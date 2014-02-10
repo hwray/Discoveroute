@@ -13,7 +13,6 @@
 
 <style>
   body { margin:0; padding:0; }
-  #map { position:absolute; top:50px; bottom:0; width:100%; }
   .map-search {position: absolute; top:0; bottom: 0; width: 100%;};
 </style>
 </head>
@@ -21,13 +20,15 @@
     <div id="container">
         <form class="navbar-form navbar-left map-search" role="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" class="form-control" style="width: 300px;" id="routeStart" placeholder="Start">
+          <input type="text" class="form-control" style="width: 300px;" id="routeEnd" placeholder="End">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+
+        <button type="submit" class="btn btn-default" id="routeButton">Route</button>
         <a href="savedroutes.html"> Saved Routes</a>
       </form>
 
-        <div id="map_canvas"></div>
+      <div id="map_canvas"></div>
 
     </div>
 
