@@ -57,8 +57,40 @@ function geocodeCallback(results, status) {
 
 function directionsCallback(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
+    var steps = response.routes[0].legs[0].steps; 
+    var distSinceLast = 0; 
+    for (var i = 0; i < steps.length; i++) {
+      var step = steps[i]; 
+      console.log(step); 
+      if ((step.distance.value + distSinceLast) < 1000) {
+        distSinceLast += step.distance.value; 
+        continue; 
+      } else {
+        distSinceLast = 0; 
+      }
+      if (step.distance.value > 2000) {
+        var numPoints = Math.floor(step.distance.value / 1600); 
+        var increment = Math.floor(step.lat_lngs.length / numPoints); 
+        var points = step.lat_lngs; 
+        for (var j = increment; j < points.length; j += increment) {
+          addMarker(step.lat_lngs[j].d, step.lat_lngs[j].e); 
+        }
+      } else {
+        var lat = step.end_location.d;
+        var lng = step.end_location.e; 
+        addMarker(lat, lng); 
+      }
+    }
     directionsDisplay.setDirections(response);
   } else {
 
   }
+}
+
+function addMarker(lat, lng) {
+  var latlng = new google.maps.LatLng(lat, lng); 
+  var marker = new google.maps.Marker({
+    map: map,
+    position: latlng
+  });
 }
