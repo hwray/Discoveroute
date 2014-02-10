@@ -8,8 +8,8 @@ var directionsDisplay;
 function initialize() {
   var map_canvas = document.getElementById('map_canvas');
   var map_options = {
-    center: new google.maps.LatLng(44.5403, -78.5463),
-    zoom: 8,
+    center: new google.maps.LatLng(37.424, -122.166),
+    zoom: 14,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }
   map = new google.maps.Map(map_canvas, map_options)
