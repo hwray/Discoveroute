@@ -1,0 +1,6 @@
+#map_canvas {
+	position: absolute;
+    width: 100%;
+    height: 95%;
+    top: 50px;
+}
