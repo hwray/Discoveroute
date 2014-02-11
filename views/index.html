@@ -4,35 +4,78 @@
 <meta charset=utf-8 />
 <title>discoveroute</title>
 
+<!-- google font -->
+<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
+<!-- style dependencies -->
 <link href='stylesheets/bootstrap.css' rel='stylesheet' />
-<link href='stylesheets/index.css' rel='stylesheet' />
+<link href='stylesheets/ionic.css' rel='stylesheet' />
+<link href='stylesheets/font-awesome.css' rel='stylesheet' />
 
-<style>
-  body { margin:0; padding:0; }
-  .map-search {position: absolute; top:0; bottom: 0; width: 100%;};
-</style>
+<!-- discoveroute css -->
+<link href='stylesheets/index.css' rel='stylesheet' />
+<link href='stylesheets/style.css' rel='stylesheet' />
+
 </head>
 <body>
-    <div id="container">
-        <form class="navbar-form navbar-left map-search" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" style="width: 300px;" id="routeStart" placeholder="Start">
-          <input type="text" class="form-control" style="width: 300px;" id="routeEnd" placeholder="End">
-        </div>
+  <nav id='main-nav' class='sidebar'>
+    <ul class='text-center'>
+      <li>
+        <a href='#'><span class='glyphicon glyphicon-map-marker'></span>
+          Destination
+        </a>
+      </li>
+      <li>
+        <a href='#'><span class='glyphicon glyphicon-road'></span>
+          Vehicle
+        </a>
+      </li>
+      <li>
+        <a href='#'><span class='fa fa-lightbulb-o'></span>
+          Activity
+        </a>
+      </li>
+      <li>
+        <a href='#'><span class='fa fa-clock-o'></span>
+          Time
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-        <button type="submit" class="btn btn-default" id="routeButton">Route</button>
-        <a href="savedroutes.html"> Saved Routes</a>
+<div class="bar bar-header">
+  <button class="button icon ion-navicon"></button>
+  <h1 class="title">Header Buttons</h1>
+  <button class="button">Edit</button>
+</div>
+  <nav class="navbar navbar-inverse navbar-fixed-top topbar" role="navigation">
+    <div class='navbar-inner'>
+      <span class='fa fa-bars left-menu'></span>
+      <div class='nav-center'>
+        <img src='images/drWhite.png' class='logo'/>
+      </div>
+    </div>
+  </nav>
+
+  <div class='container-fluid content'>
+    <form class="navbar-form navbar-left map-search" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="find your destination!">
+      </div>
+      <button type="submit" class="btn btn-default"><a href="transportation-mode.html">Go!</a></button>
+      <button class="btn btn-default routes"><a href="savedroutes.html"> Saved Routes</a></button>
       </form>
-
-      <div id="map_canvas"></div>
-
+      <div class="map-search">
+        </div>
+      </form>
+        <div id='map'></div>
+    </div>
     </div>
 
-  <script src="javascripts/index.js"></script>
-
+  <script src='javascripts/jquery.js'></script>
+  <script src='https://maps.googleapis.com/maps/api/js?sensor=false'></script>
+  <script src='javascripts/index.js'></script>
+  
 </body>
 </html>
