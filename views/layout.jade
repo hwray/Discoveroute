@@ -2,13 +2,6 @@ doctype html
 html
   include head.jade
   body
-    // topbar navigation
-    div(class="bar bar-header bar-dark")
-      button(class='button fa fa-bars' id='sidebar-button')
-      h1(class="title")
-        img(src='images/drWhite.png' class='logo')
-
-
     // left sidebar navigation
     nav(id='sidebar-menu' class='sidebar')
       ul(class='text-center')
@@ -28,3 +21,15 @@ html
           a(href='#')
             span(class='fa fa-clock-o') 
             | Time
+
+    div(class='main-container')
+      // topbar navigation
+      div(class="bar bar-header bar-dark topbar")
+        button(class='button fa fa-bars' id='sidebar-button')
+        h1(class="title")
+          img(src='images/drWhite.png' class='logo')
+
+      block content
+
+    include scripts.jade
+    block scripts
