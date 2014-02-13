@@ -1,7 +1,21 @@
-doctype html
-html
-  head
-    title= title
-    include index.html
-  body
-    
+extends layout.jade
+
+block styles
+    link(rel='stylesheet', href='/stylesheets/index.css')
+
+
+block content
+
+    div(class="container-fluid" id="content")
+      form(class="navbar-form navbar-left map-search" role="search")
+        div(class="form-group")
+          input(type="text" class="form-control" style="width: 300px;" id="routeStart" placeholder="Start")
+          input(type="text" class="form-control" style="width: 300px;" id="routeEnd" placeholder="End")
+        button(type="submit" class="btn btn-default" id="routeButton") Route
+        a(href="savedroutes.html") Saved Routes
+
+    div(id="map_canvas")
+
+block scripts
+    script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
+    script(src='javascripts/index.js')
