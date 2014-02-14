@@ -51,14 +51,10 @@ routeButton.addEventListener("click", function(e) {
       travelMode: google.maps.TravelMode.DRIVING
     };
 
-<<<<<<< HEAD
   directionsService.route(request, directionsCallback);
   setAlarm(5000);
 });
-=======
-    directionsService.route(request, directionsCallback);
-  });
->>>>>>> c402f4652fdfda62135add193f6dc7cc573de29a
+
 
 function setAlarm(seconds){
   timerSeconds = seconds;
