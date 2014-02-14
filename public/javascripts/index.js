@@ -240,9 +240,9 @@ function addMarker(lat, lng) {
 }
 
 
-var timeButton = document.getElementById("timeButton"); 
-timeButton.addEventListener("click", function(e) {
-  e.preventDefault(); 
-  var picker = $('#datetimepicker3').data('datetimepicker');
-  console.log(picker); 
-}); 
+// var timeButton = document.getElementById("timeButton"); 
+// timeButton.addEventListener("click", function(e) {
+//   e.preventDefault(); 
+//   var picker = $('#datetimepicker3').data('datetimepicker');
+//   console.log(picker); 
+// }); 
