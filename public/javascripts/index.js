@@ -6,15 +6,15 @@ var directionsDisplay;
 var timerSeconds;
 
 $(document).ready(function() {
-    $('#sidebar-menu').toggle('slide');
-    $('#sidebar-button').click(slideLeftMenu);
-  })
+  $('#sidebar-menu').toggle('slide');
+  $('#sidebar-button').click(slideLeftMenu);
+})
 
-  function slideLeftMenu(e){
-    e.preventDefault();
-    var sidebar = $('#sidebar');
-    $('#sidebar-menu').toggle('slide');
-  }
+function slideLeftMenu(e){
+  e.preventDefault();
+  var sidebar = $('#sidebar');
+  $('#sidebar-menu').toggle('slide');
+}
 
 function initialize() {
   var map_canvas = document.getElementById('map_canvas');
@@ -41,19 +41,24 @@ routeButton.addEventListener("click", function(e) {
   var end = document.getElementById("routeEnd").value; 
 
   var request = {
-      origin: start,
-      destination: end,
+    origin: start,
+    destination: end,
 
       // HARDCODING
       // DRIVING
       // TRAVEL MODE
       // FOR NOW
       travelMode: google.maps.TravelMode.DRIVING
-  };
+    };
 
+<<<<<<< HEAD
   directionsService.route(request, directionsCallback);
   setAlarm(5000);
 });
+=======
+    directionsService.route(request, directionsCallback);
+  });
+>>>>>>> c402f4652fdfda62135add193f6dc7cc573de29a
 
 function setAlarm(seconds){
   timerSeconds = seconds;
