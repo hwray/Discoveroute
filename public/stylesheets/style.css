@@ -40,13 +40,14 @@ body {
 
 .interaction-bar{
 	position: absolute;
-	top: 40px;
-	height: 100%;
-	right: 0px;
-	width: 20%;
-	background-color: #444444;
+	top: 90px;
+	height: 80%;
+	right: 30px;
+	width: 25%;
+	background-color: white;
 	color: white;
 	padding: 10px;
+	border-radius: 10px;
 }
 
 
