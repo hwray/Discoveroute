@@ -3,6 +3,7 @@ var geocoder;
 var directionsService; 
 var directionsDisplay; 
 
+var timerSeconds;
 
 
 function initialize() {
@@ -41,7 +42,42 @@ routeButton.addEventListener("click", function(e) {
   };
 
   directionsService.route(request, directionsCallback);
+  setAlarm(5000);
 });
+
+function setAlarm(seconds){
+  timerSeconds = seconds;
+  timerInterval = setInterval(updateTimeLeft, 1000);
+}
+
+function secs2timeString(seconds){
+  var str = "";
+  var hours = Math.floor(seconds/3600);
+  seconds %= 3600;
+  var minutes = Math.floor(seconds/60);
+  seconds %= 60;
+  seconds = Math.floor(seconds);
+  if(hours < 10) str += "0";
+  str += hours + ":";
+  if(minutes < 10) str += "0";
+  str += minutes + ":";
+  if(seconds < 10) str += "0";
+  str += seconds;
+  return str;
+}
+
+function updateTimeLeft(){
+  if(timerSeconds <= 0){
+    timerSeconds = 0;
+    console.log("Time is up!");
+    clearInterval(timerInterval);
+  }else{
+    var timerString = secs2timeString(timerSeconds);
+    //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
+    console.log(timerString + " remaining.");
+    timerSeconds -= 1;
+  }
+}
 
 function geocodeCallback(results, status) {
   if (status == google.maps.GeocoderStatus.OK) {
