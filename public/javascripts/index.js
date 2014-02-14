@@ -60,13 +60,30 @@ routeButton.addEventListener("click", function(e) {
   var categoryDiv = document.getElementById("categories"); 
   var categoryText = ""; 
   for (var i in categories) {
-    categoryText += "<div class='col-xs-12 col-sm-3 col-md-2 col-lg-2 circle'>"; 
+    categoryText += "<div class='col-xs-12 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
     categoryText += "<p>"; 
     categoryText += categories[i]; 
     categoryText += "</p>"; 
     categoryText += "</div>"; 
   }
   categoryDiv.innerHTML = categoryText; 
+
+
+  for (var i in categories) {
+    var categoryButton = document.getElementById("category" + i); 
+    categoryButton.addEventListener("click", function(e) {      
+      $.ajax({
+        url: "/places",
+        context: document.body,
+        success: function() {
+
+          // Change detours div innerHTML in sidebar
+
+        }
+      });
+    }); 
+  }
+
 
   setAlarm(5000);
 });
