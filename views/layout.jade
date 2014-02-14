@@ -1,7 +1,35 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+  include head.jade
   body
-    block content
+    // left sidebar navigation
+    nav(id='sidebar-menu' class='sidebar')
+      ul(class='text-center')
+        li
+          a(href='#') 
+            span(class='glyphicon glyphicon-map-marker') 
+            | Destination
+        li
+          a(href='#')
+            span(class='glyphicon glyphicon-road') 
+            | Vehicle
+        li
+          a(href='#')
+            span(class='fa fa-lightbulb-o') 
+            | Activity
+        li
+          a(href='#')
+            span(class='fa fa-clock-o') 
+            | Time
+
+    div(class='main-container')
+      // topbar navigation
+      div(class="bar bar-header bar-dark topbar")
+        button(class='button fa fa-bars' id='sidebar-button')
+        h1(class="title")
+          img(src='images/drWhite.png' class='logo')
+
+      block content
+
+    include scripts.jade
+    block scripts

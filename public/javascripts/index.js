@@ -5,6 +5,16 @@ var directionsDisplay;
 
 var timerSeconds;
 
+$(document).ready(function() {
+    $('#sidebar-menu').toggle('slide');
+    $('#sidebar-button').click(slideLeftMenu);
+  })
+
+  function slideLeftMenu(e){
+    e.preventDefault();
+    var sidebar = $('#sidebar');
+    $('#sidebar-menu').toggle('slide');
+  }
 
 function initialize() {
   var map_canvas = document.getElementById('map_canvas');
