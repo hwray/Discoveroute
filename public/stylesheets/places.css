@@ -1,0 +1,33 @@
+.business
+{
+  padding: 3px 0px 3px 0px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
+.profilePic
+{
+  padding: 3px;
+}
+
+.profilePic img
+{
+  border-radius: 10px;
+  width: 100%;
+}
+
+p.business_name
+{
+  padding: 0px;
+}
+
+.sidebar
+{
+  width: 350px;
+}
+
+body
+{
+  font-family: "HelveticaNeue-Light"
+}
