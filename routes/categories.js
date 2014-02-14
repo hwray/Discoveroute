@@ -5,7 +5,7 @@ exports.selectCategory = function (req, res) {
 
   res.render('categories', 
     { 
-      'categories' : ["eat", "drink", "listen", "see", "feel"],
+      'categories' : ["eat", "drink", "listen", "read", "see", "feel"],
       'coordinates' : []
     } );
 }

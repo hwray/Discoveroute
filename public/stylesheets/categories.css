@@ -1,8 +1,8 @@
 div.circle
 {
   border-radius: 50%;
-  height: 150px;
-  width: 150px;
+  height: 75px;
+  width: 75px;
   background-color: #33A1E2;
   margin: 10px;
   text-align: center;
@@ -17,11 +17,4 @@ div.circle
   color: white;
   font-family: "HelveticaNeue-Light", "Helvetica", "Tahoma", sans-serif;
   letter-spacing: 1px;
-}
-
-body
-{
-  background-color: #1F2931;
-  color: white;
-  text-align: center;
 }

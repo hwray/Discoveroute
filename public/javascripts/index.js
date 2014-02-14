@@ -5,6 +5,10 @@ var directionsDisplay;
 
 var timerSeconds;
 
+var searchMarkers = new Array(); 
+
+var categories = ["eat", "drink", "listen", "read", "see", "feel"]; 
+
 $(document).ready(function() {
   $('#sidebar-menu').toggle('slide');
   $('#sidebar-button').click(slideLeftMenu);
@@ -52,6 +56,18 @@ routeButton.addEventListener("click", function(e) {
     };
 
   directionsService.route(request, directionsCallback);
+
+  var categoryDiv = document.getElementById("categories"); 
+  var categoryText = ""; 
+  for (var i in categories) {
+    categoryText += "<div class='col-xs-12 col-sm-3 col-md-2 col-lg-2 circle'>"; 
+    categoryText += "<p>"; 
+    categoryText += categories[i]; 
+    categoryText += "</p>"; 
+    categoryText += "</div>"; 
+  }
+  categoryDiv.innerHTML = categoryText; 
+
   setAlarm(5000);
 });
 
@@ -120,11 +136,15 @@ function directionsCallback(response, status) {
         var increment = Math.floor(step.lat_lngs.length / numPoints); 
         var points = step.lat_lngs; 
         for (var j = increment; j < points.length; j += increment) {
+          var latlng = new google.maps.LatLng(step.lat_lngs[j].d, step.lat_lngs[j].e); 
+          searchMarkers.push(latlng); 
           addMarker(step.lat_lngs[j].d, step.lat_lngs[j].e); 
         }
       } else {
         var lat = step.end_location.d;
         var lng = step.end_location.e; 
+        var latlng = new google.maps.LatLng(lat, lng); 
+        searchMarkers.push(latlng); 
         addMarker(lat, lng); 
       }
     }
@@ -149,3 +169,10 @@ function addMarker(lat, lng) {
     position: latlng
   });
 }
+
+var timeButton = document.getElementById("timeButton"); 
+timeButton.addEventListener("click", function(e) {
+  e.preventDefault(); 
+  var picker = $('#datetimepicker3').data('datetimepicker');
+  console.log(picker); 
+}); 
