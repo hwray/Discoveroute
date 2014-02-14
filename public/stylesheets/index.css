@@ -22,3 +22,15 @@
 	position: relative;
 	width: 90%;
 }
+
+input.form-control
+{
+  height: 30px;
+  font-size: 15px;
+  border-radius: 2px;
+}
+
+.form-group
+{
+  margin: 0px;
+}

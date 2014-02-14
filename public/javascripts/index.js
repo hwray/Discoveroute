@@ -10,7 +10,7 @@ var searchMarkers = new Array();
 var categories = ["eat", "drink", "listen", "read", "see", "feel"]; 
 
 $(document).ready(function() {
-  $('#sidebar-menu').toggle('slide');
+  //$('#sidebar-menu').toggle('slide');
   $('#sidebar-button').click(slideLeftMenu);
 })
 
