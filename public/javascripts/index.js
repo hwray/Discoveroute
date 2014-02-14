@@ -4,15 +4,15 @@ var directionsService;
 var directionsDisplay; 
 
 $(document).ready(function() {
-    $('#sidebar-menu').toggle('slide');
-    $('#sidebar-button').click(slideLeftMenu);
-  })
+  $('#sidebar-menu').toggle('slide');
+  $('#sidebar-button').click(slideLeftMenu);
+})
 
-  function slideLeftMenu(e){
-    e.preventDefault();
-    var sidebar = $('#sidebar');
-    $('#sidebar-menu').toggle('slide');
-  }
+function slideLeftMenu(e){
+  e.preventDefault();
+  var sidebar = $('#sidebar');
+  $('#sidebar-menu').toggle('slide');
+}
 
 function initialize() {
   var map_canvas = document.getElementById('map_canvas');
@@ -39,18 +39,18 @@ routeButton.addEventListener("click", function(e) {
   var end = document.getElementById("routeEnd").value; 
 
   var request = {
-      origin: start,
-      destination: end,
+    origin: start,
+    destination: end,
 
       // HARDCODING
       // DRIVING
       // TRAVEL MODE
       // FOR NOW
       travelMode: google.maps.TravelMode.DRIVING
-  };
+    };
 
-  directionsService.route(request, directionsCallback);
-});
+    directionsService.route(request, directionsCallback);
+  });
 
 function geocodeCallback(results, status) {
   if (status == google.maps.GeocoderStatus.OK) {

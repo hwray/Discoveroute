@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= Categories
+    link(rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css")
+    link(rel="stylesheet" type="text/css" href="../stylesheets/categories.css")
+  body
+    each category in categories
+      div(class="col-xs-12 col-sm-3 col-md-2 col-lg-2 circle")
+        p
+          a(href="#" onclick="getPlaces(\"#{category}\");") #{category}
+
+
+
+
+   form(id="selectionForm")
+    input(type="hidden",id="coordinates",name="coordinates",value="#{coordinates}")
+    input(type="hidden",id="category",name="category",value="")
+  script(src="http://code.jquery.com/jquery-1.10.2.min.js")
+  script(src="../javascripts/categories.js")
