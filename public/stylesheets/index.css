@@ -10,3 +10,8 @@
 	left: 15%;
 
 }
+
+#datePickerInput
+{
+  max-width: 80%;
+}

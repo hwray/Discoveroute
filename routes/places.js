@@ -5,8 +5,6 @@ var yelpClient = require("../node_modules/yelp/index.js").createClient({
   token_secret: "qEIqCuvJ1rw1mkmzBuP4xRy67Cw",
 });
 
-
-
 exports.places = function(req, res) {
   var counter = res.body.coordinates.length;
   for (var i = 0; i < req.body.coordinates.length; i++) {
