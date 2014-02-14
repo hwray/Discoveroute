@@ -6,9 +6,10 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 */
 
 /* COLORS
-	dark grey:	1F2931;
+	cobalt-y color:	1F2931;
 	orange: FF9805;
 	light grey: bebebe;
+	dark grey: 444444;
 */
 
 
@@ -33,14 +34,20 @@ body {
 	top:50px; 
 }
 
-#map { 
-	position:absolute; 
-	top:10%; 
-	bottom: 0px; 
-	width:100%; 
-	z-index: -1
-}
+/* INTERACTION BAR
+=============================================
+*/
 
+.interaction-bar{
+	position: absolute;
+	top: 40px;
+	height: 100%;
+	right: 0px;
+	width: 200px;
+	background-color: #444444;
+	color: white;
+	padding: 10px;
+}
 
 
 /* TOPBAR
