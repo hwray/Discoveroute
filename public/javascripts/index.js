@@ -8,6 +8,24 @@ var timerSeconds;
 var searchMarkers = new Array(); 
 
 var categories = ["eat", "drink", "listen", "read", "see", "feel"]; 
+$('#timeButton').click(function() {
+  //var datetimepicker= $('#datetimepicker3');
+  var timeInput= $('#datePickerInput');
+  var timeEnd = timeInput.val().toString();//hh:mm:ss
+  var hours = timeEnd.substring(0,2);
+  var minutes = timeEnd.substring(3,5);
+  var seconds = timeEnd.substring(6,8);
+  if(hours.charAt(0) == '0') hours = hours.substring(1);
+  if(minutes.charAt(0) == '0') minutes = minutes.substring(1);
+  if(seconds.charAt(0) == '0') seconds = seconds.substring(1);
+  var timeEndSecs = parseInt(seconds) + parseInt(minutes*60) + parseInt(hours*3600);
+  var timeBegin = new Date();
+  var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
+  var timeRemaining = timeEndSecs - timeBeginSecs;
+  if(timeRemaining > 0){
+    setAlarm(timeRemaining);
+  }
+});
 
 $(document).ready(function() {
   //$('#sidebar-menu').toggle('slide');
@@ -138,13 +156,17 @@ function secs2timeString(seconds){
 
 
 function updateTimeLeft(){
+  var timerValDiv = document.getElementById("timerValue"); 
   if(timerSeconds <= 0){
     timerSeconds = 0;
+    timerValDiv.innerHTML = "Time is up!"; 
     console.log("Time is up!");
     clearInterval(timerInterval);
   }else{
     var timerString = secs2timeString(timerSeconds);
     //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
+    // $('#timerValue').innerHTML = (timerString + " remaining");
+    timerValDiv.innerHTML = timerString + " remaining"; 
     console.log(timerString + " remaining.");
     timerSeconds -= 1;
   }
@@ -218,9 +240,9 @@ function addMarker(lat, lng) {
 }
 
 
-var timeButton = document.getElementById("timeButton"); 
-timeButton.addEventListener("click", function(e) {
-  e.preventDefault(); 
-  var picker = $('#datetimepicker3').data('datetimepicker');
-  console.log(picker); 
-}); 
+// var timeButton = document.getElementById("timeButton"); 
+// timeButton.addEventListener("click", function(e) {
+//   e.preventDefault(); 
+//   var picker = $('#datetimepicker3').data('datetimepicker');
+//   console.log(picker); 
+// }); 
