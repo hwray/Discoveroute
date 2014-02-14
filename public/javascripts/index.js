@@ -134,8 +134,8 @@ function directionsCallback(response, status) {
     var durationVal = response.routes[0].legs[0].duration.value; 
     console.log(duration); 
 
-    var sidebar = document.getElementById("timer"); 
-    sidebar.innerHTML = duration; 
+    var timer = document.getElementById("tripTime"); 
+    timer.innerHTML = "Your trip will take " + duration; 
 
   } else {
 
