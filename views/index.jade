@@ -3,6 +3,7 @@ extends layout.jade
 block styles
     link(rel='stylesheet', href='/stylesheets/index.css')
     link(rel='stylesheet', href='/stylesheets/categories.css')
+    link(rel='stylesheet', href='/stylesheets/places.css')
     link(href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet")
     link(rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css")
 
@@ -20,10 +21,9 @@ block content
       //  button(type="button" class="btn btn-default" id="timeButton") Start Timer
 
       div(id="categories")
+      div(id="detourDisplay")
 
     div(id="map_canvas")
-
-    div(id="detours")
 
 block scripts
     script(src='https://maps.googleapis.com/maps/api/js?sensor=false')

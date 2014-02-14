@@ -71,13 +71,22 @@ routeButton.addEventListener("click", function(e) {
 
   for (var i in categories) {
     var categoryButton = document.getElementById("category" + i); 
-    categoryButton.addEventListener("click", function(e) {      
+    categoryButton.addEventListener("click", function(e) {    
+
+      var yelpData = {
+        category: "food", 
+        coordinates: searchMarkers
+      }; 
+
       $.ajax({
         url: "/places",
         context: document.body,
-        success: function() {
+        data: JSON.stringify(yelpData),
+        success: function(data, textStatus, jqXHR) {
 
-          // Change detours div innerHTML in sidebar
+          var detoursDiv = document.getElementById("detourDisplay"); 
+          console.log(data); 
+          detoursDiv.innerHTML = data; 
 
         }
       });
