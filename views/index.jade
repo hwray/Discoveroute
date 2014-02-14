@@ -1,11 +1,11 @@
 extends layout.jade
 
 block styles
-    link(rel='stylesheet', href='/stylesheets/categories.css')
-    link(rel='stylesheet', href='/stylesheets/places.css')
+    link(rel='stylesheet' href='/stylesheets/categories.css')
+    link(rel='stylesheet' href='/stylesheets/places.css')
     link(href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet")
     link(rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css")
-    link(rel='stylesheet', href='/stylesheets/index.css')
+    link(rel='stylesheet' href='/stylesheets/index.css')
 
 block content
 
@@ -23,7 +23,7 @@ block content
       div(id="categories")
       div(id="detourDisplay")
 
-        //include timer.html
+        include timer.html
         button(type="button" class="btn btn-default" id="timeButton") Start Timer
         <br/>
         <br/>
