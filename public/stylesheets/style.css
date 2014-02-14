@@ -41,7 +41,8 @@ body {
 .interaction-bar{
 	position: absolute;
 	top: 90px;
-	height: 80%;
+	/*AGAIN, JUST CHANGING THIS FOR STUDIO*/
+	/*height: 80%;*/
 	right: 30px;
 	width: 25%;
 	background-color: white;

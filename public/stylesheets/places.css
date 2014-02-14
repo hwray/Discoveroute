@@ -3,7 +3,10 @@
   padding: 3px 0px 3px 0px;
   margin: 10px;
   border-radius: 5px;
-  border: 2px solid black;
+  border: 2px solid #33A1E2;
+  position: relative;
+  /* HARDCODING THIS FOR STUDIO*/
+  left: 50px;
 }
 
 .profilePic

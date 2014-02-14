@@ -38,8 +38,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
 var routeButton = document.getElementById("routeButton"); 
+routeButton.addEventListener("click", routeButtonClick);
 
-routeButton.addEventListener("click", function(e) { 
+function routeButtonClick(e) {
   e.preventDefault(); 
   var start = document.getElementById("routeStart").value; 
   var end = document.getElementById("routeEnd").value; 
@@ -57,6 +58,13 @@ routeButton.addEventListener("click", function(e) {
 
   directionsService.route(request, directionsCallback);
 
+  setAlarm(5000);
+
+  displayCategories(); 
+}
+
+
+function displayCategories() {
   var categoryDiv = document.getElementById("categories"); 
   var categoryText = ""; 
   for (var i in categories) {
@@ -71,37 +79,46 @@ routeButton.addEventListener("click", function(e) {
 
   for (var i in categories) {
     var categoryButton = document.getElementById("category" + i); 
-    categoryButton.addEventListener("click", function(e) {    
-
-      var yelpData = {
-        category: "food", 
-        coordinates: searchMarkers
-      }; 
-
-      $.ajax({
-        url: "/places",
-        context: document.body,
-        data: JSON.stringify(yelpData),
-        success: function(data, textStatus, jqXHR) {
-
-          var detoursDiv = document.getElementById("detourDisplay"); 
-          console.log(data); 
-          detoursDiv.innerHTML = data; 
-
-        }
-      });
-    }); 
+    categoryButton.addEventListener("click", categoryClick); 
   }
+}
 
 
-  setAlarm(5000);
-});
+function categoryClick(e) {
+  var yelpData = {
+    category: "food", 
+    coordinates: searchMarkers
+  }; 
+
+  $.ajax({
+    url: "/places",
+    context: document.body,
+    // data: JSON.stringify(yelpData),
+    success: yelpCallback
+  });
+}
+
+
+
+function yelpCallback(data, textStatus, jqXHR) {
+  var detoursDiv = document.getElementById("detourDisplay"); 
+  console.log(data); 
+  for (var i in data) {
+    detoursDiv.innerHTML += "<div class='row business'><div class='col-sm-4 profilePic'>" +
+                            "<img src='" + data[i][0].snippet_image_url + "'></img></div>" +
+                            "<div class='col-sm-8'><p class='business-name'>" + data[i][0].name +
+                            "</p>" + data[i][0].snippet_text + "</div></div>"
+    //detoursDiv.innerHTML += "<h1>" + data[i][0].name + "</h1>"; 
+  }
+}
+
 
 
 function setAlarm(seconds){
   timerSeconds = seconds;
   timerInterval = setInterval(updateTimeLeft, 1000);
 }
+
 
 function secs2timeString(seconds){
   var str = "";
@@ -119,6 +136,7 @@ function secs2timeString(seconds){
   return str;
 }
 
+
 function updateTimeLeft(){
   if(timerSeconds <= 0){
     timerSeconds = 0;
@@ -132,6 +150,7 @@ function updateTimeLeft(){
   }
 }
 
+
 function geocodeCallback(results, status) {
   if (status == google.maps.GeocoderStatus.OK) {
     map.setCenter(results[0].geometry.location);
@@ -143,6 +162,7 @@ function geocodeCallback(results, status) {
     alert('Geocode was not successful for the following reason: ' + status);
   }
 }
+
 
 function directionsCallback(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
@@ -188,6 +208,7 @@ function directionsCallback(response, status) {
   }
 }
 
+
 function addMarker(lat, lng) {
   var latlng = new google.maps.LatLng(lat, lng); 
   var marker = new google.maps.Marker({
@@ -195,6 +216,7 @@ function addMarker(lat, lng) {
     position: latlng
   });
 }
+
 
 var timeButton = document.getElementById("timeButton"); 
 timeButton.addEventListener("click", function(e) {

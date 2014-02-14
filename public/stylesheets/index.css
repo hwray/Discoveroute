@@ -15,3 +15,10 @@
 {
   max-width: 80%;
 }
+
+#detourDisplay 
+{
+	color: black;
+	position: relative;
+	width: 90%;
+}
