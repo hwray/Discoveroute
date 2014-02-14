@@ -1,0 +1,6 @@
+each business in businesses
+  div(class="row business")
+    div(class="col-sm-4 profilePic")
+      img(src="#{business[0].snippet_image_url}")
+    div(class="col-sm-8")
+      p(class="business-name") #{business[0].name}
