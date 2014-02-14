@@ -104,11 +104,11 @@ function geocodeCallback(results, status) {
 
 function directionsCallback(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
+    console.log(response); 
     var steps = response.routes[0].legs[0].steps; 
     var distSinceLast = 0; 
     for (var i = 0; i < steps.length; i++) {
       var step = steps[i]; 
-      console.log(step); 
       if ((step.distance.value + distSinceLast) < 1000) {
         distSinceLast += step.distance.value; 
         continue; 
@@ -129,6 +129,14 @@ function directionsCallback(response, status) {
       }
     }
     directionsDisplay.setDirections(response);
+
+    var duration = response.routes[0].legs[0].duration.text; 
+    var durationVal = response.routes[0].legs[0].duration.value; 
+    console.log(duration); 
+
+    var sidebar = document.getElementById("timer"); 
+    sidebar.innerHTML = duration; 
+
   } else {
 
   }

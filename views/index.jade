@@ -6,15 +6,13 @@ block styles
 
 block content
 
-    div(class="container-fluid" id="content")
-      form(class="navbar-form navbar-left map-search" role="search")
-        div(class="form-group")
-          input(type="text" class="form-control" style="width: 300px;" id="routeStart" placeholder="Start")
-          input(type="text" class="form-control" style="width: 300px;" id="routeEnd" placeholder="End")
-        button(type="submit" class="btn btn-default" id="routeButton") Route
-        a(href="savedroutes.html") Saved Routes
-
     div(class='interaction-bar')      
+      div(class="form-group")
+        input(type="text" class="form-control" style="width: 150px;" id="routeStart" placeholder="Start")
+        input(type="text" class="form-control" style="width: 150px;" id="routeEnd" placeholder="End")
+      button(type="submit" class="btn btn-default" id="routeButton") Route
+      a(href="savedroutes.html") Saved Routes
+      div(id="timer")
 
     div(id="map_canvas")
 
