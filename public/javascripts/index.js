@@ -30,6 +30,7 @@ $('#timeButton').click(function() {
 $(document).ready(function() {
   //$('#sidebar-menu').toggle('slide');
   $('#sidebar-button').click(slideLeftMenu);
+  $('.carousel').carousel(); 
 })
 
 function slideLeftMenu(e){
@@ -119,7 +120,27 @@ function categoryClick(e) {
 
 
 function yelpCallback(data, textStatus, jqXHR) {
-  var detoursDiv = document.getElementById("detourDisplay"); 
+  
+  var detoursDiv = document.getElementById("this-carousel-inner"); 
+  console.log(data); 
+  for (var i in data) {
+    if (data[i].length < 1)
+      continue; 
+    var htmlString = ""; 
+    if (i == 0) {
+      htmlString += "<div class='item active'>"; 
+    } else {
+      htmlString += "<div class='item'>"; 
+    }
+    htmlString += "<img src='" + data[i][0].snippet_image_url + "' />"; 
+    htmlString += "<div class='carousel-caption'><p>" + data[i][0].name + "</p></div>"; 
+    htmlString += "</div>"; 
+
+    detoursDiv.innerHTML += htmlString; 
+  }
+
+    //detoursDiv.innerHTML += "<h1>" + data[i][0].name + "</h1>"; 
+  /*var detoursDiv = document.getElementById("detourDisplay"); 
   console.log(data); 
   for (var i in data) {
     detoursDiv.innerHTML += "<div class='row business'><div class='col-sm-4 profilePic'>" +
@@ -127,7 +148,7 @@ function yelpCallback(data, textStatus, jqXHR) {
                             "<div class='col-sm-8'><p class='business-name'>" + data[i][0].name +
                             "</p>" + data[i][0].snippet_text + "</div></div>"
     //detoursDiv.innerHTML += "<h1>" + data[i][0].name + "</h1>"; 
-  }
+  }*/
 }
 
 

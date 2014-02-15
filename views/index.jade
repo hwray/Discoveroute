@@ -10,7 +10,12 @@ block styles
 block content
   div(class="row")
     div(id="map_canvas")
-    div(class='interaction-bar')      
+    div(class='interaction-bar')  
+      div(id="this-carousel-id" class="carousel slide")
+        div(id="this-carousel-inner" class="carousel-inner")
+        a(class="carousel-control left" href="#this-carousel-id" data-slide="prev") &lsaquo;
+        a(class="carousel-control right" href="#this-carousel-id" data-slide="next") &rsaquo;
+
       div(class="form-group")
         input(type="text" class="form-control" id="routeStart" placeholder="Start")
         input(type="text" class="form-control" id="routeEnd" placeholder="End")
@@ -31,4 +36,5 @@ block content
     div(id="map_canvas")
 block scripts
     script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
+    script(src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js")
     script(src='javascripts/index.js')
