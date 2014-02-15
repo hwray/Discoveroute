@@ -35,8 +35,19 @@ $(document).ready(function() {
 
 function slideLeftMenu(e){
   e.preventDefault();
-  var sidebar = $('#sidebar');
-  $('#sidebar-menu').toggle('slide');
+  var sidebar = $("#sidebar-menu");
+  if (sidebar.css("left") == "-100px") {
+    $("#sidebar-menu").animate({left:"+=100px"}, { duration: 200, queue: false});
+    $("#map_canvas").animate({left:"+=100px"}, { duration: 200, queue: false});
+    $("#interaction-bar").animate({right:"-=100px"}, { duration: 200, queue: false});
+
+  } else {
+    $("#sidebar-menu").animate({left:"-=100px"}, { duration: 200, queue: false});
+    $("#map_canvas").animate({left:"-=100px"}, { duration: 200, queue: false});
+    $("#interaction-bar").animate({right:"+=100px"}, { duration: 200, queue: false});
+  }
+
+
 }
 
 function initialize() {
@@ -75,69 +86,69 @@ function routeButtonClick(e) {
       travelMode: google.maps.TravelMode.DRIVING
     };
 
-  directionsService.route(request, directionsCallback);
+    directionsService.route(request, directionsCallback);
 
-  setAlarm(5000);
+    setAlarm(5000);
 
-  displayCategories(); 
-}
-
-
-function displayCategories() {
-  var categoryDiv = document.getElementById("categories"); 
-  var categoryText = ""; 
-  for (var i in categories) {
-    categoryText += "<div class='col-xs-12 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
-    categoryText += "<p>"; 
-    categoryText += categories[i]; 
-    categoryText += "</p>"; 
-    categoryText += "</div>"; 
+    displayCategories(); 
   }
-  categoryDiv.innerHTML = categoryText; 
 
 
-  for (var i in categories) {
-    var categoryButton = document.getElementById("category" + i); 
-    categoryButton.addEventListener("click", categoryClick); 
-  }
-}
-
-
-function categoryClick(e) {
-  var yelpData = {"coordinates" : JSON.stringify(searchMarkers)};
-  
-  if (searchMarkers.length < 25) {
-    $.ajax({
-      url: "/places",
-      type: "POST",
-      context: document.body,
-      data: yelpData,
-      success: yelpCallback
-    });
-  }
-}
-
-
-
-function yelpCallback(data, textStatus, jqXHR) {
-  
-  var detoursDiv = document.getElementById("this-carousel-inner"); 
-  console.log(data); 
-  for (var i in data) {
-    if (data[i].length < 1)
-      continue; 
-    var htmlString = ""; 
-    if (i == 0) {
-      htmlString += "<div class='item active'>"; 
-    } else {
-      htmlString += "<div class='item'>"; 
+  function displayCategories() {
+    var categoryDiv = document.getElementById("categories"); 
+    var categoryText = ""; 
+    for (var i in categories) {
+      categoryText += "<div class='col-xs-12 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
+      categoryText += "<p>"; 
+      categoryText += categories[i]; 
+      categoryText += "</p>"; 
+      categoryText += "</div>"; 
     }
-    htmlString += "<img src='" + data[i][0].snippet_image_url + "' />"; 
-    htmlString += "<div class='carousel-caption'><p>" + data[i][0].name + "</p></div>"; 
-    htmlString += "</div>"; 
+    categoryDiv.innerHTML = categoryText; 
 
-    detoursDiv.innerHTML += htmlString; 
+
+    for (var i in categories) {
+      var categoryButton = document.getElementById("category" + i); 
+      categoryButton.addEventListener("click", categoryClick); 
+    }
   }
+
+
+  function categoryClick(e) {
+    var yelpData = {"coordinates" : JSON.stringify(searchMarkers)};
+    
+    if (searchMarkers.length < 25) {
+      $.ajax({
+        url: "/places",
+        type: "POST",
+        context: document.body,
+        data: yelpData,
+        success: yelpCallback
+      });
+    }
+  }
+
+
+
+  function yelpCallback(data, textStatus, jqXHR) {
+    
+    var detoursDiv = document.getElementById("this-carousel-inner"); 
+    console.log(data); 
+    for (var i in data) {
+      if (data[i].length < 1)
+        continue; 
+      var htmlString = ""; 
+      if (i == 0) {
+        htmlString += "<div class='item active'>"; 
+      } else {
+        htmlString += "<div class='item'>"; 
+      }
+      htmlString += "<img src='" + data[i][0].snippet_image_url + "' />"; 
+      htmlString += "<div class='carousel-caption'><p>" + data[i][0].name + "</p></div>"; 
+      htmlString += "</div>"; 
+
+      detoursDiv.innerHTML += htmlString; 
+    }
 
     //detoursDiv.innerHTML += "<h1>" + data[i][0].name + "</h1>"; 
   /*var detoursDiv = document.getElementById("detourDisplay"); 
