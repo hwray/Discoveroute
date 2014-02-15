@@ -34,3 +34,13 @@ input.form-control
 {
   margin: 0px;
 }
+
+#tripTime 
+{
+  color: black;
+}
+
+#timerValue
+{
+  color: black;
+}

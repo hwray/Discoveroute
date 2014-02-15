@@ -105,20 +105,22 @@ function displayCategories() {
 function categoryClick(e) {
   var yelpData = {"coordinates" : JSON.stringify(searchMarkers)};
   
-  $.ajax({
-    url: "/places",
-    type: "POST",
-    context: document.body,
-    data: yelpData,
-    success: yelpCallback
-  });
+  if (searchMarkers.length < 25) {
+    $.ajax({
+      url: "/places",
+      type: "POST",
+      context: document.body,
+      data: yelpData,
+      success: yelpCallback
+    });
+  }
 }
 
 
 
 function yelpCallback(data, textStatus, jqXHR) {
   var detoursDiv = document.getElementById("detourDisplay"); 
-  ////console.log(data); 
+  console.log(data); 
   for (var i in data) {
     detoursDiv.innerHTML += "<div class='row business'><div class='col-sm-4 profilePic'>" +
                             "<img src='" + data[i][0].snippet_image_url + "'></img></div>" +
@@ -157,23 +159,16 @@ function updateTimeLeft(){
   var timerValDiv = document.getElementById("timerValue"); 
   if(timerSeconds <= 0){
     timerSeconds = 0;
-<<<<<<< HEAD
     timerValDiv.innerHTML = "Time is up!"; 
     console.log("Time is up!");
-=======
-    //console.log("Time is up!");
->>>>>>> brian-categories
     clearInterval(timerInterval);
   }else{
     var timerString = secs2timeString(timerSeconds);
     //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
-<<<<<<< HEAD
     // $('#timerValue').innerHTML = (timerString + " remaining");
     timerValDiv.innerHTML = timerString + " remaining"; 
-    console.log(timerString + " remaining.");
-=======
+    // console.log(timerString + " remaining.");
     //console.log(timerString + " remaining.");
->>>>>>> brian-categories
     timerSeconds -= 1;
   }
 }
@@ -246,18 +241,9 @@ function addMarker(lat, lng) {
 }
 
 
-<<<<<<< HEAD
 // var timeButton = document.getElementById("timeButton"); 
 // timeButton.addEventListener("click", function(e) {
 //   e.preventDefault(); 
 //   var picker = $('#datetimepicker3').data('datetimepicker');
 //   console.log(picker); 
 // }); 
-=======
-var timeButton = document.getElementById("timeButton"); 
-timeButton.addEventListener("click", function(e) {
-  e.preventDefault(); 
-  var picker = $('#datetimepicker3').data('datetimepicker');
-  //console.log(picker); 
-}); 
->>>>>>> brian-categories
