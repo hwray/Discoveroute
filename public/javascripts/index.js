@@ -85,15 +85,13 @@ function displayCategories() {
 
 
 function categoryClick(e) {
-  var yelpData = {
-    category: "food", 
-    coordinates: searchMarkers
-  }; 
-
+  var yelpData = {"coordinates" : JSON.stringify(searchMarkers)};
+  
   $.ajax({
     url: "/places",
+    type: "POST",
     context: document.body,
-    // data: JSON.stringify(yelpData),
+    data: yelpData,
     success: yelpCallback
   });
 }
@@ -102,7 +100,7 @@ function categoryClick(e) {
 
 function yelpCallback(data, textStatus, jqXHR) {
   var detoursDiv = document.getElementById("detourDisplay"); 
-  console.log(data); 
+  ////console.log(data); 
   for (var i in data) {
     detoursDiv.innerHTML += "<div class='row business'><div class='col-sm-4 profilePic'>" +
                             "<img src='" + data[i][0].snippet_image_url + "'></img></div>" +
@@ -140,12 +138,12 @@ function secs2timeString(seconds){
 function updateTimeLeft(){
   if(timerSeconds <= 0){
     timerSeconds = 0;
-    console.log("Time is up!");
+    //console.log("Time is up!");
     clearInterval(timerInterval);
   }else{
     var timerString = secs2timeString(timerSeconds);
     //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
-    console.log(timerString + " remaining.");
+    //console.log(timerString + " remaining.");
     timerSeconds -= 1;
   }
 }
@@ -166,7 +164,7 @@ function geocodeCallback(results, status) {
 
 function directionsCallback(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
-    console.log(response); 
+    //console.log(response); 
     var steps = response.routes[0].legs[0].steps; 
     var distSinceLast = 0; 
     for (var i = 0; i < steps.length; i++) {
@@ -198,7 +196,7 @@ function directionsCallback(response, status) {
 
     var duration = response.routes[0].legs[0].duration.text; 
     var durationVal = response.routes[0].legs[0].duration.value; 
-    console.log(duration); 
+    //console.log(duration); 
 
     var timer = document.getElementById("tripTime"); 
     timer.innerHTML = "Your trip will take " + duration; 
@@ -222,5 +220,5 @@ var timeButton = document.getElementById("timeButton");
 timeButton.addEventListener("click", function(e) {
   e.preventDefault(); 
   var picker = $('#datetimepicker3').data('datetimepicker');
-  console.log(picker); 
+  //console.log(picker); 
 }); 

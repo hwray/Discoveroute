@@ -8,7 +8,8 @@ block styles
     link(rel='stylesheet', href='/stylesheets/index.css')
 
 block content
-
+  div(class="row")
+    div(id="map_canvas")
     div(class='interaction-bar')      
       div(class="form-group")
         input(type="text" class="form-control" id="routeStart" placeholder="Start")
@@ -22,8 +23,6 @@ block content
 
       div(id="categories")
       div(id="detourDisplay")
-
-    div(id="map_canvas")
 
 block scripts
     script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
