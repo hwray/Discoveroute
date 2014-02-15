@@ -11,7 +11,6 @@ exports.places = function(req, res) {
   var businesses = [];
   var coordinates = JSON.parse(req.body.coordinates);
   var counter = coordinates.length;
-  console.log("NUMBER OF COORDINATES: " + counter);
   for (var i = 0; i < coordinates.length; i++) {
 
    yelpClient.search(
@@ -26,9 +25,8 @@ exports.places = function(req, res) {
     businesses.push(data.businesses);
     counter--;
     if (counter == 0) {
-      console.log(businesses.length);
-     res.json(businesses);
-   }
+      res.json(businesses);
+    }
  });
  }
 };

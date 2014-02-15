@@ -16,13 +16,6 @@
   max-width: 80%;
 }
 
-#detourDisplay 
-{
-	color: black;
-	position: relative;
-	width: 90%;
-}
-
 input.form-control
 {
   height: 30px;
@@ -32,7 +25,7 @@ input.form-control
 
 .form-group
 {
-  margin: 0px;
+  margin: 10px;
 }
 
 #tripTime 
@@ -43,9 +36,4 @@ input.form-control
 #timerValue
 {
   color: black;
-}
-
-.carousel-control
-{
-
 }
