@@ -6,57 +6,30 @@ var yelpClient = require("../node_modules/yelp/index.js").createClient({
 });
 
 
-/*
 exports.places = function(req, res) {
-  console.log(req);
-  console.log(req.query.coordinates.length);
-  var counter = req.body.coordinates.length;
-  console.log(counter);
-   for (var i = 0; i < req.body.coordinates.length; i++) {
-     yelpClient.search(
-     {
-       term: req.body.category, 
-       ll: coords[i].d + "," + coords[i].e,
-       radius_filter: "1000", 
-       limit: 1
-     }, 
-    
-     function(error, data) {
-       result.push(data.businesses);
-       counter--;
-       if (counter == 0)
-         res.json(result);
-     });
+
+  var businesses = [];
+  var coordinates = JSON.parse(req.body.coordinates);
+  var counter = coordinates.length;
+  console.log("NUMBER OF COORDINATES: " + counter);
+  for (var i = 0; i < coordinates.length; i++) {
+
+   yelpClient.search(
+   {
+     term: req.body.category, 
+     ll: coordinates[i].d + "," + coordinates[i].e,
+     radius_filter: "1000", 
+     limit: 1
+   }, 
+
+   function(error, data) {
+    businesses.push(data.businesses);
+    counter--;
+    if (counter == 0) {
+      console.log(businesses.length);
+     res.json(businesses);
    }
+ });
+ }
 };
-*/
-
- exports.places = function(req, res) {
-
-   var counter;
-   var businesses = [];
-
-   var coords = ["37.4225,-122.1653", "34.102046,-118.020279"]
-   counter = coords.length;
-
-   for (var i = 0; i < coords.length; i++) {
-
-     yelpClient.search(
-     {
-       term: "food", 
-       ll: "" + coords[i], 
-       radius_filter: "1000", 
-       limit: 1
-     }, 
-
-     function(error, data) {
-       businesses.push(data.businesses);
-       counter--;
-       if (counter == 0) {
-         //res.render('places', {"businesses" : businesses});
-         res.json(businesses);
-       }
-     });
-   }
- };
 

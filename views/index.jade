@@ -8,7 +8,8 @@ block styles
     link(rel='stylesheet' href='/stylesheets/index.css')
 
 block content
-
+  div(class="row")
+    div(id="map_canvas")
     div(class='interaction-bar')      
       div(class="form-group")
         input(type="text" class="form-control" id="routeStart" placeholder="Start")
@@ -22,7 +23,6 @@ block content
 
       div(id="categories")
       div(id="detourDisplay")
-
         include timer.html
         button(type="button" class="btn btn-default" id="timeButton") Start Timer
         <br/>
@@ -30,7 +30,6 @@ block content
         div(id="timerValue")
 
     div(id="map_canvas")
-
 block scripts
     script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
     script(src='javascripts/index.js')
