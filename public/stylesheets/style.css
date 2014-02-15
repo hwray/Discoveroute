@@ -41,8 +41,6 @@ body {
 .interaction-bar{
 	position: absolute;
 	top: 90px;
-	/*AGAIN, JUST CHANGING THIS FOR STUDIO*/
-	/*height: 80%;*/
 	right: 30px;
 	width: 25%;
 	background-color: white;
@@ -98,10 +96,9 @@ body {
     border-color: #111111;
     color: white;
 	position: fixed;
-	left: 0px;
+	left: -100px;
 	width: 100px;
 	height: 100%;
-	display: none;
 }
 
 .sidebar ul{
