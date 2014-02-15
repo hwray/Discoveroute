@@ -98,10 +98,10 @@ body {
     border-color: #111111;
     color: white;
 	position: fixed;
-	left: 0px;
+	left: -100px;
 	width: 100px;
 	height: 100%;
-	display: none;
+	z-index: 1;
 }
 
 .sidebar ul{

@@ -8,27 +8,21 @@ block styles
     link(rel='stylesheet' href='/stylesheets/index.css')
 
 block content
-  div(class="row")
-    div(id="map_canvas")
-    div(class='interaction-bar')      
-      div(class="form-group")
-        input(type="text" class="form-control" id="routeStart" placeholder="Start")
-        input(type="text" class="form-control" id="routeEnd" placeholder="End")
+  div(id="map_canvas")
+  div(id="interaction-bar" class='interaction-bar')      
+    div(class="form-group")
+      input(type="text" class="form-control" id="routeStart" placeholder="Start")
+      input(type="text" class="form-control" id="routeEnd" placeholder="End")
       button(type="submit" class="btn btn-default" id="routeButton") Route
-
       div(id="timer")
         div(id="tripTime")</br>
         include timer.html
         button(type="button" class="btn btn-default" id="timeButton") Start Timer
         <br/>
         <br/>
-        div(id="timerValue")
-
+      div(id="timerValue")
       div(id="categories")
-
       div(id="detourDisplay")
-
-    div(id="map_canvas")
 block scripts
     script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
     script(src='javascripts/index.js')

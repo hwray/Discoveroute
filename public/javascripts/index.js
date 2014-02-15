@@ -28,14 +28,24 @@ $('#timeButton').click(function() {
 });
 
 $(document).ready(function() {
-  //$('#sidebar-menu').toggle('slide');
   $('#sidebar-button').click(slideLeftMenu);
 })
 
 function slideLeftMenu(e){
   e.preventDefault();
-  var sidebar = $('#sidebar');
-  $('#sidebar-menu').toggle('slide');
+  var sidebar = $("#sidebar-menu");
+  if (sidebar.css("left") == "-100px") {
+    $("#sidebar-menu").animate({left:"+=100px"}, { duration: 200, queue: false}, function() {});
+    $("#map_canvas").animate({left:"+=100px"}, { duration: 200, queue: false}, function() {});
+    $("#interaction-bar").animate({right:"-=100px"}, { duration: 200, queue: false}, function() {});
+
+  } else {
+    $("#sidebar-menu").animate({left:"-=100px"}, { duration: 200, queue: false}, function() {});
+     $("#map_canvas").animate({left:"-=100px"}, { duration: 200, queue: false}, function() {});
+     $("#interaction-bar").animate({right:"+=100px"}, { duration: 200, queue: false}, function() {});
+  }
+
+
 }
 
 function initialize() {
