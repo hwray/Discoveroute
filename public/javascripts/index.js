@@ -5,7 +5,7 @@ var directionsDisplay;
 
 var timerSeconds;
 
-var searchMarkers = new Array(); 
+var searchMarkers = new Array();
 
 var categories = ["eat", "drink", "listen", "read", "see", "feel"]; 
 $('#timeButton').click(function() {
@@ -37,14 +37,14 @@ function slideLeftMenu(e){
   e.preventDefault();
   var sidebar = $("#sidebar-menu");
   if (sidebar.css("left") == "-100px") {
-    $("#sidebar-menu").animate({left:"+=100px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"+=100px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({right:"-=100px"}, { duration: 200, queue: false});
+    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false});
+    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false});
+    $("#interaction-bar").animate({left: "100px"}, { duration: 200, queue: false});
 
   } else {
-    $("#sidebar-menu").animate({left:"-=100px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"-=100px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({right:"+=100px"}, { duration: 200, queue: false});
+    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false});
+    $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false});
+    $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false});
   }
 
 
@@ -136,12 +136,12 @@ function routeButtonClick(e) {
 
 
   function yelpCallback(data, textStatus, jqXHR) {
+    $("#interaction-bar").css("background-color", "transparent");
     $("#categories").hide();
     
     var detoursDiv = document.getElementById("detourDisplay"); 
     for (var i in data) {
       if(data[i].length > 0) {
-        console.log(data[i][0].name);
         detoursDiv.appendChild(createListing(data[i][0]));
       }
     }
@@ -197,6 +197,7 @@ function routeButtonClick(e) {
 
 
   function updateTimeLeft(){
+    /*
     var timerValDiv = document.getElementById("timerValue"); 
     if(timerSeconds <= 0){
       timerSeconds = 0;
@@ -205,13 +206,14 @@ function routeButtonClick(e) {
       clearInterval(timerInterval);
     }else{
       var timerString = secs2timeString(timerSeconds);
-    //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
-    // $('#timerValue').innerHTML = (timerString + " remaining");
+    .clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
+     $('#timerValue').innerHTML = (timerString + " remaining");
     timerValDiv.innerHTML = timerString + " remaining"; 
-    // console.log(timerString + " remaining.");
-    //console.log(timerString + " remaining.");
+     console.log(timerString + " remaining.");
+    console.log(timerString + " remaining.");
     timerSeconds -= 1;
   }
+  */
 }
 
 
