@@ -1,12 +1,15 @@
 extends layout.jade
 
 block styles
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="apple-mobile-web-app-status-bar-style" content="black")
     link(rel='stylesheet' href='/stylesheets/categories.css')
     link(rel='stylesheet' href='/stylesheets/places.css')
     link(href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet")
     link(rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css")
     link(rel='stylesheet' href='/stylesheets/index.css')
     link(rel="stylesheet" href='/stylesheets/style.css')
+    link(rel="apple-touch-icon" href="/images/R.png")
 
 block content
   div(id="interaction-bar" class='interaction-bar')
