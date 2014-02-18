@@ -96,6 +96,7 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	left: -100px;
 	width: 100px;
 	height: 100%;
+	z-index: 1;
 }
 
 .sidebar ul{
@@ -135,6 +136,7 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	height: 100%;
 	border-spacing: 3px;
 	overflow-x: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
 .listing
