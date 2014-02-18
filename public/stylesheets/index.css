@@ -46,7 +46,7 @@ input.form-control
 }
 
 .vehicleSelect input[type="radio"]:checked + img {
-  -webkit-filter: opacity(1) drop-shadow(3px 3px 0px gray);
+  -webkit-filter: opacity(1) drop-shadow(1px 1px 0px gray);
 }
 
 .input_hidden{

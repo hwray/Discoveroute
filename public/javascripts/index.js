@@ -27,29 +27,6 @@ $('#timeButton').click(function() {
   }
 });
 
-$(document).ready(function() {
-  //$('#sidebar-menu').toggle('slide');
-  $('#sidebar-button').click(slideLeftMenu);
-  $('.carousel').carousel(); 
-})
-
-function slideLeftMenu(e){
-  e.preventDefault();
-  var sidebar = $("#sidebar-menu");
-  if (sidebar.css("left") == "-100px") {
-    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({left: "100px"}, { duration: 200, queue: false});
-
-  } else {
-    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false});
-  }
-
-
-}
-
 function initialize() {
 
   //setTimeout(function(){ window.scrollTo(0, 1);}, 0);
