@@ -14,6 +14,24 @@ block styles
 block content
   div(id="interaction-bar" class='interaction-bar')
     div(id="form-group" class="form-group")
+      div(class="btn-group vehicleSelect")
+        div(class='btn-group')
+          label
+            input(type='radio' class='input_hidden' name='vehicleOptions' id='vehicleOptions' value='DRIVING' checked) 
+            img(src='images/car.png')
+        div(class='btn-group')
+          label
+            input(type='radio' class='input_hidden' name='vehicleOptions' id='vehicleOptions' value='TRANSIT') 
+            img(src='images/bus.png')
+        div(class='btn-group')
+          label  
+            input(type='radio' class='input_hidden' name='vehicleOptions' id='vehicleOptions' value='BICYCLING') 
+            img(src='images/bike.png')
+        div        
+          label
+            input(type='radio' class='input_hidden' name='vehicleOptions' id='vehicleOptions' value='WALKING') 
+            img(src='images/walk.png')
+
       input(type="text" class="form-control" id="routeStart" placeholder="Start")
       input(type="text" class="form-control" id="routeEnd" placeholder="End")
       button(type="submit" class="btn btn-default" id="routeButton") Route
@@ -22,5 +40,5 @@ block content
   div(id="map_canvas")
 block scripts
     script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
-    script(src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js")
     script(src='javascripts/index.js')
+

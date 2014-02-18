@@ -27,29 +27,6 @@ $('#timeButton').click(function() {
   }
 });
 
-$(document).ready(function() {
-  //$('#sidebar-menu').toggle('slide');
-  $('#sidebar-button').click(slideLeftMenu);
-  $('.carousel').carousel(); 
-})
-
-function slideLeftMenu(e){
-  e.preventDefault();
-  var sidebar = $("#sidebar-menu");
-  if (sidebar.css("left") == "-100px") {
-    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({left: "100px"}, { duration: 200, queue: false});
-
-  } else {
-    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false});
-  }
-
-
-}
-
 function initialize() {
 
   //setTimeout(function(){ window.scrollTo(0, 1);}, 0);
@@ -76,16 +53,24 @@ function routeButtonClick(e) {
   e.preventDefault(); 
   var start = document.getElementById("routeStart").value; 
   var end = document.getElementById("routeEnd").value; 
+  var vehicle = $('input[name="vehicleOptions"]:checked').val();
+
+  var vehicleString;
+
+  if (vehicle === 'DRIVING')
+    vehicleString = google.maps.TravelMode.DRIVING;
+  else if (vehicle === 'TRANSIT')
+    vehicleString = google.maps.TravelMode.TRANSIT;
+  else if (vehicle === 'BICYCLING')
+    vehicleString = google.maps.TravelMode.BICYCLING;
+  else if (vehicle === 'WALKING')
+    vehicleString = google.maps.TravelMode.WALKING;
+
 
   var request = {
-    origin: start,
-    destination: end,
-
-      // HARDCODING
-      // DRIVING
-      // TRAVEL MODE
-      // FOR NOW
-      travelMode: google.maps.TravelMode.DRIVING
+      origin: start,
+      destination: end,
+      travelMode: vehicleString, //DRIVING
     };
 
     directionsService.route(request, directionsCallback);
