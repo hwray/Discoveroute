@@ -5,7 +5,7 @@ var directionsDisplay;
 
 var timerSeconds;
 
-var searchMarkers = new Array(); 
+var searchMarkers = new Array();
 
 var categories = ["eat", "drink", "listen", "read", "see", "feel"]; 
 $('#timeButton').click(function() {
@@ -27,6 +27,7 @@ $('#timeButton').click(function() {
   }
 });
 
+
 $(document).ready(function() {
   $('#sidebar-button').click(slideLeftMenu);
 })
@@ -35,20 +36,22 @@ function slideLeftMenu(e){
   e.preventDefault();
   var sidebar = $("#sidebar-menu");
   if (sidebar.css("left") == "-100px") {
-    $("#sidebar-menu").animate({left:"+=100px"}, { duration: 200, queue: false}, function() {});
-    $("#map_canvas").animate({left:"+=100px"}, { duration: 200, queue: false}, function() {});
-    $("#interaction-bar").animate({right:"-=100px"}, { duration: 200, queue: false}, function() {});
+    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
+    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false}, function() {});
+    $("#interaction-bar").animate({right:"100px"}, { duration: 200, queue: false}, function() {});
 
   } else {
-    $("#sidebar-menu").animate({left:"-=100px"}, { duration: 200, queue: false}, function() {});
-     $("#map_canvas").animate({left:"-=100px"}, { duration: 200, queue: false}, function() {});
-     $("#interaction-bar").animate({right:"+=100px"}, { duration: 200, queue: false}, function() {});
+    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false}, function() {});
+     $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
+     $("#interaction-bar").animate({right:"0px"}, { duration: 200, queue: false}, function() {});
   }
 
 
 }
 
 function initialize() {
+
+  //setTimeout(function(){ window.scrollTo(0, 1);}, 0);
   var map_canvas = document.getElementById('map_canvas');
   var map_options = {
     center: new google.maps.LatLng(37.424, -122.166),
@@ -72,115 +75,152 @@ function routeButtonClick(e) {
   e.preventDefault(); 
   var start = document.getElementById("routeStart").value; 
   var end = document.getElementById("routeEnd").value; 
+  var vehicle = $('input[name="vehicleOptions"]:checked').val();
+
+  var vehicleString;
+
+  if (vehicle === 'DRIVING')
+    vehicleString = google.maps.TravelMode.DRIVING;
+  else if (vehicle === 'TRANSIT')
+    vehicleString = google.maps.TravelMode.TRANSIT;
+  else if (vehicle === 'BICYCLING')
+    vehicleString = google.maps.TravelMode.BICYCLING;
+  else if (vehicle === 'WALKING')
+    vehicleString = google.maps.TravelMode.WALKING;
+
 
   var request = {
-    origin: start,
-    destination: end,
-
-      // HARDCODING
-      // DRIVING
-      // TRAVEL MODE
-      // FOR NOW
-      travelMode: google.maps.TravelMode.DRIVING
+      origin: start,
+      destination: end,
+      travelMode: vehicleString, //DRIVING
     };
 
-  directionsService.route(request, directionsCallback);
+    directionsService.route(request, directionsCallback);
 
-  setAlarm(5000);
+    setAlarm(5000);
 
-  displayCategories(); 
-}
-
-
-function displayCategories() {
-  var categoryDiv = document.getElementById("categories"); 
-  var categoryText = ""; 
-  for (var i in categories) {
-    categoryText += "<div class='col-xs-12 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
-    categoryText += "<p>"; 
-    categoryText += categories[i]; 
-    categoryText += "</p>"; 
-    categoryText += "</div>"; 
+    displayCategories(); 
   }
-  categoryDiv.innerHTML = categoryText; 
 
 
-  for (var i in categories) {
-    var categoryButton = document.getElementById("category" + i); 
-    categoryButton.addEventListener("click", categoryClick); 
+  function displayCategories() {
+    // hides the form box when the categories are shown
+    $("#form-group").hide();
+
+    var categoryDiv = document.getElementById("categories"); 
+    var categoryText = ""; 
+    for (var i in categories) {
+      categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
+      categoryText += "<p>"; 
+      categoryText += categories[i]; 
+      categoryText += "</p>"; 
+      categoryText += "</div>"; 
+    }
+    categoryDiv.innerHTML = categoryText; 
+
+
+    for (var i in categories) {
+      var categoryButton = document.getElementById("category" + i); 
+      categoryButton.addEventListener("click", categoryClick); 
+    }
   }
-}
 
 
-function categoryClick(e) {
-  var yelpData = {"coordinates" : JSON.stringify(searchMarkers)};
-  
-  if (searchMarkers.length < 25) {
-    $.ajax({
-      url: "/places",
-      type: "POST",
-      context: document.body,
-      data: yelpData,
-      success: yelpCallback
-    });
+  function categoryClick(e) {
+    var yelpData = {"coordinates" : JSON.stringify(searchMarkers)};
+    
+    if (searchMarkers.length < 25) {
+      $.ajax({
+        url: "/places",
+        type: "POST",
+        context: document.body,
+        data: yelpData,
+        success: yelpCallback
+      });
+    }
   }
-}
 
 
 
-function yelpCallback(data, textStatus, jqXHR) {
-  var detoursDiv = document.getElementById("detourDisplay"); 
-  console.log(data); 
-  for (var i in data) {
-    detoursDiv.innerHTML += "<div class='row business'><div class='col-sm-4 profilePic'>" +
-                            "<img src='" + data[i][0].snippet_image_url + "'></img></div>" +
-                            "<div class='col-sm-8'><p class='business-name'>" + data[i][0].name +
-                            "</p>" + data[i][0].snippet_text + "</div></div>"
-    //detoursDiv.innerHTML += "<h1>" + data[i][0].name + "</h1>"; 
+  function yelpCallback(data, textStatus, jqXHR) {
+    $("#interaction-bar").css("background-color", "transparent");
+    $("#categories").hide();
+    
+    var detoursDiv = document.getElementById("detourDisplay"); 
+    for (var i in data) {
+      if(data[i].length > 0) {
+        detoursDiv.appendChild(createListing(data[i][0]));
+      }
+    }
   }
-}
+
+  function createListing(listing) {
+    var listingDiv = document.createElement("DIV");
+    // listingDiv.className = "listing";
 
 
 
-function setAlarm(seconds){
-  timerSeconds = seconds;
-  timerInterval = setInterval(updateTimeLeft, 1000);
-}
+    // var name = document.createElement("P");
+    // name.className = "name";
+    // name.innerHTML = listing.name;
+    // listingDiv.appendChild(name);
+
+    listingDiv.className = "listing";
+    listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">" + 
+                            "<p class=\"name\">" + listing.name + "</p>" + 
+                            "<p class=\"name\">" + listing.display_phone + "</p>" +
+                            "<p class=\"name\">" + listing.snippet_text + "</p>";
 
 
-function secs2timeString(seconds){
-  var str = "";
-  var hours = Math.floor(seconds/3600);
-  seconds %= 3600;
-  var minutes = Math.floor(seconds/60);
-  seconds %= 60;
-  seconds = Math.floor(seconds);
-  if(hours < 10) str += "0";
-  str += hours + ":";
-  if(minutes < 10) str += "0";
-  str += minutes + ":";
-  if(seconds < 10) str += "0";
-  str += seconds;
-  return str;
-}
+
+    return listingDiv;
+  }
 
 
-function updateTimeLeft(){
-  var timerValDiv = document.getElementById("timerValue"); 
-  if(timerSeconds <= 0){
-    timerSeconds = 0;
-    timerValDiv.innerHTML = "Time is up!"; 
-    console.log("Time is up!");
-    clearInterval(timerInterval);
-  }else{
-    var timerString = secs2timeString(timerSeconds);
-    //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
-    // $('#timerValue').innerHTML = (timerString + " remaining");
+
+
+
+  function setAlarm(seconds){
+    timerSeconds = seconds;
+    timerInterval = setInterval(updateTimeLeft, 1000);
+  }
+
+
+  function secs2timeString(seconds){
+    var str = "";
+    var hours = Math.floor(seconds/3600);
+    seconds %= 3600;
+    var minutes = Math.floor(seconds/60);
+    seconds %= 60;
+    seconds = Math.floor(seconds);
+    if(hours < 10) str += "0";
+    str += hours + ":";
+    if(minutes < 10) str += "0";
+    str += minutes + ":";
+    if(seconds < 10) str += "0";
+    str += seconds;
+    return str;
+  }
+
+
+  function updateTimeLeft(){
+    /*
+    var timerValDiv = document.getElementById("timerValue"); 
+    if(timerSeconds <= 0){
+      timerSeconds = 0;
+      timerValDiv.innerHTML = "Time is up!"; 
+      console.log("Time is up!");
+      clearInterval(timerInterval);
+    }else{
+      var timerString = secs2timeString(timerSeconds);
+    .clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
+     $('#timerValue').innerHTML = (timerString + " remaining");
     timerValDiv.innerHTML = timerString + " remaining"; 
-    // console.log(timerString + " remaining.");
-    //console.log(timerString + " remaining.");
+     console.log(timerString + " remaining.");
+    console.log(timerString + " remaining.");
     timerSeconds -= 1;
   }
+  */
 }
 
 

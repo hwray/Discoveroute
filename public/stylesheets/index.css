@@ -16,13 +16,6 @@
   max-width: 80%;
 }
 
-#detourDisplay 
-{
-	color: black;
-	position: relative;
-	width: 90%;
-}
-
 input.form-control
 {
   height: 30px;
@@ -32,7 +25,7 @@ input.form-control
 
 .form-group
 {
-  margin: 0px;
+  margin: 10px;
 }
 
 #tripTime 
@@ -44,3 +37,20 @@ input.form-control
 {
   color: black;
 }
+
+.vehicleSelect img{
+  width: 50px;
+  margin-bottom: 0px;
+  -webkit-filter: opacity(0.4);
+
+}
+
+.vehicleSelect input[type="radio"]:checked + img {
+  -webkit-filter: opacity(1) drop-shadow(1px 1px 0px gray);
+}
+
+.input_hidden{
+  position: absolute;
+  left: -9999px;
+}
+
