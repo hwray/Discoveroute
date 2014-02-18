@@ -5,7 +5,7 @@ var directionsDisplay;
 
 var timerSeconds;
 
-var searchMarkers = new Array(); 
+var searchMarkers = new Array();
 
 var categories = ["eat", "drink", "listen", "read", "see", "feel"]; 
 $('#timeButton').click(function() {
@@ -37,20 +37,22 @@ function slideLeftMenu(e){
   e.preventDefault();
   var sidebar = $("#sidebar-menu");
   if (sidebar.css("left") == "-100px") {
-    $("#sidebar-menu").animate({left:"+=100px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"+=100px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({right:"-=100px"}, { duration: 200, queue: false});
+    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false});
+    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false});
+    $("#interaction-bar").animate({left: "100px"}, { duration: 200, queue: false});
 
   } else {
-    $("#sidebar-menu").animate({left:"-=100px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"-=100px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({right:"+=100px"}, { duration: 200, queue: false});
+    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false});
+    $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false});
+    $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false});
   }
 
 
 }
 
 function initialize() {
+
+  //setTimeout(function(){ window.scrollTo(0, 1);}, 0);
   var map_canvas = document.getElementById('map_canvas');
   var map_options = {
     center: new google.maps.LatLng(37.424, -122.166),
@@ -95,10 +97,13 @@ function routeButtonClick(e) {
 
 
   function displayCategories() {
+    // hides the form box when the categories are shown
+    $("#form-group").hide();
+
     var categoryDiv = document.getElementById("categories"); 
     var categoryText = ""; 
     for (var i in categories) {
-      categoryText += "<div class='col-xs-12 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
+      categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
       categoryText += "<p>"; 
       categoryText += categories[i]; 
       categoryText += "</p>"; 
@@ -131,78 +136,84 @@ function routeButtonClick(e) {
 
 
   function yelpCallback(data, textStatus, jqXHR) {
+    $("#interaction-bar").css("background-color", "transparent");
+    $("#categories").hide();
     
-    var detoursDiv = document.getElementById("this-carousel-inner"); 
-    console.log(data); 
+    var detoursDiv = document.getElementById("detourDisplay"); 
     for (var i in data) {
-      if (data[i].length < 1)
-        continue; 
-      var htmlString = ""; 
-      if (i == 0) {
-        htmlString += "<div class='item active'>"; 
-      } else {
-        htmlString += "<div class='item'>"; 
+      if(data[i].length > 0) {
+        detoursDiv.appendChild(createListing(data[i][0]));
       }
-      htmlString += "<img src='" + data[i][0].snippet_image_url + "' />"; 
-      htmlString += "<div class='carousel-caption'><p>" + data[i][0].name + "</p></div>"; 
-      htmlString += "</div>"; 
-
-      detoursDiv.innerHTML += htmlString; 
     }
+  }
 
-    //detoursDiv.innerHTML += "<h1>" + data[i][0].name + "</h1>"; 
-  /*var detoursDiv = document.getElementById("detourDisplay"); 
-  console.log(data); 
-  for (var i in data) {
-    detoursDiv.innerHTML += "<div class='row business'><div class='col-sm-4 profilePic'>" +
-                            "<img src='" + data[i][0].snippet_image_url + "'></img></div>" +
-                            "<div class='col-sm-8'><p class='business-name'>" + data[i][0].name +
-                            "</p>" + data[i][0].snippet_text + "</div></div>"
-    //detoursDiv.innerHTML += "<h1>" + data[i][0].name + "</h1>"; 
-  }*/
-}
+  function createListing(listing) {
+    var listingDiv = document.createElement("DIV");
+    // listingDiv.className = "listing";
 
 
 
-function setAlarm(seconds){
-  timerSeconds = seconds;
-  timerInterval = setInterval(updateTimeLeft, 1000);
-}
+    // var name = document.createElement("P");
+    // name.className = "name";
+    // name.innerHTML = listing.name;
+    // listingDiv.appendChild(name);
+
+    listingDiv.className = "listing";
+    listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">" + 
+                            "<p class=\"name\">" + listing.name + "</p>" + 
+                            "<p class=\"name\">" + listing.display_phone + "</p>" +
+                            "<p class=\"name\">" + listing.snippet_text + "</p>";
 
 
-function secs2timeString(seconds){
-  var str = "";
-  var hours = Math.floor(seconds/3600);
-  seconds %= 3600;
-  var minutes = Math.floor(seconds/60);
-  seconds %= 60;
-  seconds = Math.floor(seconds);
-  if(hours < 10) str += "0";
-  str += hours + ":";
-  if(minutes < 10) str += "0";
-  str += minutes + ":";
-  if(seconds < 10) str += "0";
-  str += seconds;
-  return str;
-}
+
+    return listingDiv;
+  }
 
 
-function updateTimeLeft(){
-  var timerValDiv = document.getElementById("timerValue"); 
-  if(timerSeconds <= 0){
-    timerSeconds = 0;
-    timerValDiv.innerHTML = "Time is up!"; 
-    console.log("Time is up!");
-    clearInterval(timerInterval);
-  }else{
-    var timerString = secs2timeString(timerSeconds);
-    //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
-    // $('#timerValue').innerHTML = (timerString + " remaining");
+
+
+
+  function setAlarm(seconds){
+    timerSeconds = seconds;
+    timerInterval = setInterval(updateTimeLeft, 1000);
+  }
+
+
+  function secs2timeString(seconds){
+    var str = "";
+    var hours = Math.floor(seconds/3600);
+    seconds %= 3600;
+    var minutes = Math.floor(seconds/60);
+    seconds %= 60;
+    seconds = Math.floor(seconds);
+    if(hours < 10) str += "0";
+    str += hours + ":";
+    if(minutes < 10) str += "0";
+    str += minutes + ":";
+    if(seconds < 10) str += "0";
+    str += seconds;
+    return str;
+  }
+
+
+  function updateTimeLeft(){
+    /*
+    var timerValDiv = document.getElementById("timerValue"); 
+    if(timerSeconds <= 0){
+      timerSeconds = 0;
+      timerValDiv.innerHTML = "Time is up!"; 
+      console.log("Time is up!");
+      clearInterval(timerInterval);
+    }else{
+      var timerString = secs2timeString(timerSeconds);
+    .clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
+     $('#timerValue').innerHTML = (timerString + " remaining");
     timerValDiv.innerHTML = timerString + " remaining"; 
-    // console.log(timerString + " remaining.");
-    //console.log(timerString + " remaining.");
+     console.log(timerString + " remaining.");
+    console.log(timerString + " remaining.");
     timerSeconds -= 1;
   }
+  */
 }
 
 

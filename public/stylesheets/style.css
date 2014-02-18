@@ -10,29 +10,28 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	orange: FF9805;
 	light grey: bebebe;
 	dark grey: 444444;
-*/
+	*/
 
 
-body { 
-	font-family: 'Nunito';
-	font-size: 13px; 
-	overflow-x: hidden;
-	font-weight: 300;
-	height: 100%;
-	width: 100%;
-	margin:0px; 
-	padding:0px;
-}
+	body { 
+		font-size: 13px; 
+		overflow-x: hidden;
+		font-weight: 300;
+		height: 100%;
+		width: 100%;
+		margin:0px; 
+		padding:0px;
+	}
 
-.content{
-	position: absolute;
-	left: 0px;
-}
+	.content{
+		position: absolute;
+		left: 0px;
+	}
 
-.map-search {
-	position: absolute; 
-	top:50px; 
-}
+	.map-search {
+		position: absolute; 
+		top:50px; 
+	}
 
 /* INTERACTION BAR
 =============================================
@@ -40,13 +39,11 @@ body {
 
 .interaction-bar{
 	position: absolute;
-	top: 90px;
-	right: 30px;
-	width: 25%;
-	background-color: white;
-	color: white;
-	padding: 10px;
-	border-radius: 10px;
+	bottom: 0px;
+	width: 100%;
+	background-color: gray; /*rgba(0,0,0,0.3);*/
+	padding: 0px;
+	min-height: 20%;
 }
 
 
@@ -70,16 +67,16 @@ body {
 .topbar button{
 	color: white;
 	background: none;
-    border-color: transparent; }
+	border-color: transparent; }
 }
 
 .nav-center {
-    margin: 0px;
-    float:none;
+	margin: 0px;
+	float:none;
 }
 
 .navbar-inner{
-    text-align:center;
+	text-align:center;
 }
 
 .navbar-inner span{
@@ -93,8 +90,8 @@ body {
 
 .sidebar 	{
 	background-color: #444444;
-    border-color: #111111;
-    color: white;
+	border-color: #111111;
+	color: white;
 	position: fixed;
 	left: -100px;
 	width: 100px;
@@ -130,5 +127,35 @@ body {
 	margin-right: auto;
 	font-size: 24px;
 	line-height: 150%;
+}
+
+#detourDisplay 
+{
+	width: 100%;
+	height: 100%;
+	border-spacing: 3px;
+	overflow-x: scroll;
+}
+
+.listing
+{
+	display: table-cell;
+	margin: 2px 5px 2px 5px;
+	padding: 5px;
+	min-width: 150px;
+	height: 200px;
+	background-color: white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.listing > .name
+{
+	font-weight: bold;
+}
+
+.listing > .profilePic
+{
+	width: 100%;
 }
 
