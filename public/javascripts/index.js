@@ -148,6 +148,7 @@ function routeButtonClick(e) {
   }
 
   function createListing(listing) {
+    console.log(listing);
     var listingDiv = document.createElement("DIV");
     // listingDiv.className = "listing";
 
