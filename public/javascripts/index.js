@@ -27,6 +27,7 @@ $('#timeButton').click(function() {
   }
 });
 
+
 $(document).ready(function() {
   //$('#sidebar-menu').toggle('slide');
   $('#sidebar-button').click(slideLeftMenu);
@@ -76,16 +77,24 @@ function routeButtonClick(e) {
   e.preventDefault(); 
   var start = document.getElementById("routeStart").value; 
   var end = document.getElementById("routeEnd").value; 
+  var vehicle = $('input[name="vehicleOptions"]:checked').val();
+
+  var vehicleString;
+
+  if (vehicle === 'DRIVING')
+    vehicleString = google.maps.TravelMode.DRIVING;
+  else if (vehicle === 'TRANSIT')
+    vehicleString = google.maps.TravelMode.TRANSIT;
+  else if (vehicle === 'BICYCLING')
+    vehicleString = google.maps.TravelMode.BICYCLING;
+  else if (vehicle === 'WALKING')
+    vehicleString = google.maps.TravelMode.WALKING;
+
 
   var request = {
-    origin: start,
-    destination: end,
-
-      // HARDCODING
-      // DRIVING
-      // TRAVEL MODE
-      // FOR NOW
-      travelMode: google.maps.TravelMode.DRIVING
+      origin: start,
+      destination: end,
+      travelMode: vehicleString, //DRIVING
     };
 
     directionsService.route(request, directionsCallback);
@@ -148,16 +157,8 @@ function routeButtonClick(e) {
   }
 
   function createListing(listing) {
-    console.log(listing);
+
     var listingDiv = document.createElement("DIV");
-    // listingDiv.className = "listing";
-
-
-
-    // var name = document.createElement("P");
-    // name.className = "name";
-    // name.innerHTML = listing.name;
-    // listingDiv.appendChild(name);
 
     listingDiv.className = "listing";
     listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">" + 
