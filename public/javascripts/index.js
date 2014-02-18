@@ -38,12 +38,12 @@ function slideLeftMenu(e){
   if (sidebar.css("left") == "-100px") {
     $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
     $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false}, function() {});
-    $("#interaction-bar").animate({right:"100px"}, { duration: 200, queue: false}, function() {});
+    $("#interaction-bar").animate({left:"100px"}, { duration: 200, queue: false}, function() {});
 
   } else {
     $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false}, function() {});
      $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
-     $("#interaction-bar").animate({right:"0px"}, { duration: 200, queue: false}, function() {});
+     $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
   }
 
 
