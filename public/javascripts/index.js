@@ -8,6 +8,12 @@ var timerSeconds;
 var searchMarkers = new Array();
 
 var categories = ["eat", "drink", "listen", "read", "see", "feel"]; 
+
+$(document).ready(function() {
+  // displayCategories();
+  $("#categories").hide();
+});
+
 $('#timeButton').click(function() {
   //var datetimepicker= $('#datetimepicker3');
   var timeInput= $('#datePickerInput');
@@ -98,14 +104,13 @@ function routeButtonClick(e) {
     directionsService.route(request, directionsCallback);
 
     setAlarm(5000);
-
     displayCategories(); 
   }
 
 
   function displayCategories() {
     // hides the form box when the categories are shown
-    $("#form-group").hide();
+    // $("#form-group").hide();
 
     var categoryDiv = document.getElementById("categories"); 
     var categoryText = ""; 
@@ -144,7 +149,7 @@ function routeButtonClick(e) {
 
   function yelpCallback(data, textStatus, jqXHR) {
     $("#interaction-bar").css("background-color", "transparent");
-    $("#categories").hide();
+    // $("#categories").hide();
     
     var detoursDiv = document.getElementById("detourDisplay"); 
     for (var i in data) {
@@ -291,9 +296,66 @@ function addMarker(lat, lng) {
 }
 
 
+
 // var timeButton = document.getElementById("timeButton"); 
 // timeButton.addEventListener("click", function(e) {
 //   e.preventDefault(); 
 //   var picker = $('#datetimepicker3').data('datetimepicker');
 //   console.log(picker); 
 // }); 
+
+var destinationButton = $('.sidebar').find('.sidebar-destination');
+var categoriesButton = $('.sidebar').find('.sidebar-activity');
+var routeButton = $('#routeButton');
+
+var categories = $('#categories');
+
+$(document).ready(function() {
+  destinationButton.addClass('active');
+
+  $('#sidebar-button').click(slideLeftMenu);
+  destinationButton.click(destinationScreen);
+  routeButton.click(categoriesScreen);
+  categoriesButton.click(categoriesScreen);
+})
+
+
+var sidebar = $("#sidebar-menu");
+
+function slideLeftMenu(e){
+  e.preventDefault();
+  if (sidebar.css("left") == "-100px") {
+    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false});
+    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false});
+    $("#interaction-bar").animate({left: "100px"}, { duration: 200, queue: false});
+
+  } else {
+    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false});
+    $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false});
+    $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false});
+  }
+
+}
+
+function removeActiveClass(){
+  $('#interaction-bar').find('.active').hide();
+  $('.active').removeClass('active');
+}
+
+function categoriesScreen(e){
+  removeActiveClass();
+  categories.addClass('active');
+  console.log(categories);
+  console.log(categoriesButton);
+  categoriesButton.addClass('active');
+  categories.show();
+}
+
+function destinationScreen(e){
+  e.preventDefault;
+  var destinationForm = $('#interaction-bar').find('#form-group')
+  destinationForm.show();
+  removeActiveClass();
+  $(this).addClass('active');
+
+}
