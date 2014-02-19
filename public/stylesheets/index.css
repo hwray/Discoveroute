@@ -90,3 +90,11 @@ input.form-control
   text-transform: uppercase;
 
 }
+
+#duration{
+  visibility: hidden;
+}
+
+#durationVal{
+  visibility: hidden;
+}
