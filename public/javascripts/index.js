@@ -115,22 +115,28 @@ function routeButtonClick(e) {
     var categoryText = ""; 
     for (var i in categories) {
       // categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
-      categoryText += "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption' id='category" + i + "'>";
+      categoryText += '<input type="checkbox" class="input_hidden" name="categorySelect" id="category'+[i]+'" value="'+ categories[i]+'">';
+      categoryText += '<label for="category'+[i]+'">';
+      categoryText += "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption' id='categoryDiv" + i + "'>";
       categoryText += "<h3 class='text-center category'>"; 
-      categoryText += '<input type="checkbox" name="categorySelect" value="'+ categories[i]+'">';
       categoryText += categories[i]; 
       categoryText += "</h3>"; 
       categoryText += "</div>"; 
+      categoryText += '</label>';
     }
     $(categoryDiv).before(categoryText); 
 
 
     for (var i in categories) {
-      var categoryButton = document.getElementById("category" + i); 
+      var categoryButton = document.getElementById("categoryDiv" + i); 
       $(categoryButton).css('background-color', categoryColors[i]);
+      $(categoryButton).click(toggleCategorySelect);
     }
+  }
 
-
+  function toggleCategorySelect(e){
+    $(this).toggleClass('selectedCategory');
+    // console.log()
   }
 
   function categoriesClick(e){
