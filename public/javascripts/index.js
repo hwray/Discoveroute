@@ -55,14 +55,14 @@ function updateTimeLeft(){
   var timerValDiv = document.getElementById("timerValue"); 
   if(timerSeconds <= 0){
     timerSeconds = 0;
-    //timerValDiv.innerHTML = "Time is up!"; 
+    timerValDiv.innerHTML = "Time is up!"; 
     console.log("Time is up!");
     clearInterval(timerInterval);
   }else{
     var timerString = secs2timeString(timerSeconds);
     //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
     //$('#timerValue').innerHTML = (timerString + " remaining");
-    //timerValDiv.innerHTML = timerString + " remaining"; 
+    timerValDiv.innerHTML = "You have " + timerString + " to reach your final destination"; 
     console.log(timerString + " remaining.");
     timerSeconds -= 1;
   }
