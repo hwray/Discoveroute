@@ -7,7 +7,15 @@ var timerSeconds;
 
 var searchMarkers = new Array();
 
-var categories = ["eat", "drink", "listen", "read", "see", "feel"]; 
+var categories = ["coffee", "food", "art", "beer", "nature", "music"]; 
+var categoryColors = ["#A35E5A", "#FFA100", "#82105b", "#44a16c", "#379788", "#69559c"];
+
+$(document).ready(function() {
+  $("#categories").hide();
+  displayCategories();
+
+});
+
 $('#timeButton').click(function() {
   //var datetimepicker= $('#datetimepicker3');
   var timeInput= $('#datePickerInput');
@@ -29,23 +37,21 @@ $('#timeButton').click(function() {
 
 
 $(document).ready(function() {
-  //$('#sidebar-menu').toggle('slide');
   $('#sidebar-button').click(slideLeftMenu);
-  $('.carousel').carousel(); 
 })
 
 function slideLeftMenu(e){
   e.preventDefault();
   var sidebar = $("#sidebar-menu");
   if (sidebar.css("left") == "-100px") {
-    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({left: "100px"}, { duration: 200, queue: false});
+    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
+    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false}, function() {});
+    $("#interaction-bar").animate({left:"100px"}, { duration: 200, queue: false}, function() {});
 
   } else {
-    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false});
+    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false}, function() {});
+     $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
+     $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
   }
 
 
@@ -70,9 +76,6 @@ function initialize() {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
-var routeButton = document.getElementById("routeButton"); 
-routeButton.addEventListener("click", routeButtonClick);
-
 function routeButtonClick(e) {
   e.preventDefault(); 
   var start = document.getElementById("routeStart").value; 
@@ -94,28 +97,27 @@ function routeButtonClick(e) {
   var request = {
       origin: start,
       destination: end,
-      travelMode: vehicleString, //DRIVING
+      travelMode: vehicleString, 
     };
 
     directionsService.route(request, directionsCallback);
 
     setAlarm(5000);
-
-    displayCategories(); 
   }
 
 
   function displayCategories() {
     // hides the form box when the categories are shown
-    $("#form-group").hide();
+    // $("#form-group").hide();
 
     var categoryDiv = document.getElementById("categories"); 
     var categoryText = ""; 
     for (var i in categories) {
-      categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
-      categoryText += "<p>"; 
+      // categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
+      categoryText += "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption' id='category" + i + "'>";
+      categoryText += "<h3 class='text-center category'>"; 
       categoryText += categories[i]; 
-      categoryText += "</p>"; 
+      categoryText += "</h3>"; 
       categoryText += "</div>"; 
     }
     categoryDiv.innerHTML = categoryText; 
@@ -123,13 +125,17 @@ function routeButtonClick(e) {
 
     for (var i in categories) {
       var categoryButton = document.getElementById("category" + i); 
+      $(categoryButton).css('background-color', categoryColors[i]);
       categoryButton.addEventListener("click", categoryClick); 
     }
   }
 
 
+
   function categoryClick(e) {
-    var yelpData = {"coordinates" : JSON.stringify(searchMarkers)};
+    // var clickedCategory = "food"
+
+    var yelpData = {"coordinates" : JSON.stringify(searchMarkers) /*, "category" : clickedCategory */};
     
     if (searchMarkers.length < 25) {
       $.ajax({
@@ -137,7 +143,7 @@ function routeButtonClick(e) {
         type: "POST",
         context: document.body,
         data: yelpData,
-        success: yelpCallback
+        success: [yelpCallback, activitiesScreen]
       });
     }
   }
@@ -145,8 +151,6 @@ function routeButtonClick(e) {
 
 
   function yelpCallback(data, textStatus, jqXHR) {
-    $("#interaction-bar").css("background-color", "transparent");
-    $("#categories").hide();
     
     var detoursDiv = document.getElementById("detourDisplay"); 
     for (var i in data) {
@@ -284,6 +288,7 @@ function addMarker(lat, lng) {
     position: latlng
   });
 }
+
 
 
 // var timeButton = document.getElementById("timeButton"); 

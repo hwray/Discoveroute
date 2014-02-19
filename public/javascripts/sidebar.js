@@ -1,7 +1,27 @@
+
+var destinationButton = $('.sidebar').find('.sidebar-destination');
+var categoriesButton = $('.sidebar').find('.sidebar-categories');
+var activitiesButton = $('.sidebar').find('.sidebar-activities');
+
+
+var routeButton = $('#routeButton');
+var categoriesDiv = $('#interaction-bar').find('#categories');
+var destinationForm = $('#interaction-bar').find('#form-group');
+var activitiesDiv = $('#interaction-bar').find('#detourDisplay');
+
 $(document).ready(function() {
+  destinationButton.addClass('active');
+  destinationForm.addClass('active');
+
   $('#sidebar-button').click(slideLeftMenu);
-  //$('.sidebar-destination').click(destinationScreen);
+  destinationButton.click(destinationScreen);
+  routeButton.click(routeButtonClick);
+  routeButton.click(categoriesScreen);
+  categoriesButton.click(categoriesScreen);
+  activitiesButton.click(categoriesScreen);
+
 })
+
 
 var sidebar = $("#sidebar-menu");
 
@@ -20,9 +40,39 @@ function slideLeftMenu(e){
 
 }
 
+function activitiesScreen(){
+
+  removeActiveClass();
+  activitiesDiv.addClass('active');
+  activitiesButton.addClass('active');
+  activitiesDiv.show();
+}
+
+function showActivitiesScreen(e){
+  e.preventDefault;
+  activitiesScreen();
+}
+
+function removeActiveClass(){
+  $('#interaction-bar').find('.active').hide();
+  $('.active').removeClass('active');
+}
+
+
+function categoriesScreen(e){
+  e.preventDefault;
+
+  removeActiveClass();
+  categoriesDiv.addClass('active');
+  categoriesButton.addClass('active');
+  categoriesDiv.show();
+}
 
 function destinationScreen(e){
-	e.preventDefault;
-	var destinationForm = $('#interaction-bar').find('#form-group')
-	destinationForm.show();
+  e.preventDefault;
+  removeActiveClass();
+  destinationButton.addClass('active');
+  destinationForm.show();
+  destinationForm.addClass('active');
+
 }

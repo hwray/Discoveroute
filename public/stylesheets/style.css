@@ -14,6 +14,7 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 
 
 	body { 
+		font-weight: 300;
 		font-size: 13px; 
 		overflow-x: hidden;
 		font-weight: 300;
@@ -95,6 +96,7 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	left: -100px;
 	width: 100px;
 	height: 100%;
+	z-index: 1;
 }
 
 .sidebar ul{
@@ -116,6 +118,9 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 
 .sidebar a:hover { color:#FF9805; text-decoration:none; }
 .sidebar a:hover span { color:#FF9805; }
+
+.sidebar a.active { color:#FF9805; text-decoration:none; }
+.sidebar a.active span { color:#FF9805; }
 
 /* nav icons*/
 .sidebar span{
@@ -143,7 +148,7 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	margin: 2px 5px 2px 5px;
 	padding: 5px;
 	min-width: 150px;
-	height: 80%;
+	height: 60%;
 	background-color: white;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -157,5 +162,6 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 .listing > .profilePic
 {
 	width: 100%;
+	max-width: 150px;
 }
 
