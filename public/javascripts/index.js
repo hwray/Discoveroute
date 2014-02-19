@@ -7,11 +7,13 @@ var timerSeconds;
 
 var searchMarkers = new Array();
 
-var categories = ["eat", "drink", "listen", "read", "see", "feel"]; 
+var categories = ["coffee", "food", "art", "beer", "nature", "music"]; 
+var categoryColors = ["#A35E5A", "#FFA100", "#82105b", "#44a16c", "#379788", "#69559c"];
 
 $(document).ready(function() {
-  // displayCategories();
   $("#categories").hide();
+  displayCategories();
+
 });
 
 $('#timeButton').click(function() {
@@ -74,9 +76,6 @@ function initialize() {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
-var routeButton = document.getElementById("routeButton"); 
-routeButton.addEventListener("click", routeButtonClick);
-
 function routeButtonClick(e) {
   e.preventDefault(); 
   var start = document.getElementById("routeStart").value; 
@@ -98,13 +97,12 @@ function routeButtonClick(e) {
   var request = {
       origin: start,
       destination: end,
-      travelMode: vehicleString, //DRIVING
+      travelMode: vehicleString, 
     };
 
     directionsService.route(request, directionsCallback);
 
     setAlarm(5000);
-    displayCategories(); 
   }
 
 
@@ -115,10 +113,11 @@ function routeButtonClick(e) {
     var categoryDiv = document.getElementById("categories"); 
     var categoryText = ""; 
     for (var i in categories) {
-      categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
-      categoryText += "<p>"; 
+      // categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
+      categoryText += "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption' id='category" + i + "'>";
+      categoryText += "<h3 class='text-center category'>"; 
       categoryText += categories[i]; 
-      categoryText += "</p>"; 
+      categoryText += "</h3>"; 
       categoryText += "</div>"; 
     }
     categoryDiv.innerHTML = categoryText; 
@@ -126,9 +125,11 @@ function routeButtonClick(e) {
 
     for (var i in categories) {
       var categoryButton = document.getElementById("category" + i); 
+      $(categoryButton).css('background-color', categoryColors[i]);
       categoryButton.addEventListener("click", categoryClick); 
     }
   }
+
 
 
   function categoryClick(e) {
@@ -140,7 +141,7 @@ function routeButtonClick(e) {
         type: "POST",
         context: document.body,
         data: yelpData,
-        success: yelpCallback
+        success: [yelpCallback, activitiesScreen]
       });
     }
   }
@@ -148,8 +149,6 @@ function routeButtonClick(e) {
 
 
   function yelpCallback(data, textStatus, jqXHR) {
-    $("#interaction-bar").css("background-color", "transparent");
-    // $("#categories").hide();
     
     var detoursDiv = document.getElementById("detourDisplay"); 
     for (var i in data) {
@@ -303,59 +302,3 @@ function addMarker(lat, lng) {
 //   var picker = $('#datetimepicker3').data('datetimepicker');
 //   console.log(picker); 
 // }); 
-
-var destinationButton = $('.sidebar').find('.sidebar-destination');
-var categoriesButton = $('.sidebar').find('.sidebar-activity');
-var routeButton = $('#routeButton');
-
-var categories = $('#categories');
-
-$(document).ready(function() {
-  destinationButton.addClass('active');
-
-  $('#sidebar-button').click(slideLeftMenu);
-  destinationButton.click(destinationScreen);
-  routeButton.click(categoriesScreen);
-  categoriesButton.click(categoriesScreen);
-})
-
-
-var sidebar = $("#sidebar-menu");
-
-function slideLeftMenu(e){
-  e.preventDefault();
-  if (sidebar.css("left") == "-100px") {
-    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({left: "100px"}, { duration: 200, queue: false});
-
-  } else {
-    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false});
-    $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false});
-    $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false});
-  }
-
-}
-
-function removeActiveClass(){
-  $('#interaction-bar').find('.active').hide();
-  $('.active').removeClass('active');
-}
-
-function categoriesScreen(e){
-  removeActiveClass();
-  categories.addClass('active');
-  console.log(categories);
-  console.log(categoriesButton);
-  categoriesButton.addClass('active');
-  categories.show();
-}
-
-function destinationScreen(e){
-  e.preventDefault;
-  var destinationForm = $('#interaction-bar').find('#form-group')
-  destinationForm.show();
-  removeActiveClass();
-  $(this).addClass('active');
-
-}
