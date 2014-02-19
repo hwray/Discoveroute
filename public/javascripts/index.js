@@ -111,7 +111,7 @@ function routeButtonClick(e) {
     // hides the form box when the categories are shown
     // $("#form-group").hide();
 
-    var categoryDiv = document.getElementById("categories-form"); 
+    var categoryDiv = $('.categoryGoContainer'); 
     var categoryText = ""; 
     for (var i in categories) {
       // categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
