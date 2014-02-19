@@ -133,7 +133,9 @@ function routeButtonClick(e) {
 
 
   function categoryClick(e) {
-    var yelpData = {"coordinates" : JSON.stringify(searchMarkers)};
+    // var clickedCategory = "food"
+
+    var yelpData = {"coordinates" : JSON.stringify(searchMarkers) /*, "category" : clickedCategory */};
     
     if (searchMarkers.length < 25) {
       $.ajax({
@@ -159,15 +161,8 @@ function routeButtonClick(e) {
   }
 
   function createListing(listing) {
+
     var listingDiv = document.createElement("DIV");
-    // listingDiv.className = "listing";
-
-
-
-    // var name = document.createElement("P");
-    // name.className = "name";
-    // name.innerHTML = listing.name;
-    // listingDiv.appendChild(name);
 
     listingDiv.className = "listing";
     listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">" + 
