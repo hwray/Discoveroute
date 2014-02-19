@@ -70,6 +70,16 @@ input.form-control
   margin-bottom: -10px;
 }
 
+.selectedCategory{
+  border-style: 50px solid white;
+  border-radius: 20px;
+}
+
+.selectedCategory h3.category{
+  color: #444444;
+  -webkit-filter: drop-shadow(1px 1px 0px white);
+}
+
 .categoryOption h3{
   font-weight: 700;
   font-size: 20px;
