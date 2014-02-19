@@ -7,12 +7,13 @@ var timerSeconds;
 
 var searchMarkers = new Array();
 
-var categories = ["coffee", "food", "art", "beer", "nature", "music"]; 
-var categoryColors = ["#A35E5A", "#FFA100", "#82105b", "#44a16c", "#379788", "#69559c"];
+var categories = ["coffee", "food", "shopping", "cafes", "nightlife"]; 
+var categoryColors = ["#A35E5A", "#FFA100", "#82105b", "#44a16c", "#379788"];
 
 $(document).ready(function() {
   $("#categories").hide();
   displayCategories();
+  $('#categoriesButton').click(categoriesClick);
 
 });
 
@@ -110,41 +111,46 @@ function routeButtonClick(e) {
     // hides the form box when the categories are shown
     // $("#form-group").hide();
 
-    var categoryDiv = document.getElementById("categories"); 
+    var categoryDiv = document.getElementById("categories-form"); 
     var categoryText = ""; 
     for (var i in categories) {
       // categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
       categoryText += "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption' id='category" + i + "'>";
       categoryText += "<h3 class='text-center category'>"; 
+      categoryText += '<input type="checkbox" name="categorySelect" value="'+ categories[i]+'">';
       categoryText += categories[i]; 
       categoryText += "</h3>"; 
       categoryText += "</div>"; 
     }
-    categoryDiv.innerHTML = categoryText; 
+    $(categoryDiv).before(categoryText); 
 
 
     for (var i in categories) {
       var categoryButton = document.getElementById("category" + i); 
       $(categoryButton).css('background-color', categoryColors[i]);
-      categoryButton.addEventListener("click", categoryClick); 
     }
+
+
   }
 
+  function categoriesClick(e){
+    var selectedCategories = $('input[name="categorySelect"]:checked');
 
-
-  function categoryClick(e) {
-    // var clickedCategory = "food"
-
-    var yelpData = {"coordinates" : JSON.stringify(searchMarkers) /*, "category" : clickedCategory */};
-    
-    if (searchMarkers.length < 25) {
-      $.ajax({
-        url: "/places",
-        type: "POST",
-        context: document.body,
-        data: yelpData,
-        success: [yelpCallback, activitiesScreen]
-      });
+    for (var i = 0; i < selectedCategories.length; i++){
+      var checked = selectedCategories[i].value;
+      // makes a separate call for each category. can this be done in one yelp api call?
+      var yelpData = {"coordinates" : JSON.stringify(searchMarkers) , "category" : checked };
+      
+      if (searchMarkers.length < 25) {
+        $.ajax({
+          url: "/places",
+          type: "POST",
+          context: document.body,
+          data: yelpData,
+          success: [yelpCallback, activitiesScreen]
+          // TODO: fail callback function!
+        });
+      }
     }
   }
 
