@@ -13,6 +13,7 @@ var categoryColors = ["#A35E5A", "#FFA100", "#82105b", "#44a16c", "#379788"];
 
 $(document).ready(function() {
   $("#categories").hide();
+  $('#timer').hide();
   displayCategories();
   $('#categoriesButton').click(categoriesClick);
 

@@ -42,9 +42,15 @@ block content
           button(type='submit' class="greyBtn text-center" id="categoriesButton")
             h3(class='text-center category') GO!
     div(id="detourDisplay")
-    div(id="timer")
+    div(id="timer" class="timerDiv row-fluid")
+      h3(class='text-center') What's your ideal arrival time?
+      div(id="datetimepicker3" class="input-append date text-center")
+        input(id="datePickerInput" data-format="hh:mm:ss" type="text")
+        div(class="add-on")
+          i(data-time-icon="icon-time" data-date-icon="icon-calendar")
+      div(class="timeButtonDiv" class="text-center col-xs-6 col-xs-offset-6 col-sm-6 col-sm-offset-6 col-md-4 col-lg-4 col-md-offset-8 col-lg-offset-8")
+        button(type="button" class="btn btn-default large-btn" id="timeButton") Discover!
       include timer.html
-      button(type="button" class="btn btn-default" id="timeButton") Enter Time
       span(id="timerValue")
       div(id="duration")
       div(id="durationVal")
