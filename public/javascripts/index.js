@@ -398,7 +398,7 @@ function listDirections(response, status) {
     var dirDiv = document.getElementById("listing" + detourIndex); 
     var detourSteps = response.routes[0].legs[0].steps; 
     var origSteps = origRoute.routes[0].legs[0].steps; 
-    var directions = response.routes[0].legs[0].distance.text + ", " + response.routes[0].legs[0].duration.text; 
+    var directions = response.routes[0].legs[0].distance.text + ", " + response.routes[0].legs[0].duration.text + "</br>"; 
     directions += "<b>START:</b> " + origRoute.routes[0].legs[0].start_address;
     directions += "<ol>" 
     for (var i = 0; i < origSteps.length; i++) {
