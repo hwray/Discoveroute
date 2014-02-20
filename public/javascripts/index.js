@@ -281,53 +281,38 @@ function displayCategories() {
       var listing = yelpListings[listingID][0]; 
       detourIndex = listingID; 
       var addressString = listing.location.display_address[0] + ", " + listing.location.display_address[1]; 
-      var request = {
-        address: addressString
-      }
-      geocoder.geocode(request, function(result, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          // show directions on map
-          // show list directions
-          var pointC = result[0].geometry.location; 
-          var pointA = origRoute.routes[0].legs[0].start_location; 
-          var pointB = origRoute.routes[0].legs[0].end_location; 
-          var mode = origRoute.Tb.travelMode; 
+      var pointC = addressString; 
+      var pointA = origRoute.routes[0].legs[0].start_location; 
+      var pointB = origRoute.routes[0].legs[0].end_location; 
+      var mode = origRoute.Tb.travelMode; 
 
-          console.log("POINT C: " + pointC); 
-          console.log("POINT A: " + pointA); 
-          console.log("POINT B: " + pointB); 
-          console.log("MODE: " + mode); 
-
-          // Get directions from pointA (origin) to pointC (detour)
-          requestDirections(pointA, pointC, mode, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-              timeAC = response.routes[0].legs[0].duration.value; 
-              listDirections(response, status); 
-            } else {
-              // error while retrieving directions
-            }
-          }); 
-
-          // Get directions from pointC (detour) to pointB (destination)
-          requestDirections(pointC, pointB, mode, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-              timeCB = response.routes[0].legs[0].duration.value; 
-            } else {
-              // error while retrieving directions
-            }
-          }); 
+      // Get directions from pointA (origin) to pointC (detour)
+      requestDirections(pointA, pointC, mode, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          timeAC = response.routes[0].legs[0].duration.value; 
+          listDirections(response, status); 
         } else {
-            // error while geocoding address to lat-lng
-          }
-        }); 
+          // error while retrieving directions
+        }
+      }); 
+
+      // Get directions from pointC (detour) to pointB (destination)
+      requestDirections(pointC, pointB, mode, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          timeCB = response.routes[0].legs[0].duration.value; 
+        } else {
+          // error while retrieving directions
+        }
+      });
+
     }
 
 
 
 
-    $(listingDiv).children("a").wrap(document.createElement("p"));
-    
-    return listingDiv;
+          $(listingDiv).children("a").wrap(document.createElement("p"));
+
+          return listingDiv;
   }
 
   function createFunctionDetail(displayText, className) {
@@ -409,10 +394,13 @@ function displayCategories() {
 
 function listDirections(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
+    console.log(response); 
     var dirDiv = document.getElementById("listing" + detourIndex); 
     var detourSteps = response.routes[0].legs[0].steps; 
     var origSteps = origRoute.routes[0].legs[0].steps; 
-    var directions = "<ol>"; 
+    var directions = response.routes[0].legs[0].distance.text + ", " + response.routes[0].legs[0].duration.text; 
+    directions += "<b>START:</b> " + origRoute.routes[0].legs[0].start_address;
+    directions += "<ol>" 
     for (var i = 0; i < origSteps.length; i++) {
       if (i >= detourSteps.length) 
         break; 
@@ -430,6 +418,9 @@ function listDirections(response, status) {
     for (var j = i + 1; j < detourSteps.length; j++) {
       directions += "<li>" + detourSteps[j].instructions + "</li>"; 
     }
+
+    directions += "</ol>"; 
+    directions += "<b>END:</b> " + response.routes[0].legs[0].end_address; 
 
     dirDiv.innerHTML += directions; 
     directionsDisplay.setDirections(response);
