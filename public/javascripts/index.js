@@ -252,7 +252,7 @@ function displayCategories() {
 
       // switch what buttons are displayed 
       $(listingDiv).children("p").children("a").toggle();
-    };
+    }; 
 
     var returnButton = document.createElement("a");
     returnButton.innerHTML = "Return to Options";
