@@ -10,6 +10,9 @@ var searchMarkers = new Array();
 
 var origRoute; 
 
+var timeAC; 
+var timeCB; 
+
 var yelpListings; 
 
 var categories = ["coffee", "food", "shopping", "cafes", "nightlife"]; 
@@ -68,7 +71,7 @@ function updateTimeLeft(){
     //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
     //$('#timerValue').innerHTML = (timerString + " remaining");
     timerValDiv.innerHTML = "You have " + timerString + " to reach your final destination"; 
-    console.log(timerString + " remaining.");
+    //console.log(timerString + " remaining.");
     timerSeconds -= 1;
   }
 }
@@ -269,8 +272,50 @@ function displayCategories() {
     discoverButton.style.display = "none";
     listingDiv.appendChild(discoverButton);
 
+
     discoverButton.onclick = function() {
-      // LET'S GO SOMEWEHRE
+      var listingDiv = this.parentNode.parentNode; 
+      var listingID = listingDiv.id.substring(7); 
+      var listing = yelpListings[listingID][0]; 
+      var addressString = listing.location.display_address[0] + ", " + listing.location.display_address[1]; 
+      var request = {
+        address: addressString
+      }
+      geocoder.geocode(request, function(result, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          // show directions on map
+          // show list directions
+          var pointC = result[0].geometry.location; 
+          var pointA = origRoute.routes[0].legs[0].start_location; 
+          var pointB = origRoute.routes[0].legs[0].end_location; 
+          var mode = origRoute.Tb.travelMode; 
+
+          console.log("POINT C: " + pointC); 
+          console.log("POINT A: " + pointA); 
+          console.log("POINT B: " + pointB); 
+          console.log("MODE: " + mode); 
+
+          // Get directions from pointA (origin) to pointC (detour)
+          requestDirections(pointA, pointC, mode, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+              timeAC = response.routes[0].legs[0].duration.value; 
+            } else {
+              // error while retrieving directions
+            }
+          }); 
+
+          // Get directions from pointC (detour) to pointB (destination)
+          requestDirections(pointC, pointB, mode, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+              timeCB = response.routes[0].legs[0].duration.value; 
+            } else {
+              // error while retrieving directions
+            }
+          }); 
+        } else {
+            // error while geocoding address to lat-lng
+          }
+        }); 
     }
 
 
@@ -310,35 +355,37 @@ function displayCategories() {
 
   function showDirections(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-    // console.log(response); 
-    origRoute = response; 
-    var steps = response.routes[0].legs[0].steps; 
-    var distSinceLast = 0; 
-    for (var i = 0; i < steps.length; i++) {
-      var step = steps[i]; 
-      if ((step.distance.value + distSinceLast) < 1000) {
-        distSinceLast += step.distance.value; 
-        continue; 
-      } else {
-        distSinceLast = 0; 
-      }
-      if (step.distance.value > 2000) {
-        var numPoints = Math.floor(step.distance.value / 1600); 
-        var increment = Math.floor(step.lat_lngs.length / numPoints); 
-        var points = step.lat_lngs; 
-        for (var j = increment; j < points.length; j += increment) {
-          var latlng = new google.maps.LatLng(step.lat_lngs[j].d, step.lat_lngs[j].e); 
-          searchMarkers.push(latlng); 
-          //addMarker(step.lat_lngs[j].d, step.lat_lngs[j].e); 
+      console.log(response); 
+      origRoute = response; // jQuery.extend(true, {}, response);
+      pointA = response.origin; 
+      pointB = response.destination; 
+      var steps = response.routes[0].legs[0].steps; 
+      var distSinceLast = 0; 
+      for (var i = 0; i < steps.length; i++) {
+        var step = steps[i]; 
+        if ((step.distance.value + distSinceLast) < 1000) {
+          distSinceLast += step.distance.value; 
+          continue; 
+        } else {
+          distSinceLast = 0; 
         }
-      } else {
-        var lat = step.end_location.d;
-        var lng = step.end_location.e; 
-        var latlng = new google.maps.LatLng(lat, lng); 
-        searchMarkers.push(latlng); 
-        //addMarker(lat, lng); 
+        if (step.distance.value > 2000) {
+          var numPoints = Math.floor(step.distance.value / 1600); 
+          var increment = Math.floor(step.lat_lngs.length / numPoints); 
+          var points = step.lat_lngs; 
+          for (var j = increment; j < points.length; j += increment) {
+            var latlng = new google.maps.LatLng(step.lat_lngs[j].d, step.lat_lngs[j].e); 
+            searchMarkers.push(latlng); 
+            //addMarker(step.lat_lngs[j].d, step.lat_lngs[j].e); 
+          }
+        } else {
+          var lat = step.end_location.d;
+          var lng = step.end_location.e; 
+          var latlng = new google.maps.LatLng(lat, lng); 
+          searchMarkers.push(latlng); 
+          //addMarker(lat, lng); 
+        }
       }
-    }
     directionsDisplay.setDirections(response);
 
     var duration = response.routes[0].legs[0].duration.text;
