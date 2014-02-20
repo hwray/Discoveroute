@@ -212,7 +212,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
     for (var i = 0; i < data.length; i++) {
       if(data[i].length > 0) {
         // add listing div to carousel
-        detoursDiv.appendChild(createListing(data[i][0]), displayIndex);
+        detoursDiv.appendChild(createListing(data[i][0], displayIndex));
         displayIndex++;
         // add marker to map
         var addressString = data[i][0].location.display_address[0] + ", " + data[i][0].location.display_address[1]; 
