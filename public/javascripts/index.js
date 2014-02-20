@@ -72,7 +72,7 @@ function updateTimeLeft(){
     var timerString = secs2timeString(timerSeconds);
     //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
     //$('#timerValue').innerHTML = (timerString + " remaining");
-    timerValDiv.innerHTML = "You have " + timerString + " to reach your final destination"; 
+    //timerValDiv.innerHTML = "You have " + timerString + " to reach your final destination"; 
     //console.log(timerString + " remaining.");
     timerSeconds -= 1;
   }
@@ -359,7 +359,6 @@ function displayCategories() {
 
   function showDirections(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-      console.log(response); 
       origRoute = response; // jQuery.extend(true, {}, response);
       pointA = response.origin; 
       pointB = response.destination; 
@@ -432,8 +431,8 @@ function listDirections(response, status) {
       directions += "<li>" + detourSteps[j].instructions + "</li>"; 
     }
 
-    console.log(directions); 
     dirDiv.innerHTML += directions; 
+    directionsDisplay.setDirections(response);
   } else {
 
   }
