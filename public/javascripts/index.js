@@ -88,8 +88,8 @@ function slideLeftMenu(e){
 
   } else {
     $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false}, function() {});
-     $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
-     $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
+    $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
+    $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
   }
 
 
@@ -114,41 +114,41 @@ function initialize() {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
-  function routeButtonClick(e) {
-    e.preventDefault(); 
-    var start = document.getElementById("routeStart").value; 
-    var end = document.getElementById("routeEnd").value; 
-    var vehicle = $('input[name="vehicleOptions"]:checked').val();
+function routeButtonClick(e) {
+  e.preventDefault(); 
+  var start = document.getElementById("routeStart").value; 
+  var end = document.getElementById("routeEnd").value; 
+  var vehicle = $('input[name="vehicleOptions"]:checked').val();
 
-    var vehicleString;
+  var vehicleString;
 
-    if (vehicle === 'DRIVING')
-      vehicleString = google.maps.TravelMode.DRIVING;
-    else if (vehicle === 'TRANSIT')
-      vehicleString = google.maps.TravelMode.TRANSIT;
-    else if (vehicle === 'BICYCLING')
-      vehicleString = google.maps.TravelMode.BICYCLING;
-    else if (vehicle === 'WALKING')
-      vehicleString = google.maps.TravelMode.WALKING;
+  if (vehicle === 'DRIVING')
+    vehicleString = google.maps.TravelMode.DRIVING;
+  else if (vehicle === 'TRANSIT')
+    vehicleString = google.maps.TravelMode.TRANSIT;
+  else if (vehicle === 'BICYCLING')
+    vehicleString = google.maps.TravelMode.BICYCLING;
+  else if (vehicle === 'WALKING')
+    vehicleString = google.maps.TravelMode.WALKING;
 
-    requestDirections(start, end, vehicleString, showDirections); 
+  requestDirections(start, end, vehicleString, showDirections); 
 
-    setAlarm(5000);
-  }
-
-
-  function requestDirections(start, end, vehicle, callback) {
-    var request = {
-      origin: start,
-      destination: end,
-      travelMode: vehicle 
-    };
-
-    directionsService.route(request, callback);
-  }
+  setAlarm(5000);
+}
 
 
-  function displayCategories() {
+function requestDirections(start, end, vehicle, callback) {
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: vehicle 
+  };
+
+  directionsService.route(request, callback);
+}
+
+
+function displayCategories() {
     // hides the form box when the categories are shown
     // $("#form-group").hide();
 
@@ -177,34 +177,34 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
   function toggleCategorySelect(e){
     $(this).toggleClass('selectedCategory');
-    // console.log()
   }
 
   function categoriesClick(e){
-    var selectedCategories = $('input[name="categorySelect"]:checked');
+    var searchString = "";
 
-    for (var i = 0; i < selectedCategories.length; i++){
+    var selectedCategories = $('input[name="categorySelect"]:checked');
+    for (var i = 0; i < selectedCategories.length; i++) {
       var checked = selectedCategories[i].value;
-      // makes a separate call for each category. can this be done in one yelp api call?
-      var yelpData = {"coordinates" : JSON.stringify(searchMarkers) , "category" : checked };
-      
-      if (searchMarkers.length < 25) {
-        $.ajax({
-          url: "/places",
-          type: "POST",
-          context: document.body,
-          data: yelpData,
-          success: [yelpCallback, activitiesScreen]
-          // TODO: fail callback function!
-        });
-      }
+      searchString += "checked";
+    }
+
+    var yelpData = {"coordinates" : JSON.stringify(searchMarkers), search: searchString};
+    
+    if (searchMarkers.length < 25) {
+      $.ajax({
+        url: "/places",
+        type: "POST",
+        context: document.body,
+        data: yelpData,
+        success: [yelpCallback, activitiesScreen]
+      });
     }
   }
 
 
 
   function yelpCallback(data, textStatus, jqXHR) {
-    
+
     yelpListings = data; 
 
     var detoursDiv = document.getElementById("detourDisplay"); 
@@ -233,7 +233,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
   function createListing(listing, index) {
     console.log(index);
     var listingDiv = document.createElement("DIV");
-
     listingDiv.className = "listing";
     listingDiv.id = "listing" + index;
     listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">";
@@ -253,7 +252,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
       // switch what buttons are displayed 
       $(listingDiv).children("p").children("a").toggle();
-    };
+    }; 
 
     var returnButton = document.createElement("a");
     returnButton.innerHTML = "Return to Options";
@@ -296,21 +295,21 @@ google.maps.event.addDomListener(window, 'load', initialize);
   
 
 
-function geocodeCallback(results, status) {
-  if (status == google.maps.GeocoderStatus.OK) {
-    map.setCenter(results[0].geometry.location);
-    var marker = new google.maps.Marker({
-      map: map,
-      position: results[0].geometry.location
-    });
-  } else {
-    alert('Geocode was not successful for the following reason: ' + status);
+  function geocodeCallback(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+        map: map,
+        position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
   }
-}
 
 
-function showDirections(response, status) {
-  if (status == google.maps.DirectionsStatus.OK) {
+  function showDirections(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
     // console.log(response); 
     origRoute = response; 
     var steps = response.routes[0].legs[0].steps; 
