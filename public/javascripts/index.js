@@ -10,6 +10,11 @@ var searchMarkers = new Array();
 
 var origRoute; 
 
+var pointA;
+var pointB; 
+var pointC; 
+var mode; 
+
 var timeAC; 
 var timeCB; 
 
@@ -281,30 +286,42 @@ function displayCategories() {
       var listing = yelpListings[listingID][0]; 
       detourIndex = listingID; 
       var addressString = listing.location.display_address[0] + ", " + listing.location.display_address[1]; 
-      var pointC = addressString; 
-      var pointA = origRoute.routes[0].legs[0].start_location; 
-      var pointB = origRoute.routes[0].legs[0].end_location; 
-      var mode = origRoute.Tb.travelMode; 
+      pointC = addressString; 
+      pointA = origRoute.routes[0].legs[0].start_location; 
+      pointB = origRoute.routes[0].legs[0].end_location; 
+      mode = origRoute.Tb.travelMode; 
 
       // Get directions from pointA (origin) to pointC (detour)
       requestDirections(pointA, pointC, mode, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           timeAC = response.routes[0].legs[0].duration.value; 
           listDirections(response, status); 
+          // Get directions from pointC (detour) to pointB (destination)
+          requestDirections(pointC, pointB, mode, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+              timeCB = response.routes[0].legs[0].duration.value; 
+              console.log("timeAC (time from origin --> detour): " + timeAC); 
+              console.log("timeCB (time from detour --> destination): " + timeCB); 
+
+
+
+
+              //**********AARON HOLDEN****************
+              //******ADD TIMER STUFF HERE************
+              //**************************************
+
+
+
+
+            } else {
+              // error while retrieving directions
+            }
+          });
+
         } else {
           // error while retrieving directions
         }
       }); 
-
-      // Get directions from pointC (detour) to pointB (destination)
-      requestDirections(pointC, pointB, mode, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-          timeCB = response.routes[0].legs[0].duration.value; 
-        } else {
-          // error while retrieving directions
-        }
-      });
-
     }
 
 
