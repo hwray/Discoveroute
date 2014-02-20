@@ -13,6 +13,8 @@ var origRoute;
 var timeAC; 
 var timeCB; 
 
+var detourIndex; 
+
 var yelpListings; 
 
 var categories = ["coffee", "food", "shopping", "cafes", "nightlife"]; 
@@ -277,6 +279,7 @@ function displayCategories() {
       var listingDiv = this.parentNode.parentNode; 
       var listingID = listingDiv.id.substring(7); 
       var listing = yelpListings[listingID][0]; 
+      detourIndex = listingID; 
       var addressString = listing.location.display_address[0] + ", " + listing.location.display_address[1]; 
       var request = {
         address: addressString
@@ -299,6 +302,7 @@ function displayCategories() {
           requestDirections(pointA, pointC, mode, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
               timeAC = response.routes[0].legs[0].duration.value; 
+              listDirections(response, status); 
             } else {
               // error while retrieving directions
             }
@@ -406,29 +410,30 @@ function displayCategories() {
 
 function listDirections(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
-    var dirDiv = document.getElementById("listDirections"); 
+    var dirDiv = document.getElementById("listing" + detourIndex); 
     var detourSteps = response.routes[0].legs[0].steps; 
     var origSteps = origRoute.routes[0].legs[0].steps; 
+    var directions = "<ol>"; 
     for (var i = 0; i < origSteps.length; i++) {
       if (i >= detourSteps.length) 
         break; 
       
-      if (origSteps[i].localeCompare(detourSteps[i]) == 0) {
+      if (origSteps[i].instructions == detourSteps[i].instructions) {
         // step is the same as original route
-        console.log(origSteps[i]); 
+        directions += "<li>" + origSteps[i].instructions + "</li>"; 
       } else {
         // step diverges from the original route; follow detour steps from here on out
-        console.log("DIVERGING"); 
-        console.log("INSTEAD OF:"); 
-        console.log(origSteps[i]); 
-        console.log("DO THIS:"); 
-        console.log(detourSteps[i]); 
+        directions += "<li><b>INSTEAD OF:</b> " + origSteps[i].instructions + "</li>"; 
+        directions += "<li><b>DO THIS:</b> " + detourSteps[i].instructions + "</li>"; 
         break; 
       }
     }
     for (var j = i + 1; j < detourSteps.length; j++) {
-      console.log(detourSteps[j]); 
+      directions += "<li>" + detourSteps[j].instructions + "</li>"; 
     }
+
+    console.log(directions); 
+    dirDiv.innerHTML += directions; 
   } else {
 
   }
