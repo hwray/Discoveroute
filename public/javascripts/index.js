@@ -165,26 +165,72 @@ function routeButtonClick(e) {
   function yelpCallback(data, textStatus, jqXHR) {
     
     var detoursDiv = document.getElementById("detourDisplay"); 
-    for (var i in data) {
+    var displayIndex = 0;
+    for (var i = 0; i < data.length; i++) {
       if(data[i].length > 0) {
-        detoursDiv.appendChild(createListing(data[i][0]));
+        detoursDiv.appendChild(createListing(data[i][0], displayIndex));
+        displayIndex++;
       }
     }
   }
 
-  function createListing(listing) {
-
+  function createListing(listing, index) {
+    console.log(index);
     var listingDiv = document.createElement("DIV");
 
     listingDiv.className = "listing";
-    listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">" + 
-                            "<p class=\"name\">" + listing.name + "</p>" + 
-                            "<p class=\"name\">" + listing.display_phone + "</p>" +
-                            "<p class=\"name\">" + listing.snippet_text + "</p>";
+    listingDiv.id = "listing" + index;
+    listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">";
+    listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
+    listingDiv.appendChild(createFunctionDetail(listing.display_phone, "name"));
+
+
+    var expandButton = document.createElement("a");
+    expandButton.innerHTML = "Expand";
+    listingDiv.appendChild(expandButton);
+
+    expandButton.onclick = function() {
+      $(listingDiv).css("min-width", $("body").width()-5);
+      $(listingDiv).height($("body").height() * 0.8);
+      $(".listing").hide();
+      $(listingDiv).show();
+
+      // switch what buttons are displayed 
+      $(listingDiv).children("p").children("a").toggle();
+    };
+
+    var returnButton = document.createElement("a");
+    returnButton.innerHTML = "Return to Options";
+    returnButton.style.display = "none";
+    listingDiv.appendChild(returnButton);
+
+    returnButton.onclick = function() {
+      $(listingDiv).children("p").children("a").toggle();
+      $(".listing").removeAttr("style");
+    }
+
+    var discoverButton = document.createElement("a");
+    discoverButton.innerHTML = "Discover";
+    discoverButton.style.display = "none";
+    listingDiv.appendChild(discoverButton);
+
+    discoverButton.onclick = function() {
+      // LET'S FINALLY GO SOMEWHERE
+    }
 
 
 
+
+    $(listingDiv).children("a").wrap(document.createElement("p"));
+    
     return listingDiv;
+  }
+
+  function createFunctionDetail(displayText, className) {
+    var elem = document.createElement("p");
+    elem.className = className;
+    elem.innerHTML = displayText;
+    return elem;
   }
 
 
