@@ -54,7 +54,7 @@ $('#timeButton').click(function() {
   }else{
     console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
   }
-  //setAlarm(timeRemaining);
+  //setAlarm(time);
 });
 
 function setAlarm(seconds){
