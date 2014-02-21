@@ -20,6 +20,8 @@ var timeCB;
 var timeAB;
 var timeABstring;
 
+var destinationTime;
+
 var detourIndex; 
 
 var yelpListings; 
@@ -54,6 +56,7 @@ $('#timeButton').click(function() {
   }else{
     console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
   }
+  destinationTime = timeEndSecs;
   //setAlarm(time);
 });
 
@@ -71,7 +74,7 @@ function setAlarm(seconds){
     //do the detour
   }
   timerSeconds = seconds;
-  clearInterval(timerInterval);
+  clearInterval(timerInterval);  
   timerInterval = setInterval(updateTimeLeft, 1000);
 }
 
@@ -95,7 +98,7 @@ function updateTimeLeft(){
     //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
     //$('#timerValue').innerHTML = (timerString + " remaining");
     // timerValDiv.innerHTML = "You have " + timerString + " to reach your final destination"; 
-    // console.log(timerString + " remaining.");
+    console.log(timerString + " remaining.");
     timerSeconds -= 1;
   }
 }
@@ -357,31 +360,25 @@ function displayCategories() {
     
     var continueButton = document.createElement("a");
     continueButton.setAttribute('class', 'continueButton');
-    continueButton.innerHTML = "Continue to my original destination. ";
+    continueButton.innerHTML = "I've arrived at my detour! ";
     
     nextDirections.appendChild(continueButton);
     document.getElementById("listing" + detourIndex).appendChild(nextDirections);
 
     continueButton.onclick = function() {
-
+      var timeBegin = new Date();
+      var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
+          
       $('.continueButton').hide();
 
       requestDirections(pointC, pointB, mode, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           timeCB = response.routes[0].legs[0].duration.value; 
-          console.log("timeAC (time from origin --> detour): " + timeAC); 
-          console.log("timeCB (time from detour --> destination): " + timeCB); 
+
+          setAlarm(destinationTime - timeBeginSecs - timeCB);
 
           $('.detour-directions').hide();
           listDirections(response, status, nextDirections); 
-
-
-          //**********AARON HOLDEN****************
-          //******ADD TIMER STUFF HERE************
-          //**************************************
-
-
-
 
         } else {
           // error while retrieving directions
@@ -458,7 +455,6 @@ function displayCategories() {
 
 function listDirections(response, status, displayDiv) {
   if (status == google.maps.DirectionsStatus.OK) {
-    console.log(response); 
     dirDiv = displayDiv
     var detourSteps = response.routes[0].legs[0].steps; 
     var origSteps = origRoute.routes[0].legs[0].steps; 
