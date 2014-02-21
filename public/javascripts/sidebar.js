@@ -54,9 +54,12 @@ $(document).ready(function() {
 function showSavedDetours(data, status){
   var detours = data;
   var htmlString = '';
+  console.log("IMAGETEXT"); 
   for (var i=0; i < data.length; i++){
+    console.log(data[i].image); 
     htmlString += '<h4 class="detourName"><a>'+ data[i].title+'</a></h4>';
     htmlString += '<p class="detourFields">';
+    htmlString += '<img src="' + data[i].image + '"/><br>'; 
     htmlString += 'On: ' + data[i].date;
     htmlString += '<br /><b> Stopped At: </b>' + data[i].nameC;
     htmlString += '<br />&nbsp;&nbsp;&nbsp;'+ data[i].addressC;
