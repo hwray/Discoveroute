@@ -10,12 +10,12 @@ var destinationForm = $('#interaction-bar').find('#form-group');
 var activitiesDiv = $('#interaction-bar').find('#detourDisplay');
 var timerDiv = $('#interaction-bar').find('#timer');
 
+
 $(document).ready(function() {
   destinationButton.addClass('active');
   destinationForm.addClass('active');
 
   $('#sidebar-button').click(slideLeftMenu);
-
   // linear flow
   routeButton.click(routeButtonClick);
   routeButton.click(timerScreen);
@@ -30,26 +30,45 @@ $(document).ready(function() {
 
   // CHANGES
   activitiesButton.click(function(e) {
+    var detourBar = $("#recentDetours");
+
     e.preventDefault(); 
     removeActiveClass(); 
     activitiesButton.addClass('active'); 
 
-    var detourBar = $("#recentDetours")
+    detourBar.addClass('active');
+    detourBar.show();
 
-    if (detourBar.css("bottom") == "-100px") {
-      $("#recentDetours").animate({bottom:"0px"}, { duration: 200, queue: false});
-    } else {
-      $("#recentDetours").animate({bottom:"-100px"}, { duration: 200, queue: false});
-    }
+    // if (detourBar.css("bottom") == "-100px") {
+    //   $("#recentDetours").animate({bottom:"0px"}, { duration: 200, queue: false});
+    // } else {
+    //   $("#recentDetours").animate({bottom:"-100px"}, { duration: 200, queue: false});
+    // }
 
-    $.get('/detours/get', function(data, status) {
-      $("#recentDetours").html(data[0].title); 
-      console.log(data); 
-    });
+    $.get('/detours/get', showSavedDetours);
 
   });
 
 })
+
+function showSavedDetours(data, status){
+  var detours = data;
+  var htmlString = '';
+  for (var i=0; i < data.length; i++){
+    htmlString += '<h3>'+ data[i].title+'</h3>';
+    htmlString += '<p class="detourFields">';
+    htmlString += 'On: ' + data[i].date;
+    htmlString += '<br /><b> Stopped At: </b>' + data[i].nameC;
+    htmlString += '<br />&nbsp;&nbsp;&nbsp;'+ data[i].addressC;
+    htmlString += '<br /><i>From:</i> ' + data[i].addressA;
+    htmlString += '<br /><i>To:</i>' + data[i].addressB;
+    htmlString += '</p>';
+
+  }
+  $("#recentDetours").html(htmlString); 
+  console.log(data); 
+}
+
 
 
 var sidebar = $("#sidebar-menu");
