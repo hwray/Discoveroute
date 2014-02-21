@@ -265,7 +265,7 @@ function displayCategories() {
     }
   }
 
-  function createListing(listing, index) {
+function createListing(listing, index) {
     var listingDiv = document.createElement("DIV");
     listingDiv.className = "listing";
     listingDiv.id = "listing" + index;
@@ -342,52 +342,13 @@ function displayCategories() {
     return listingDiv;
   }
 
+
   function createFunctionDetail(displayText, className) {
     var elem = document.createElement("p");
     elem.className = className;
     elem.innerHTML = displayText;
     return elem;
   }
-
-  function createListing(listing, index) {
-    console.log(index);
-    var listingDiv = document.createElement("DIV");
-    listingDiv.className = "listing";
-    listingDiv.id = "listing" + index;
-    listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">";
-    listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
-    listingDiv.appendChild(createFunctionDetail(listing.display_phone, "name"));
-
-
-    var expandButton = document.createElement("a");
-    expandButton.innerHTML = "Expand";
-    listingDiv.appendChild(expandButton);
-
-    expandButton.onclick = function() {
-      $(listingDiv).css("min-width", $("body").width()-5);
-      $(listingDiv).height($("body").height() * 0.8);
-      $(".listing").hide();
-      $(listingDiv).show();
-
-      // switch what buttons are displayed 
-      $(listingDiv).children("p").children("a").toggle();
-    }; 
-
-    var returnButton = document.createElement("a");
-    returnButton.innerHTML = "Return to Options";
-    returnButton.style.display = "none";
-    listingDiv.appendChild(returnButton);
-
-    returnButton.onclick = function() {
-      $(listingDiv).children("p").children("a").toggle();
-      $(".listing").removeAttr("style");
-    }
-
-    var discoverButton = document.createElement("a");
-    discoverButton.innerHTML = "Discover";
-    discoverButton.style.display = "none";
-    listingDiv.appendChild(discoverButton);
-}
 
   function continueToDestination(detourDiv){
 
