@@ -83,24 +83,28 @@ function setAlarm(seconds){
 
 
 function updateTimeLeft(){
-  var timerValDiv = document.getElementById("timerValue"); 
+  var timerValDiv = document.getElementById("timer-text"); 
+  activateLightBox();
   if(timerSeconds <= 0){
     timerSeconds = 0;
-    // timerValDiv.innerHTML = "Time is up!"; 
-    $('.lightbox').click(function(){
-      $('.lightbox').hide();
-    })
-    document.getElementById('light').style.display='block';
-    document.getElementById('fade').style.display='block';
+    timerValDiv.innerHTML = "Time is up!"; 
     clearInterval(timerInterval);
   }else{
     var timerString = secs2timeString(timerSeconds);
-    //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
-    //$('#timerValue').innerHTML = (timerString + " remaining");
-    // timerValDiv.innerHTML = "You have " + timerString + " to reach your final destination"; 
-    console.log(timerString + " remaining.");
+    timerValDiv.innerHTML = timerString + " remaining.";
     timerSeconds -= 1;
+    $('.continue-from-timer').click(function() {
+      clearInterval(timerInterval);
+    });    
   }
+}
+
+function activateLightBox(){
+  $('.lightbox').click(function(){
+    $('.lightbox').hide();
+  })
+  document.getElementById('light').style.display='block';
+  document.getElementById('fade').style.display='block';
 }
 
 
@@ -163,7 +167,6 @@ function routeButtonClick(e) {
 
   requestDirections(start, end, vehicleString, showDirections); 
 
-  // setAlarm(5000);
 }
 
 
@@ -261,7 +264,6 @@ function displayCategories() {
   }
 
   function createListing(listing, index) {
-    console.log(index);
     var listingDiv = document.createElement("DIV");
     listingDiv.className = "listing";
     listingDiv.id = "listing" + index;
@@ -376,7 +378,7 @@ function displayCategories() {
           timeCB = response.routes[0].legs[0].duration.value; 
 
           setAlarm(destinationTime - timeBeginSecs - timeCB);
-
+          activateLightBox();
           $('.detour-directions').hide();
           listDirections(response, status, nextDirections); 
 

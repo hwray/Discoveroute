@@ -161,3 +161,7 @@ input.form-control
   padding-bottom: 10%;
   vertical-align: middle;
 }
+
+#timer-text{
+  color: #444444;
+}
