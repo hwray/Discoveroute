@@ -54,6 +54,12 @@ block content
       span(id="timerValue")
       div(id="duration")
       div(id="durationVal")
+  div(id="fade" class="lightbox")
+    div(id="light" class="timer_content")
+      div(class='timer-alert')
+        h2(class='text-center' id='timer-text')
+        p(class='text-center') 
+          a(class='continue-from-timer') Continue to original destination. 
   div(id="map_canvas")
 block scripts
     script(src='https://maps.googleapis.com/maps/api/js?sensor=true')

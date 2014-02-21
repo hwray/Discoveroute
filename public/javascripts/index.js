@@ -20,6 +20,8 @@ var timeCB;
 var timeAB;
 var timeABstring;
 
+var destinationTime;
+
 var detourIndex; 
 
 var yelpListings; 
@@ -54,6 +56,7 @@ $('#timeButton').click(function() {
   }else{
     console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
   }
+  destinationTime = timeEndSecs;
   //setAlarm(time);
 });
 
@@ -71,7 +74,7 @@ function setAlarm(seconds){
     //do the detour
   }
   timerSeconds = seconds;
-  clearInterval(timerInterval);
+  clearInterval(timerInterval);  
   timerInterval = setInterval(updateTimeLeft, 1000);
 }
 
@@ -80,20 +83,28 @@ function setAlarm(seconds){
 
 
 function updateTimeLeft(){
-  var timerValDiv = document.getElementById("timerValue"); 
+  var timerValDiv = document.getElementById("timer-text"); 
+  activateLightBox();
   if(timerSeconds <= 0){
     timerSeconds = 0;
     timerValDiv.innerHTML = "Time is up!"; 
-    console.log("Time is up!");
     clearInterval(timerInterval);
   }else{
     var timerString = secs2timeString(timerSeconds);
-    //.clearTime().addSeconds(timerSeconds).toString('H:mm:ss');
-    //$('#timerValue').innerHTML = (timerString + " remaining");
-    //timerValDiv.innerHTML = "You have " + timerString + " to reach your final destination"; 
-    //console.log(timerString + " remaining.");
+    timerValDiv.innerHTML = timerString + " remaining.";
     timerSeconds -= 1;
+    $('.continue-from-timer').click(function() {
+      clearInterval(timerInterval);
+    });    
   }
+}
+
+function activateLightBox(){
+  $('.lightbox').click(function(){
+    $('.lightbox').hide();
+  })
+  document.getElementById('light').style.display='block';
+  document.getElementById('fade').style.display='block';
 }
 
 
@@ -156,7 +167,6 @@ function routeButtonClick(e) {
 
   requestDirections(start, end, vehicleString, showDirections); 
 
-  setAlarm(5000);
 }
 
 
@@ -254,11 +264,10 @@ function displayCategories() {
   }
 
   function createListing(listing, index) {
-    console.log(index);
     var listingDiv = document.createElement("DIV");
     listingDiv.className = "listing";
     listingDiv.id = "listing" + index;
-    listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">";
+    listingDiv.innerHTML =  "<img class=\"profilePic\" src=\"" + listing.image_url + "\">";
     listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
     listingDiv.appendChild(createFunctionDetail(listing.display_phone, "name"));
 
@@ -304,32 +313,24 @@ function displayCategories() {
       pointB = origRoute.routes[0].legs[0].end_location; 
       mode = origRoute.Tb.travelMode; 
 
+            $(listingDiv).children("p").children("a").hide();
+
+
       // Get directions from pointA (origin) to pointC (detour)
       requestDirections(pointA, pointC, mode, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           timeAC = response.routes[0].legs[0].duration.value; 
-          listDirections(response, status); 
+
+          // var detourDiv = document.getElementById("listing" + detourIndex); 
+
+          var detourDiv = document.createElement('div');
+          detourDiv.setAttribute('class', 'detour-directions');
+          document.getElementById("listing" + detourIndex).appendChild(detourDiv);
+
+          listDirections(response, status, detourDiv); 
+          
           // Get directions from pointC (detour) to pointB (destination)
-          requestDirections(pointC, pointB, mode, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-              timeCB = response.routes[0].legs[0].duration.value; 
-              console.log("timeAC (time from origin --> detour): " + timeAC); 
-              console.log("timeCB (time from detour --> destination): " + timeCB); 
-
-
-
-
-              //**********AARON HOLDEN****************
-              //******ADD TIMER STUFF HERE************
-              //**************************************
-
-
-
-
-            } else {
-              // error while retrieving directions
-            }
-          });
+          continueToDestination(detourDiv);
 
         } else {
           // error while retrieving directions
@@ -354,7 +355,39 @@ function displayCategories() {
 
 
 
+  function continueToDestination(detourDiv){
 
+    var nextDirections = document.createElement("div");
+    nextDirections.setAttribute('class', 'continue-directions');
+    
+    var continueButton = document.createElement("a");
+    continueButton.setAttribute('class', 'continueButton');
+    continueButton.innerHTML = "I've arrived at my detour! ";
+    
+    nextDirections.appendChild(continueButton);
+    document.getElementById("listing" + detourIndex).appendChild(nextDirections);
+
+    continueButton.onclick = function() {
+      var timeBegin = new Date();
+      var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
+          
+      $('.continueButton').hide();
+
+      requestDirections(pointC, pointB, mode, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          timeCB = response.routes[0].legs[0].duration.value; 
+
+          setAlarm(destinationTime - timeBeginSecs - timeCB);
+          activateLightBox();
+          $('.detour-directions').hide();
+          listDirections(response, status, nextDirections); 
+
+        } else {
+          // error while retrieving directions
+        }
+      });
+    }
+  }
 
   
 
@@ -422,10 +455,9 @@ function displayCategories() {
 }
 
 
-function listDirections(response, status) {
+function listDirections(response, status, displayDiv) {
   if (status == google.maps.DirectionsStatus.OK) {
-    console.log(response); 
-    var dirDiv = document.getElementById("listing" + detourIndex); 
+    dirDiv = displayDiv
     var detourSteps = response.routes[0].legs[0].steps; 
     var origSteps = origRoute.routes[0].legs[0].steps; 
     var directions = response.routes[0].legs[0].distance.text + ", " + response.routes[0].legs[0].duration.text + "</br>"; 
