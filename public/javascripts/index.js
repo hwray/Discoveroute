@@ -262,7 +262,7 @@ function displayCategories() {
     var listingDiv = document.createElement("DIV");
     listingDiv.className = "listing";
     listingDiv.id = "listing" + index;
-    listingDiv.innerHTML =  "<img class=\"profilePic\"/ src=\"" + listing.image_url + "\">";
+    listingDiv.innerHTML =  "<img class=\"profilePic\" src=\"" + listing.image_url + "\">";
     listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
     listingDiv.appendChild(createFunctionDetail(listing.display_phone, "name"));
 
@@ -308,45 +308,45 @@ function displayCategories() {
       pointB = origRoute.routes[0].legs[0].end_location; 
       mode = origRoute.Tb.travelMode; 
 
+      $(listingDiv).children("p").children("a").hide();
+
+
       // Get directions from pointA (origin) to pointC (detour)
       requestDirections(pointA, pointC, mode, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           timeAC = response.routes[0].legs[0].duration.value; 
-          listDirections(response, status); 
-          // Get directions from pointC (detour) to pointB (destination)
+
+          // var detourDiv = document.getElementById("listing" + detourIndex); 
+
+          var detourDiv = document.createElement('div');
+          detourDiv.setAttribute('class', 'detour-directions');
+          document.getElementById("listing" + detourIndex).appendChild(detourDiv);
+
+          listDirections(response, status, detourDiv); 
+
           requestDirections(pointC, pointB, mode, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
               timeCB = response.routes[0].legs[0].duration.value; 
               console.log("timeAC (time from origin --> detour): " + timeAC); 
               console.log("timeCB (time from detour --> destination): " + timeCB); 
-
-
-
-
-              //**********AARON HOLDEN****************
-              //******ADD TIMER STUFF HERE************
-              //**************************************
-
-
-
-
+              continueToDestination(response, status);
             } else {
-              // error while retrieving directions
+            // error while retrieving directions
             }
           });
 
+          //**********AARON HOLDEN****************
+          //******ADD TIMER STUFF HERE************
+          //**************************************
+
         } else {
           // error while retrieving directions
-        }
-      }); 
+        }); 
     }
 
+    $(listingDiv).children("a").wrap(document.createElement("p"));
 
-
-
-          $(listingDiv).children("a").wrap(document.createElement("p"));
-
-          return listingDiv;
+    return listingDiv;
   }
 
   function createFunctionDetail(displayText, className) {
@@ -358,7 +358,25 @@ function displayCategories() {
 
 
 
+  function continueToDestination(directionsResponse, status){
+    
+    var continueButton = document.createElement("a");
+    continueButton.setAttribute('class', 'continueButton');
+    continueButton.innerHTML = "Continue to my original destination. ";
+    
+    var nextDirections = document.createElement("div");
+    nextDirections.setAttribute('class', 'continue-directions');
+    nextDirections.appendChild(continueButton);
+    document.getElementById("listing" + detourIndex).appendChild(nextDirections);
 
+    continueButton.onclick = function() {
+
+      $('.continueButton').hide();
+      $('.detour-directions').hide();
+      listDirections(directionsResponse, status, nextDirections); 
+
+    });
+  }
 
   
 
@@ -426,10 +444,10 @@ function displayCategories() {
 }
 
 
-function listDirections(response, status) {
+function listDirections(response, status, displayDiv) {
   if (status == google.maps.DirectionsStatus.OK) {
     console.log(response); 
-    var dirDiv = document.getElementById("listing" + detourIndex); 
+    dirDiv = displayDiv
     var detourSteps = response.routes[0].legs[0].steps; 
     var origSteps = origRoute.routes[0].legs[0].steps; 
     var directions = response.routes[0].legs[0].distance.text + ", " + response.routes[0].legs[0].duration.text + "</br>"; 
