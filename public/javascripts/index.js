@@ -308,7 +308,7 @@ function displayCategories() {
       pointB = origRoute.routes[0].legs[0].end_location; 
       mode = origRoute.Tb.travelMode; 
 
-      $(listingDiv).children("p").children("a").hide();
+            $(listingDiv).children("p").children("a").hide();
 
 
       // Get directions from pointA (origin) to pointC (detour)
@@ -323,30 +323,22 @@ function displayCategories() {
           document.getElementById("listing" + detourIndex).appendChild(detourDiv);
 
           listDirections(response, status, detourDiv); 
-
-          requestDirections(pointC, pointB, mode, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-              timeCB = response.routes[0].legs[0].duration.value; 
-              console.log("timeAC (time from origin --> detour): " + timeAC); 
-              console.log("timeCB (time from detour --> destination): " + timeCB); 
-              continueToDestination(response, status);
-            } else {
-            // error while retrieving directions
-            }
-          });
-
-          //**********AARON HOLDEN****************
-          //******ADD TIMER STUFF HERE************
-          //**************************************
+          
+          // Get directions from pointC (detour) to pointB (destination)
+          continueToDestination(detourDiv);
 
         } else {
           // error while retrieving directions
-        }); 
+        }
+      }); 
     }
 
-    $(listingDiv).children("a").wrap(document.createElement("p"));
 
-    return listingDiv;
+
+
+          $(listingDiv).children("a").wrap(document.createElement("p"));
+
+          return listingDiv;
   }
 
   function createFunctionDetail(displayText, className) {
@@ -358,24 +350,44 @@ function displayCategories() {
 
 
 
-  function continueToDestination(directionsResponse, status){
+  function continueToDestination(detourDiv){
+
+    var nextDirections = document.createElement("div");
+    nextDirections.setAttribute('class', 'continue-directions');
     
     var continueButton = document.createElement("a");
     continueButton.setAttribute('class', 'continueButton');
     continueButton.innerHTML = "Continue to my original destination. ";
     
-    var nextDirections = document.createElement("div");
-    nextDirections.setAttribute('class', 'continue-directions');
     nextDirections.appendChild(continueButton);
     document.getElementById("listing" + detourIndex).appendChild(nextDirections);
 
     continueButton.onclick = function() {
 
       $('.continueButton').hide();
-      $('.detour-directions').hide();
-      listDirections(directionsResponse, status, nextDirections); 
 
-    });
+      requestDirections(pointC, pointB, mode, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          timeCB = response.routes[0].legs[0].duration.value; 
+          console.log("timeAC (time from origin --> detour): " + timeAC); 
+          console.log("timeCB (time from detour --> destination): " + timeCB); 
+
+          $('.detour-directions').hide();
+          listDirections(response, status, nextDirections); 
+
+
+          //**********AARON HOLDEN****************
+          //******ADD TIMER STUFF HERE************
+          //**************************************
+
+
+
+
+        } else {
+          // error while retrieving directions
+        }
+      });
+    }
   }
 
   
