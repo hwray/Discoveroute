@@ -55,21 +55,33 @@ function showSavedDetours(data, status){
   var detours = data;
   var htmlString = '';
   for (var i=0; i < data.length; i++){
-    htmlString += '<h3>'+ data[i].title+'</h3>';
+    htmlString += '<h4 class="detourName"><a>'+ data[i].title+'</a></h4>';
     htmlString += '<p class="detourFields">';
     htmlString += 'On: ' + data[i].date;
     htmlString += '<br /><b> Stopped At: </b>' + data[i].nameC;
     htmlString += '<br />&nbsp;&nbsp;&nbsp;'+ data[i].addressC;
     htmlString += '<br /><i>From:</i> ' + data[i].addressA;
     htmlString += '<br /><i>To:</i>' + data[i].addressB;
+    htmlString += '<br /><br /> <a class="returnToDetours">&lt;&nbsp;Return to Saved Detours</a>'; 
     htmlString += '</p>';
-
   }
   $("#recentDetours").html(htmlString); 
-  console.log(data); 
+  $('.detourName').click(toggleDetourDetails);
+  $('.returnToDetours').click(returnToDetourMenu);
+
 }
 
 
+function toggleDetourDetails(e){
+  $('.detourName').toggle();
+  $(this).toggle();
+  $(this).next('p').toggle();
+}
+
+function returnToDetourMenu(e){
+  $('.detourName').show();
+  $('.detourFields').hide();
+}
 
 var sidebar = $("#sidebar-menu");
 
