@@ -35,10 +35,10 @@ block content
 
       input(type="text" class="form-control" id="routeStart" placeholder="Start")
       input(type="text" class="form-control" id="routeEnd" placeholder="End")
-      button(type="submit" class="btn btn-default" id="routeButton") Route
+      button(type="submit" class="btn btn-default large-btn" id="routeButton") DISCOVER!
     div(id="categories")
       div(id="categories-form")
-        div(class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption categoryGoContainer')
+        div(class='categoryOption categoryGoContainer')
           button(type='submit' class="greyBtn text-center" id="categoriesButton")
             h3(class='text-center category') DISCOVER!
     div(id="detourDisplay")
@@ -48,7 +48,7 @@ block content
         input(id="datePickerInput" data-format="hh:mm:ss" type="text")
         div(class="add-on")
           i(data-time-icon="icon-time" data-date-icon="icon-calendar")
-      div(class="timeButtonDiv" class="text-center col-xs-6 col-xs-offset-6 col-sm-6 col-sm-offset-6 col-md-4 col-lg-4 col-md-offset-8 col-lg-offset-8")
+      div(class="timeButtonDiv" class="text-center")
         button(type="button" class="btn btn-default large-btn" id="timeButton") DISCOVER!
       include timer.html
       span(id="timerValue")

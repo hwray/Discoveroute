@@ -218,12 +218,14 @@ function displayCategories() {
     var selectedCategories = $('input[name="categorySelect"]:checked');
     for (var i = 0; i < selectedCategories.length; i++) {
       var checked = selectedCategories[i].value;
-      searchString += "checked";
+      searchString += checked;
+      if (i != selectedCategories.length - 1)
+        searchString += ','
     }
 
-    var yelpData = {"coordinates" : JSON.stringify(searchMarkers), search: searchString};
+    var yelpData = {"coordinates" : JSON.stringify(searchMarkers), 'category': searchString};
     
-    if (searchMarkers.length < 25) {
+    if (searchMarkers.length > 0) {
       $.ajax({
         url: "/places",
         type: "POST",
@@ -313,15 +315,12 @@ function displayCategories() {
       pointB = origRoute.routes[0].legs[0].end_location; 
       mode = origRoute.Tb.travelMode; 
 
-            $(listingDiv).children("p").children("a").hide();
-
+      $(listingDiv).children("p").children("a").hide();
 
       // Get directions from pointA (origin) to pointC (detour)
       requestDirections(pointA, pointC, mode, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           timeAC = response.routes[0].legs[0].duration.value; 
-
-          // var detourDiv = document.getElementById("listing" + detourIndex); 
 
           var detourDiv = document.createElement('div');
           detourDiv.setAttribute('class', 'detour-directions');
@@ -337,13 +336,10 @@ function displayCategories() {
         }
       }); 
     }
+    
+    $(listingDiv).children("a").wrap(document.createElement("p"));
 
-
-
-
-          $(listingDiv).children("a").wrap(document.createElement("p"));
-
-          return listingDiv;
+    return listingDiv;
   }
 
   function createFunctionDetail(displayText, className) {
@@ -445,10 +441,7 @@ function displayCategories() {
     timeABstring = duration;
 
     //console.log(duration); 
-
-
-    var timer = document.getElementById("tripTime"); 
-    // timer.innerHTML = "Your trip will take " + duration; 
+ 
   } else {
 
   }
@@ -527,12 +520,3 @@ function secs2timeString(seconds){
   str += seconds;
   return str;
 }
-
-
-
-// var timeButton = document.getElementById("timeButton"); 
-// timeButton.addEventListener("click", function(e) {
-//   e.preventDefault(); 
-//   var picker = $('#datetimepicker3').data('datetimepicker');
-//   console.log(picker); 
-// }); 
