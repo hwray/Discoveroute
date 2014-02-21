@@ -1,0 +1,16 @@
+[
+	{
+		"title": "Coffee on the way to the HCI lab",
+		"date": "January 9, 2014",
+		"category": "Drink",
+		"nameA": "Home", 
+		"addressA": "44 Loyola Ave, Menlo Park, CA",
+		"nameB": "Gates Building",
+		"addressB": "353 Serra Street, Stanford, CA",
+		"nameC": "Peet's Coffee & Tea",
+		"addressC": "898 Santa Cruz Ave, Menlo Park, CA",
+		"travelMode": "Driving",
+		"comment": "chai tea every damn dayy duude u no me",
+		"image": "http://www.berkeleyside.com/wp-content/uploads/2011/09/peets-logo-200x132.jpg"
+	}
+]

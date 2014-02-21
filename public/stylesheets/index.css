@@ -116,10 +116,10 @@ input.form-control
 }
 
 
-
 .timerDiv h3{
   color: white;
 }
+
 
 .timeButtonDiv{
   padding-top: 100px;
@@ -127,4 +127,48 @@ input.form-control
 
 .timeButtonDiv p{
   background-color: #FF9805
+}
+
+
+.lightbox{
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+
+.timer_content {
+    display: none;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    padding: 16px;
+    background-color: black;
+    filter: alpha(opacity=95);
+    /*background-color: #444444;*/
+    z-index:1002;
+    overflow: auto;      
+}
+
+.timer_content a{
+  color: #FEC700;
+}
+
+.timer-alert{
+  padding-top: 40%;
+  padding-bottom: 40%;
+  vertical-align: middle;
+}
+
+#timer-text{
+  color: white;
 }
