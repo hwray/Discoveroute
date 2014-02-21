@@ -418,7 +418,11 @@ function createListing(listing, index) {
             var addressB = origRoute.routes[0].legs[0].end_address; 
             var addressC = detourListing.location.display_address[0] + " " + detourListing.location.display_address[1]; 
             var travelMode = origRoute.Tb.travelMode;
-            var image = detourListing.snippetImageURL;
+            var image = detourListing.image_url;
+
+
+
+            console.log(image); 
 
             
             var json = {
