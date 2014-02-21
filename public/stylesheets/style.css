@@ -139,6 +139,7 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	height: 100%;
 	border-spacing: 3px;
 	overflow-x: scroll;
+	/*overflow-y: scroll;*/
 	-webkit-overflow-scrolling: touch;
 }
 
@@ -178,4 +179,16 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 
 .listing a{
 	color: #FEC700;
+}
+
+/* RECENT DETOURS BAR
+=============================================
+*/
+#recentDetours {
+	position: absolute;
+	bottom: -100px;
+	width: 100%;
+	padding: 0px;
+	min-height: 100px;
+	background-color: #444444;
 }

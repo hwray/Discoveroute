@@ -10,6 +10,14 @@ var http = require('http');
 var path = require('path');
 var place = require('./routes/places');
 var categories = require('./routes/categories');
+var mongoose = require('mongoose');
+
+var detours = require('./routes/detours');
+
+var local_database_name = 'discoveroute';
+var local_database_uri  = 'mongodb://localhost/' + local_database_name
+var database_uri = process.env.MONGOLAB_URI || local_database_uri
+mongoose.connect(database_uri);
 
 var app = express();
 
@@ -31,7 +39,9 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+//app.get('/users', user.list);
+app.get('/detours/get', detours.getDetours);
+app.post('/detours/new', detours.newDetour);
 app.post('/places', place.places);
 app.get('/categories', categories.selectCategory);
 

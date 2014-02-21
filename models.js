@@ -4,7 +4,9 @@ var Mongoose = require('mongoose');
 
 var DetourSchema = new Mongoose.Schema({
   "title": String,
-  "date": Date,
+  "date": String,
+  "distance": String, 
+  "duration": String,
   "category": String,
   "nameA": String,
   "addressA": String,

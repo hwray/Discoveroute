@@ -20,34 +20,13 @@ $(document).ready(function() {
   routeButton.click(routeButtonClick);
   routeButton.click(timerScreen);
   $('#timeButton').click(categoriesScreen);
-  //  routeButton.click(categoriesScreen);
+//  routeButton.click(categoriesScreen);
 
   // sidebar button
   destinationButton.click(destinationScreen);
   timeSidebarButton.click(timerScreen);
   categoriesButton.click(categoriesScreen);
-
-
-  // CHANGES
-  activitiesButton.click(function(e) {
-    e.preventDefault(); 
-    removeActiveClass(); 
-    activitiesButton.addClass('active'); 
-
-    var detourBar = $("#recentDetours")
-
-    if (detourBar.css("bottom") == "-100px") {
-      $("#recentDetours").animate({bottom:"0px"}, { duration: 200, queue: false});
-    } else {
-      $("#recentDetours").animate({bottom:"-100px"}, { duration: 200, queue: false});
-    }
-
-    $.get('/detours/get', function(data, status) {
-      $("#recentDetours").html(data[0].title); 
-      console.log(data); 
-    });
-
-  });
+  activitiesButton.click(categoriesScreen);
 
 })
 

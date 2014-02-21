@@ -10,6 +10,8 @@ var searchMarkers = new Array();
 
 var origRoute; 
 
+var detourListing; 
+
 var pointA;
 var pointB; 
 var pointC; 
@@ -308,6 +310,7 @@ function createListing(listing, index) {
       var listingDiv = this.parentNode.parentNode; 
       var listingID = listingDiv.id.substring(7); 
       var listing = yelpListings[listingID][0]; 
+      detourListing = yelpListings[listingID][0]
       detourIndex = listingID; 
       var addressString = listing.location.display_address[0] + ", " + listing.location.display_address[1]; 
       pointC = addressString; 
@@ -376,6 +379,70 @@ function createListing(listing, index) {
           activateLightBox();
           $('.detour-directions').hide();
           listDirections(response, status, nextDirections); 
+
+          var saveButton = document.createElement("a");
+          saveButton.setAttribute('class', 'saveButton');
+          saveButton.innerHTML = "I'm all done. Save this detour!";
+          $(".continue-directions").append("<br><br>");
+
+          var titleText = document.createElement("textarea"); 
+          titleText.setAttribute('id', 'detourTitleText')
+          titleText.setAttribute('placeholder', 'Enter a name for this detour!'); 
+
+          $(".continue-directions").append(titleText);
+          $(".continue-directions").append("<br><br>");
+          
+          $(".continue-directions").append(saveButton);
+
+          saveButton.onclick = function(e) {
+            e.preventDefault(); 
+            
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; 
+
+            var yyyy = today.getFullYear();
+            if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
+
+            var title = $('#detourTitleText').val(); 
+            var date = today;
+            var distance = origRoute.routes[0].legs[0].distance.text;
+            var duration = origRoute.routes[0].legs[0].duration.text; 
+            var category = "none";
+            var nameA = origRoute.Tb.origin;
+            var nameB = origRoute.Tb.destination;
+            var nameC = detourListing.name;
+            var addressA = origRoute.routes[0].legs[0].start_address; 
+            var addressB = origRoute.routes[0].legs[0].end_address; 
+            var addressC = detourListing.location.display_address[0] + " " + detourListing.location.display_address[1]; 
+            var travelMode = origRoute.Tb.travelMode;
+            var image = detourListing.snippetImageURL;
+
+            
+            var json = {
+              "title": title,
+              "date": date,
+              "distance": distance, 
+              "duration": duration,
+              "category": category,
+              "nameA": nameA,
+              "addressA": addressA,
+              "nameB": nameB,
+              "addressB": addressB,
+              "nameC": nameC,
+              "addressC": addressC,
+              "travelMode": travelMode,
+              "comment": "No comment", 
+              "image": image
+            };
+
+            
+
+            $.post('/detours/new', json, function() {
+              window.location.href = '/'; // reload the page
+            });
+          }
+
 
         } else {
           // error while retrieving directions
