@@ -16,7 +16,9 @@ var pointC;
 var mode; 
 
 var timeAC; 
-var timeCB; 
+var timeCB;
+var timeAB;
+var timeABstring;
 
 var detourIndex; 
 
@@ -41,13 +43,24 @@ $('#timeButton').click(function() {
   var timeBegin = new Date();
   var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
   var timeRemaining = timeEndSecs - timeBeginSecs;
-  setAlarm(timeRemaining);
+  var extraTime = timeRemaining - timeAB;
+  var minDetourTime = 15*60;
+  if(timeRemaining < 0){
+    console.log("Please select a time after the present time");
+  }else if(extraTime < 0){
+    console.log("No time for a detour! Either reconsider your arrival time or get to where you're going now!");
+  }else if(extraTime < minDetourTime){
+    console.log("Warning: you only have an estimated " + secs2timeString(extraTime) + " extra time to detour. Detour wisely.");
+  }else{
+    console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
+  }
+  //setAlarm(timeRemaining);
 });
 
 function setAlarm(seconds){
-  var durationText = document.getElementById("duration").innerHTML;
-  var durationVal = document.getElementById("durationVal").innerHTML;
-  var minDetourTime = 20*60;//minimum detour time maybe about 20 minutes, including driving/parking
+  var durationText = timeABstring;
+  var durationVal = timeAB;
+  var minDetourTime = 15*60;//minimum detour time maybe about 15 minutes, including driving/parking
   if(seconds < 0){
     //time entered is before time right now
   }else if(seconds < durationVal){
@@ -394,9 +407,9 @@ function displayCategories() {
     directionsDisplay.setDirections(response);
 
     var duration = response.routes[0].legs[0].duration.text;
-    document.getElementById("duration").innerHTML = duration;
     var durationVal = response.routes[0].legs[0].duration.value;
-    document.getElementById("durationVal").innerHTML = durationVal;
+    timeAB = durationVal;
+    timeABstring = duration;
 
     //console.log(duration); 
 
