@@ -84,7 +84,6 @@ function setAlarm(seconds){
 
 function updateTimeLeft(){
   var timerValDiv = document.getElementById("timer-text"); 
-  activateLightBox();
   if(timerSeconds <= 0){
     timerSeconds = 0;
     timerValDiv.innerHTML = "Time is up!"; 
@@ -92,11 +91,12 @@ function updateTimeLeft(){
   }else{
     var timerString = secs2timeString(timerSeconds);
     timerValDiv.innerHTML = timerString + " remaining.";
-    timerSeconds -= 1;
-    $('.continue-from-timer').click(function() {
-      clearInterval(timerInterval);
-    });    
+    timerSeconds -= 1; 
   }
+  activateLightBox();
+  $('.continue-from-timer').click(function() {
+    clearInterval(timerInterval);
+  });   
 }
 
 function activateLightBox(){
@@ -269,7 +269,7 @@ function displayCategories() {
     listingDiv.id = "listing" + index;
     listingDiv.innerHTML =  "<img class=\"profilePic\" src=\"" + listing.image_url + "\">";
     listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
-    listingDiv.appendChild(createFunctionDetail(listing.display_phone, "name"));
+    listingDiv.appendChild(createFunctionDetail(listing.display_phone, "phone_num"));
 
 
     var expandButton = document.createElement("a");
