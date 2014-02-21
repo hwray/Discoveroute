@@ -99,7 +99,7 @@ input.form-control
   visibility: hidden;
 }
 
-.timerDiv{
+.greyDiv{
   background-color: #444444;
   padding-left: auto;
   padding-right: auto;
@@ -116,7 +116,7 @@ input.form-control
 }
 
 
-.timerDiv h3{
+#timer h3{
   color: white;
 }
 
@@ -172,4 +172,20 @@ input.form-control
 
 #timer-text{
   color: white;
+}
+
+.detourName{
+  color: #FF9805;
+}
+
+#recentDetours p{
+  color: white;
+}
+
+#recentDetours a{
+  color: #FEC700;
+}
+
+.detourFields{
+  display: none;
 }

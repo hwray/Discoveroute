@@ -185,10 +185,10 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 =============================================
 */
 #recentDetours {
-	position: absolute;
+/*	position: absolute;
 	bottom: -100px;
 	width: 100%;
 	padding: 0px;
-	min-height: 100px;
-	background-color: #444444;
+	min-height: 100px;*/
+	/*background-color: #444444;*/
 }

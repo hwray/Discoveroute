@@ -12,7 +12,6 @@ block styles
     link(rel="apple-touch-icon" href="/images/R.png")
 
 block content
-  div(id="recentDetours")
   div(id="interaction-bar" class='interaction-bar')
     div(id="form-group" class="form-group")
 
@@ -43,7 +42,7 @@ block content
           button(type='submit' class="greyBtn text-center" id="categoriesButton")
             h3(class='text-center category') DISCOVER!
     div(id="detourDisplay")
-    div(id="timer" class="timerDiv row-fluid")
+    div(id="timer" class="greyDiv row-fluid")
       h3(class='text-center') What's your ideal arrival time?
       div(id="datetimepicker3" class="input-append date text-center")
         input(id="datePickerInput" data-format="hh:mm:ss" type="text")
@@ -51,10 +50,11 @@ block content
           i(data-time-icon="icon-time" data-date-icon="icon-calendar")
       div(class="timeButtonDiv" class="text-center")
         button(type="button" class="btn btn-default large-btn" id="timeButton") DISCOVER!
-      include timer.html
       span(id="timerValue")
       div(id="duration")
       div(id="durationVal")
+    div(id="recentDetours" class="greyDiv row-fluid")
+
   div(id="fade" class="lightbox")
     div(id="light" class="timer_content")
       div(class='timer-alert')
@@ -65,4 +65,6 @@ block content
 block scripts
     script(src='https://maps.googleapis.com/maps/api/js?sensor=true')
     script(src='javascripts/index.js')
+    include timer.html
+
 
