@@ -27,6 +27,7 @@ $(document).ready(function() {
   timeSidebarButton.click(timerScreen);
   categoriesButton.click(categoriesScreen);
 
+  $('.logo-button').click(destinationScreen);
 
   // CHANGES
   activitiesButton.click(function(e) {
@@ -50,6 +51,8 @@ $(document).ready(function() {
   });
 
 })
+
+
 
 function showSavedDetours(data, status){
   var detours = data;
