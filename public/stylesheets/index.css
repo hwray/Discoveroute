@@ -189,3 +189,9 @@ input.form-control
 .detourFields{
   display: none;
 }
+
+.saveButton {
+  background: #FF9805 !important;
+  border: none !important;
+  color: white;
+}

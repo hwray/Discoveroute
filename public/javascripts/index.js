@@ -413,71 +413,45 @@ function createListing(listing, index) {
           $('.detour-directions').hide();
           listDirections(response, status, nextDirections); 
 
-          var saveButton = document.createElement("a");
-          saveButton.setAttribute('class', 'saveButton');
-          saveButton.innerHTML = "I'm all done. Save this detour!";
           $(".continue-directions").append("<br><br>");
+          var doneText = document.createElement("p"); 
+          doneText.setAttribute('id', 'doneText'); 
+          doneText.innerHTML = "<b>Arrived at your destination?</b>"
+          $(".continue-directions").append(doneText);
 
-          var titleText = document.createElement("textarea"); 
-          titleText.setAttribute('id', 'detourTitleText')
-          titleText.setAttribute('placeholder', 'Enter a name for this detour!'); 
-
-          $(".continue-directions").append(titleText);
-          $(".continue-directions").append("<br><br>");
-          
+          var saveButton = document.createElement("button");
+          saveButton.setAttribute('class', 'btn');
+          saveButton.setAttribute('class', 'btn-default');
+          saveButton.setAttribute('class', 'saveButton'); 
+          saveButton.innerHTML = "Save this detour!";
           $(".continue-directions").append(saveButton);
+
+          $(".continue-directions").append("  ");
+
+          var exitButton = document.createElement("button");
+          exitButton.setAttribute('class', 'btn');
+          exitButton.setAttribute('class', 'btn-default');
+          exitButton.setAttribute('class', 'saveButton'); 
+          exitButton.innerHTML = "Meh. Let's try again.";
+          $(".continue-directions").append(exitButton);
 
           saveButton.onclick = function(e) {
             e.preventDefault(); 
-            
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1; 
 
-            var yyyy = today.getFullYear();
-            if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
+            var checkText = document.getElementById("detourTitleText"); 
+            if (checkText == null) {
+              var titleText = document.createElement("textarea"); 
+              titleText.setAttribute('id', 'detourTitleText')
+              titleText.setAttribute('placeholder', 'Enter a name for this detour!'); 
+              $("#doneText").after(titleText);
+              $('#detourTitleText').after("<br>"); 
+            } else {
+              saveDetour(); 
+            }
+          }
 
-            var title = $('#detourTitleText').val(); 
-            var date = today;
-            var distance = origRoute.routes[0].legs[0].distance.text;
-            var duration = origRoute.routes[0].legs[0].duration.text; 
-            var category = "none";
-            var nameA = origRoute.Tb.origin;
-            var nameB = origRoute.Tb.destination;
-            var nameC = detourListing.name;
-            var addressA = origRoute.routes[0].legs[0].start_address; 
-            var addressB = origRoute.routes[0].legs[0].end_address; 
-            var addressC = detourListing.location.display_address[0] + " " + detourListing.location.display_address[1]; 
-            var travelMode = origRoute.Tb.travelMode;
-            var image = detourListing.image_url;
-
-
-
-            console.log(image); 
-
-            
-            var json = {
-              "title": title,
-              "date": date,
-              "distance": distance, 
-              "duration": duration,
-              "category": category,
-              "nameA": nameA,
-              "addressA": addressA,
-              "nameB": nameB,
-              "addressB": addressB,
-              "nameC": nameC,
-              "addressC": addressC,
-              "travelMode": travelMode,
-              "comment": "No comment", 
-              "image": image
-            };
-
-            
-
-            $.post('/detours/new', json, function() {
-              window.location.href = '/'; // reload the page
-            });
+          exitButton.onclick = function(e) {
+            window.location.href = '/';
           }
 
 
@@ -486,6 +460,52 @@ function createListing(listing, index) {
         }
       });
     }
+  }
+
+  function saveDetour() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+
+    var yyyy = today.getFullYear();
+    if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
+
+    var title = $('#detourTitleText').val(); 
+    var date = today;
+    var distance = origRoute.routes[0].legs[0].distance.text;
+    var duration = origRoute.routes[0].legs[0].duration.text; 
+    var category = "none";
+    var nameA = origRoute.Tb.origin;
+    var nameB = origRoute.Tb.destination;
+    var nameC = detourListing.name;
+    var addressA = origRoute.routes[0].legs[0].start_address; 
+    var addressB = origRoute.routes[0].legs[0].end_address; 
+    var addressC = detourListing.location.display_address[0] + " " + detourListing.location.display_address[1]; 
+    var travelMode = origRoute.Tb.travelMode;
+    var image = detourListing.image_url;
+
+    var json = {
+      "title": title,
+      "date": date,
+      "distance": distance, 
+      "duration": duration,
+      "category": category,
+      "nameA": nameA,
+      "addressA": addressA,
+      "nameB": nameB,
+      "addressB": addressB,
+      "nameC": nameC,
+      "addressC": addressC,
+      "travelMode": travelMode,
+      "comment": "No comment", 
+      "image": image
+    };
+
+
+
+    $.post('/detours/new', json, function() {
+      window.location.href = '/'; // reload the page
+    });
   }
 
   
