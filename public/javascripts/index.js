@@ -35,7 +35,7 @@ $(document).ready(function() {
   $("#categories").hide();
   $('#timer').hide();
   $('#recentDetours').hide();
-
+  $('#loading-spinner').hide();
   displayCategories();
   $('#categoriesButton').click(categoriesClick);
 
@@ -268,6 +268,7 @@ function displayCategories() {
         type: "POST",
         context: document.body,
         data: yelpData,
+        beforeSend: function() { $('#loading-spinner').show(); },
         success: [yelpCallback, activitiesScreen]
       });
     }
@@ -279,8 +280,8 @@ function displayCategories() {
 
   function yelpCallback(data, textStatus, jqXHR) {
 
-    //yelpListings = data; 
-    yelpListings = [];
+    $('#loading-spinner').hide();
+    yelpListings = data; 
 
     var detoursDiv = document.getElementById("detourDisplay"); 
     var displayIndex = 0;
