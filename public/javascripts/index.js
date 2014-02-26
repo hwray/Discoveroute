@@ -28,8 +28,8 @@ var detourIndex;
 
 var yelpListings; 
 
-var categories = ["coffee", "food", "shopping", "cafes", "nightlife"]; 
-var categoryColors = ["#A35E5A", "#FFA100", "#82105b", "#44a16c", "#379788"];
+var categories = ["restaurants", "shopping", "cafes", "nightlife", "arts", "grocery"]; 
+var categoryColors = ["#5A132c", "#761c4b", "#eed258", "#44a16c", "#379788", "#3d6585"];
 
 $(document).ready(function() {
   $("#categories").hide();
@@ -188,7 +188,7 @@ function displayCategories() {
     // hides the form box when the categories are shown
     // $("#form-group").hide();
 
-    var categoryDiv = $('.categoryGoContainer'); 
+    var categoryDiv = $('#categories-form'); 
     var categoryText = ""; 
     for (var i in categories) {
       // categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
@@ -248,6 +248,12 @@ function displayCategories() {
 
     var detoursDiv = document.getElementById("detourDisplay"); 
     var displayIndex = 0;
+
+    // remove all elements currently in the detourDiv
+    while(detoursDiv.hasChildNodes()){
+      detoursDiv.removeChild(detoursDiv.lastChild);
+    }
+
     for (var i = 0; i < data.length; i++) {
       if(data[i].length > 0) {
         // add listing div to carousel
@@ -282,14 +288,25 @@ function createListing(listing, index) {
     expandButton.innerHTML = "Expand";
     listingDiv.appendChild(expandButton);
 
+    var listingInfo = document.createElement("p");
+    listingInfo.innerHTML = listing.location.display_address;
+    listingInfo.className = 'listingInfo'
+
+    console.log(listing);
+
+    listingInfo.innerHTML += '<br />' + listing.snippet_text;
+    listingInfo.style.display = 'none';
+    listingDiv.appendChild(listingInfo);
+
     expandButton.onclick = function() {
       $(listingDiv).css("min-width", $("body").width()-5);
-      $(listingDiv).height($("body").height() * 0.8);
+      // $(listingDiv).height($("body").height() * 0.8);
       $(".listing").hide();
       $(listingDiv).show();
 
       // switch what buttons are displayed 
       $(listingDiv).children("p").children("a").toggle();
+      $(listingDiv).find('.listingInfo').toggle();
     }; 
 
     var returnButton = document.createElement("a");
@@ -299,6 +316,7 @@ function createListing(listing, index) {
 
     returnButton.onclick = function() {
       $(listingDiv).children("p").children("a").toggle();
+      $(listingDiv).find('.listingInfo').toggle();
       $(".listing").removeAttr("style");
     }
 
