@@ -43,14 +43,16 @@ $(document).ready(function() {
 
 
 $('#timeButton').click(function() {
-  var timeInput= $('#datePickerInput');
+  var timeInput= $('#datetimepicker4').find('input');
   var timeEnd = timeInput.val().toString();//hh:mm:ss
+  var momentTime = new Date(timeInput);
   var timeEndSecs = parseTimeString(timeEnd);
+
   var timeBegin = new Date();
   var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
   var timeRemaining = timeEndSecs - timeBeginSecs;
   var extraTime = timeRemaining - timeAB;
-  var minDetourTime = 15*60;
+  var minDetourTime = 15*60; // 15 minutes
   if(timeRemaining < 0){
     console.log("Please select a time after the present time");
   }else if(extraTime < 0){
@@ -61,22 +63,10 @@ $('#timeButton').click(function() {
     console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
   }
   destinationTime = timeEndSecs;
-  //setAlarm(time);
 });
 
 function setAlarm(seconds){
-  var durationText = timeABstring;
-  var durationVal = timeAB;
-  var minDetourTime = 15*60;//minimum detour time maybe about 15 minutes, including driving/parking
-  if(seconds < 0){
-    //time entered is before time right now
-  }else if(seconds < durationVal){
-    //user better leave for destination now, rather than detour
-  }else if(seconds < durationVal + minDetourTime){
-    //user will not have time to take a detour unless they can be late
-  }else{
-    //do the detour
-  }
+
   timerSeconds = seconds;
   clearInterval(timerInterval);  
   timerInterval = setInterval(updateTimeLeft, 1000);
@@ -225,6 +215,7 @@ function displayCategories() {
 
   function toggleCategorySelect(e){
     $(this).toggleClass('selectedCategory');
+    console.log('hellloooo');
   }
 
   function categoriesClick(e){
@@ -616,16 +607,18 @@ function addMarker(lat, lng) {
   });
 }
 
-//returns time in seconds, given "hh:mm:ss"
+//returns time in seconds, given "hh:mm AM/PM"
 function parseTimeString(str){
-  var hours = str.substring(0,2);
-  var minutes = str.substring(3,5);
-  var seconds = str.substring(6,8);
-  if(hours.charAt(0) == '0') hours = hours.substring(1);
+  var colonDelim = str.search(':');
+  var spaceDelim = str.search (' ');
+  var hours = str.substring(0, colonDelim);
+  var minutes = str.substring(colonDelim + 1, spaceDelim);
+  var AmPm = str.substring(spaceDelim + 1);
+  if(AmPm == 'PM') hours = parseInt(hours) + 12;
   if(minutes.charAt(0) == '0') minutes = minutes.substring(1);
-  if(seconds.charAt(0) == '0') seconds = seconds.substring(1);
-  return parseInt(seconds) + parseInt(minutes*60) + parseInt(hours*3600);
+  return parseInt(minutes*60) + parseInt(hours*3600);
 }
+
 
 function secs2timeString(seconds){
   var str = "";
