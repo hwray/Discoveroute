@@ -190,8 +190,9 @@ input.form-control
   display: none;
 }
 
-.saveButton {
+.discoverButton {
   background: #FF9805 !important;
   border: none !important;
   color: white;
+  -webkit-filter: drop-shadow(1px 1px 0px #444444);
 }

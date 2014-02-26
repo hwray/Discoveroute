@@ -287,16 +287,16 @@ function createListing(listing, index) {
     listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
     listingDiv.appendChild(createFunctionDetail(listing.display_phone, "phone_num"));
 
-
-    var expandButton = document.createElement("a");
-    expandButton.innerHTML = "Expand";
+    var expandButton = document.createElement("span"); 
+    expandButton.setAttribute('class', 'fa fa-chevron-circle-up'); 
+    expandButton.setAttribute('style', "color:#FF9805; font-size:16pt;"); 
     listingDiv.appendChild(expandButton);
 
     var listingInfo = document.createElement("p");
     listingInfo.innerHTML = listing.location.display_address;
     listingInfo.className = 'listingInfo'
 
-    console.log(listing);
+    // console.log(listing);
 
     listingInfo.innerHTML += '<br />' + listing.snippet_text;
     listingInfo.style.display = 'none';
@@ -309,25 +309,34 @@ function createListing(listing, index) {
       $(listingDiv).show();
 
       // switch what buttons are displayed 
-      $(listingDiv).children("p").children("a").toggle();
+      $(listingDiv).children("button").toggle();
+      $(listingDiv).children("span").toggle();
       $(listingDiv).find('.listingInfo').toggle();
     }; 
 
-    var returnButton = document.createElement("a");
-    returnButton.innerHTML = "Return to Options";
+    var discoverButton = document.createElement("button");
+    discoverButton.setAttribute('class', 'btn');
+    discoverButton.setAttribute('class', 'btn-default');
+    discoverButton.setAttribute('class', 'discoverButton'); 
+    discoverButton.innerHTML = "Discover!";
+    discoverButton.style.display = "none";
+    listingDiv.appendChild(discoverButton);
+
+    listingDiv.appendChild(document.createElement("br")); 
+    listingDiv.appendChild(document.createElement("br")); 
+
+    var returnButton = document.createElement("span"); 
+    returnButton.setAttribute('class', 'fa fa-chevron-circle-down'); 
+    returnButton.setAttribute('style', "color:#FF9805; font-size:16pt;"); 
     returnButton.style.display = "none";
     listingDiv.appendChild(returnButton);
 
     returnButton.onclick = function() {
-      $(listingDiv).children("p").children("a").toggle();
+      $(listingDiv).children("button").toggle();
+      $(listingDiv).children("span").toggle();
       $(listingDiv).find('.listingInfo').toggle();
       $(".listing").removeAttr("style");
     }
-
-    var discoverButton = document.createElement("a");
-    discoverButton.innerHTML = "Discover";
-    discoverButton.style.display = "none";
-    listingDiv.appendChild(discoverButton);
 
 
     discoverButton.onclick = function() {
@@ -413,7 +422,7 @@ function createListing(listing, index) {
           var saveButton = document.createElement("button");
           saveButton.setAttribute('class', 'btn');
           saveButton.setAttribute('class', 'btn-default');
-          saveButton.setAttribute('class', 'saveButton'); 
+          saveButton.setAttribute('class', 'discoverButton'); 
           saveButton.innerHTML = "Save this detour!";
           $(".continue-directions").append(saveButton);
 
@@ -422,7 +431,7 @@ function createListing(listing, index) {
           var exitButton = document.createElement("button");
           exitButton.setAttribute('class', 'btn');
           exitButton.setAttribute('class', 'btn-default');
-          exitButton.setAttribute('class', 'saveButton'); 
+          exitButton.setAttribute('class', 'discoverButton'); 
           exitButton.innerHTML = "Meh. Let's try again.";
           $(".continue-directions").append(exitButton);
 
