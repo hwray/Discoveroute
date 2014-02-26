@@ -147,6 +147,19 @@ function initialize() {
   directionsService = new google.maps.DirectionsService();
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsDisplay.setMap(map);
+
+  var inputStart = /** @type {HTMLInputElement} */(
+      document.getElementById('routeStart'));
+  var autocompleteStart = new google.maps.places.Autocomplete(inputStart);
+  autocompleteStart.bindTo('bounds', map);
+
+
+  var inputEnd = /** @type {HTMLInputElement} */(
+      document.getElementById('routeEnd'));
+  var autocompleteEnd = new google.maps.places.Autocomplete(inputEnd);
+  autocompleteEnd.bindTo('bounds', map);
+
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
