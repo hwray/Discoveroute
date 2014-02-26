@@ -28,7 +28,7 @@ var detourIndex;
 
 var yelpListings; 
 
-var categories = ["restaurants", "shopping", "cafes", "nightlife", "arts", "grocery"]; 
+var categories = ["dining", "shopping", "cafes", "nightlife", "arts", "grocery"]; 
 var categoryColors = ["#5A132c", "#761c4b", "#eed258", "#44a16c", "#379788", "#3d6585"];
 
 $(document).ready(function() {
