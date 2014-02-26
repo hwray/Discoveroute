@@ -4,19 +4,25 @@ html
   body
     // left sidebar navigation
     nav(id='sidebar-menu' class='sidebar')
-      ul(class='text-center')
+      ul(id='sidebar-list' class='text-center')
         li
           a(href='#' class='sidebar-destination') 
             span(class='glyphicon glyphicon-map-marker') 
             | Destination
         li
-          a(href='#' class='sidebar-time')
-            span(class='fa fa-clock-o') 
-            | Time
+          div
+            a(href='#' class='sidebar-time')
+              span(class='fa fa-clock-o') 
+              | Time
+          div(class='inactive-icon')
+            span(class='fa fa-circle')
         li
-          a(href='#' class='sidebar-categories')
-            span(class='fa fa-ellipsis-h')
-            | Categories
+          div
+            a(href='#' class='sidebar-categories')
+              span(class='fa fa-ellipsis-h')
+              | Categories
+          div(class='inactive-icon')
+            span(class='fa fa-circle')
         li
           a(href='#' class='sidebar-activities')
             span(class='fa fa-floppy-o') 

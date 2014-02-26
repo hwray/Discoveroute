@@ -44,6 +44,9 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	width: 100%;
 	padding: 0px;
 	min-height: 20%;
+	max-height: 90%;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
 
@@ -191,4 +194,14 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	padding: 0px;
 	min-height: 100px;*/
 	/*background-color: #444444;*/
+}
+
+.inactive-icon
+{
+	display: none;
+}
+
+.inactive-icon > span
+{
+	font-size: 12px;
 }
