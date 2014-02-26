@@ -36,12 +36,15 @@ block content
       input(type="text" class="form-control" id="routeStart" placeholder="Start")
       input(type="text" class="form-control" id="routeEnd" placeholder="End")
       button(type="submit" class="btn btn-default large-btn" id="routeButton") DISCOVER!
+    
     div(id="categories")
+      //- div(class='row-fluid')
+      //-   h3 Select a few interesting categories
       div(id="categories-form")
-        div(class='categoryOption categoryGoContainer col-xs-6 col-sm-6 col-md-6 col-lg-6 col-lg-offset-6')
-          button(type='submit' class="greyBtn text-center" id="categoriesButton")
-            h3(class='text-center category') DISCOVER!
+        button(type="submit" class="btn btn-default large-btn" id="categoriesButton") DISCOVER!
+
     div(id="detourDisplay")
+    
     div(id="timer" class="greyDiv row-fluid")
       h3(class='text-center') What's your ideal arrival time?
       div(id="datetimepicker3" class="input-append date text-center")
