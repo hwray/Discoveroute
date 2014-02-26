@@ -375,7 +375,10 @@ function displayCategories() {
     discoverButton.onclick = function() {
 
       //$("#interaction-bar").css("max-height", "90%");
-      var listingDiv = this.parentNode.parentNode; 
+      var listingDiv = this.parentNode; 
+      $(listingDiv).children("button").toggle();
+      $(listingDiv).children("span").hide();
+
       var listingID = listingDiv.id.substring(7); 
       var listing = yelpListings[listingID][0]; 
       detourListing = yelpListings[listingID][0]
@@ -426,8 +429,11 @@ function displayCategories() {
     var nextDirections = document.createElement("div");
     nextDirections.setAttribute('class', 'continue-directions');
     
-    var continueButton = document.createElement("a");
+    var continueButton = document.createElement("button");
     continueButton.setAttribute('class', 'continueButton');
+    continueButton.setAttribute('class', 'btn');
+    continueButton.setAttribute('class', 'btn-default');
+    continueButton.setAttribute('class', 'discoverButton'); 
     continueButton.innerHTML = "I've arrived at my detour! ";
     
     nextDirections.appendChild(continueButton);
@@ -437,7 +443,7 @@ function displayCategories() {
       var timeBegin = new Date();
       var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
 
-      $('.continueButton').hide();
+      $(this).hide();
 
       requestDirections(pointC, pointB, mode, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
