@@ -184,6 +184,11 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	color: #FEC700;
 }
 
+#spinner{
+	margin-top: 30%;	
+	color: rgba(255, 255, 255, 1);
+}
+
 /* RECENT DETOURS BAR
 =============================================
 */
