@@ -108,19 +108,29 @@ $(document).ready(function() {
 
 function slideLeftMenu(e){
   e.preventDefault();
+  e.stopPropagation();
   var sidebar = $("#sidebar-menu");
-  if (sidebar.css("left") == "-100px") {
-    $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
-    $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false}, function() {});
-    $("#interaction-bar").animate({left:"100px"}, { duration: 200, queue: false}, function() {});
-
+  if (sidebarIsVisible()) {
+    slideHide();
   } else {
-    $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false}, function() {});
-    $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
-    $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
+    slideView();
   }
+}
 
+function sidebarIsVisible() {
+  return (sidebar.css("left") == "0px")
+}
 
+function slideView() {
+  $("#sidebar-menu").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
+  $("#map_canvas").animate({left:"100px"}, { duration: 200, queue: false}, function() {});
+  $("#interaction-bar").animate({left:"100px"}, { duration: 200, queue: false}, function() {});
+}
+
+function slideHide() {
+  $("#sidebar-menu").animate({left:"-100px"}, { duration: 200, queue: false}, function() {});
+  $("#map_canvas").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
+  $("#interaction-bar").animate({left:"0px"}, { duration: 200, queue: false}, function() {});
 }
 
 function initialize() {
@@ -150,12 +160,28 @@ function initialize() {
   autocompleteEnd.bindTo('bounds', map);
 
 
+  $("html").click(function(event) {
+    if (sidebarIsVisible)
+      slideHide();
+  });
+
+  $("#sidebar-menu").click(function(event) {
+    event.stopPropagation();
+  });
+
+  $($("#sidebar-list").children()[1].children).toggle();
+  $($("#sidebar-list").children()[2].children).toggle();
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
 function routeButtonClick(e) {
+
+  $($("#sidebar-list").children()[1].children).toggle();
+  $($("#sidebar-list").children()[2].children).toggle();
+
+  displayOptions();
   e.preventDefault(); 
   var start = document.getElementById("routeStart").value; 
   var end = document.getElementById("routeEnd").value; 
@@ -175,6 +201,10 @@ function routeButtonClick(e) {
 
 }
 
+function displayOptions() {
+  
+}
+
 
 function requestDirections(start, end, vehicle, callback) {
   var request = {
@@ -186,14 +216,12 @@ function requestDirections(start, end, vehicle, callback) {
   directionsService.route(request, callback);
 }
 
-
 function displayCategories() {
-    // hides the form box when the categories are shown
-    // $("#form-group").hide();
+  console.log("displaying categories");
 
-    var categoryDiv = $('#categories-form'); 
-    var categoryText = ""; 
-    for (var i in categories) {
+  var categoryDiv = $('#categories-form'); 
+  var categoryText = ""; 
+  for (var i in categories) {
       // categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
       categoryText += '<input type="checkbox" class="input_hidden" name="categorySelect" id="category'+[i]+'" value="'+ categories[i]+'">';
       categoryText += '<label for="category'+[i]+'">';
@@ -209,14 +237,17 @@ function displayCategories() {
     for (var i in categories) {
       var categoryButton = document.getElementById("categoryDiv" + i); 
       $(categoryButton).css('background-color', categoryColors[i]);
-      $(categoryButton).click(toggleCategorySelect);
+      //$(categoryButton).click(toggleCategorySelect);
+      $(categoryButton).click(function() {
+        $(this).toggleClass('selectedCategory');
+        if ($(".selectedCategory").length == 0) {
+          $("#categoriesButton").attr("disabled", "true");
+        } else {
+          $("#categoriesButton").removeAttr("disabled");
+        }
+      });
     }
-  }
-
-  function toggleCategorySelect(e){
-    $(this).toggleClass('selectedCategory');
-    console.log('hellloooo');
-  }
+}
 
   function categoriesClick(e){
     var searchString = "";
@@ -248,7 +279,8 @@ function displayCategories() {
 
   function yelpCallback(data, textStatus, jqXHR) {
 
-    yelpListings = data; 
+    //yelpListings = data; 
+    yelpListings = [];
 
     var detoursDiv = document.getElementById("detourDisplay"); 
     var displayIndex = 0;
@@ -263,6 +295,7 @@ function displayCategories() {
         // add listing div to carousel
         detoursDiv.appendChild(createListing(data[i][0], displayIndex));
         displayIndex++;
+        yelpListings.push(data[i]);
         // add marker to map
         var addressString = data[i][0].location.display_address[0] + ", " + data[i][0].location.display_address[1]; 
         var request = {
@@ -279,7 +312,7 @@ function displayCategories() {
     }
   }
 
-function createListing(listing, index) {
+  function createListing(listing, index) {
     var listingDiv = document.createElement("DIV");
     listingDiv.className = "listing";
     listingDiv.id = "listing" + index;
@@ -340,6 +373,8 @@ function createListing(listing, index) {
 
 
     discoverButton.onclick = function() {
+
+      //$("#interaction-bar").css("max-height", "90%");
       var listingDiv = this.parentNode.parentNode; 
       var listingID = listingDiv.id.substring(7); 
       var listing = yelpListings[listingID][0]; 
@@ -401,7 +436,7 @@ function createListing(listing, index) {
     continueButton.onclick = function() {
       var timeBegin = new Date();
       var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
-          
+
       $('.continueButton').hide();
 
       requestDirections(pointC, pointB, mode, function(response, status) {
@@ -459,8 +494,8 @@ function createListing(listing, index) {
           // error while retrieving directions
         }
       });
-    }
-  }
+}
+}
 
   function saveDetour() {
     var today = new Date();
@@ -508,24 +543,23 @@ function createListing(listing, index) {
     });
   }
 
-  
 
 
-  function geocodeCallback(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-        map: map,
-        position: results[0].geometry.location
-      });
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
+function geocodeCallback(results, status) {
+  if (status == google.maps.GeocoderStatus.OK) {
+    map.setCenter(results[0].geometry.location);
+    var marker = new google.maps.Marker({
+      map: map,
+      position: results[0].geometry.location
+    });
+  } else {
+    alert('Geocode was not successful for the following reason: ' + status);
   }
+}
 
 
-  function showDirections(response, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
+function showDirections(response, status) {
+  if (status == google.maps.DirectionsStatus.OK) {
       origRoute = response; // jQuery.extend(true, {}, response);
       pointA = response.origin; 
       pointB = response.destination; 
@@ -556,15 +590,15 @@ function createListing(listing, index) {
           //addMarker(lat, lng); 
         }
       }
-    directionsDisplay.setDirections(response);
+      directionsDisplay.setDirections(response);
 
-    var duration = response.routes[0].legs[0].duration.text;
-    var durationVal = response.routes[0].legs[0].duration.value;
-    timeAB = durationVal;
-    timeABstring = duration;
+      var duration = response.routes[0].legs[0].duration.text;
+      var durationVal = response.routes[0].legs[0].duration.value;
+      timeAB = durationVal;
+      timeABstring = duration;
 
     //console.log(duration); 
- 
+
   } else {
 
   }
