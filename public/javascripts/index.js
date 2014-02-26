@@ -281,7 +281,7 @@ function displayCategories() {
   function yelpCallback(data, textStatus, jqXHR) {
 
     $('#loading-spinner').hide();
-    yelpListings = data; 
+    yelpListings = []; 
 
     var detoursDiv = document.getElementById("detourDisplay"); 
     var displayIndex = 0;
