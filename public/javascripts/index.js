@@ -160,6 +160,18 @@ function initialize() {
   var autocompleteEnd = new google.maps.places.Autocomplete(inputEnd);
   autocompleteEnd.bindTo('bounds', map);
 
+  if ("geolocation" in navigator) {
+    /* geolocation is available */
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); 
+      map.setCenter(currentLocation);
+      addMarker(position.coords.latitude, position.coords.longitude); 
+    });
+  } else {
+    /* geolocation IS NOT available */
+
+  }
+
 
   $("html").click(function(event) {
     if (sidebarIsVisible)
