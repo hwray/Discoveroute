@@ -330,7 +330,10 @@ function displayCategories() {
     var listingDiv = document.createElement("DIV");
     listingDiv.className = "listing";
     listingDiv.id = "listing" + index;
-    listingDiv.innerHTML =  "<img class=\"profilePic\" src=\"" + listing.image_url + "\">";
+    var listingImg = document.createElement("img"); 
+    listingImg.setAttribute("class", "profilePic"); 
+    listingImg.setAttribute("src", listing.image_url); 
+    listingDiv.appendChild(listingImg); 
     listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
     listingDiv.appendChild(createFunctionDetail(listing.display_phone, "phone_num"));
 
@@ -349,7 +352,8 @@ function displayCategories() {
     listingInfo.style.display = 'none';
     listingDiv.appendChild(listingInfo);
 
-    expandButton.onclick = function() {
+    var expandListing = function() {
+
       $(listingDiv).css("min-width", $("body").width()-5);
       // $(listingDiv).height($("body").height() * 0.8);
       $(".listing").hide();
@@ -359,6 +363,23 @@ function displayCategories() {
       $(listingDiv).children("button").toggle();
       $(listingDiv).children("span").toggle();
       $(listingDiv).find('.listingInfo').toggle();
+    }; 
+
+    var hideListing = function() {
+      $(listingDiv).children("button").toggle();
+      $(listingDiv).children("span").toggle();
+      $(listingDiv).find('.listingInfo').toggle();
+      $(".listing").removeAttr("style");
+    }; 
+
+    expandButton.onclick = expandListing; 
+
+    listingImg.onclick = function() {
+      if ($(listingDiv).find('.listingInfo').css("display") == "none") {
+        expandListing(); 
+      } else {
+        hideListing(); 
+      }
     }; 
 
     var discoverButton = document.createElement("button");
@@ -378,12 +399,7 @@ function displayCategories() {
     returnButton.style.display = "none";
     listingDiv.appendChild(returnButton);
 
-    returnButton.onclick = function() {
-      $(listingDiv).children("button").toggle();
-      $(listingDiv).children("span").toggle();
-      $(listingDiv).find('.listingInfo').toggle();
-      $(".listing").removeAttr("style");
-    }
+    returnButton.onclick = hideListing; 
 
 
     discoverButton.onclick = function() {
