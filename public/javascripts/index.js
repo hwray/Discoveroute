@@ -140,7 +140,8 @@ function initialize() {
   var map_options = {
     center: new google.maps.LatLng(37.424, -122.166),
     zoom: 14,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.ROADMAP, 
+    mapTypeControl: false
   }
   map = new google.maps.Map(map_canvas, map_options)
   geocoder = new google.maps.Geocoder();
