@@ -14,3 +14,11 @@ exports.index = function(req, res){
 		res.render('index', { 'detours': detours });
 	}
 };
+
+exports.categoriesV2 = function (req, res){
+	models.Detour.find().sort('date').exec(renderIndex2);
+
+	function renderIndex2(err, detours) {
+		res.render('indexB', { 'detours': detours });
+	}
+}
