@@ -143,8 +143,14 @@ function initialize() {
   var map_options = {
     center: new google.maps.LatLng(37.424, -122.166),
     zoom: 14,
-    mapTypeId: google.maps.MapTypeId.ROADMAP, 
-    mapTypeControl: false
+    panControl: false,
+    scaleControl: false,
+    zoomControl: false,
+    streetViewControl: false,
+    mapTypeControlOptions: {
+      position: google.maps.ControlPosition.LEFT_TOP
+    }, 
+    mapTypeId: google.maps.MapTypeId.ROADMAP
   }
   map = new google.maps.Map(map_canvas, map_options)
   geocoder = new google.maps.Geocoder();
@@ -319,6 +325,7 @@ function displayCategories() {
     yelpListings = []; 
 
     var detoursDiv = document.getElementById("detourDisplay"); 
+
     var displayIndex = 0;
 
     // remove all elements currently in the detourDiv
@@ -357,7 +364,7 @@ function displayCategories() {
     listingImg.setAttribute("src", listing.image_url); 
     listingDiv.appendChild(listingImg); 
     listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
-    listingDiv.appendChild(createFunctionDetail(listing.display_phone, "phone_num"));
+    // listingDiv.appendChild(createFunctionDetail(listing.display_phone, "phone_num"));
 
     var expandButton = document.createElement("span"); 
     expandButton.setAttribute('class', 'fa fa-chevron-circle-up'); 
