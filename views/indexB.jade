@@ -1,0 +1,84 @@
+extends layout.jade
+
+block styles
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="apple-mobile-web-app-status-bar-style" content="black")
+    link(rel='stylesheet' href='/stylesheets/categories.css')
+    link(rel='stylesheet' href='/stylesheets/places.css')
+    link(href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet")
+    link(rel='stylesheet' href='/stylesheets/index.css')
+    link(rel="stylesheet" href='/stylesheets/style.css')
+    link(rel="apple-touch-icon" href="/images/R.png")
+
+block content
+  div(id="interaction-bar" class='interaction-bar')
+    div(id="form-group" class="form-group")
+
+      div(class="btn-group vehicleSelect")
+        div(class='btn-group')
+          label
+            input(type='radio' class='input_hidden' name='vehicleOptions' id='vehicleOptions' value='DRIVING' checked) 
+            img(src='images/car.png')
+        div(class='btn-group')
+          label
+            input(type='radio' class='input_hidden' name='vehicleOptions' id='vehicleOptions' value='TRANSIT') 
+            img(src='images/bus.png')
+        div(class='btn-group')
+          label  
+            input(type='radio' class='input_hidden' name='vehicleOptions' id='vehicleOptions' value='BICYCLING') 
+            img(src='images/bike.png')
+        div        
+          label
+            input(type='radio' class='input_hidden' name='vehicleOptions' id='vehicleOptions' value='WALKING') 
+            img(src='images/walk.png')
+
+      input(type="text" class="form-control" id="routeStart" placeholder="Start")
+      input(type="text" class="form-control" id="routeEnd" placeholder="End")
+      button(type="submit" class="btn btn-default large-btn" id="routeButton") DISCOVER!
+    
+    div(id="categories")
+      //- div(class='row-fluid')
+      //-   h3 Select a few interesting categories
+      div(id="categories-form")
+        button(type="submit" class="btn btn-default large-btn" id="categoriesButton" disabled) DISCOVER!
+
+    div(id="detourDisplay")
+    
+    div(id="timer" class="greyDiv row-fluid")
+      h3(class='text-center') What's your ideal arrival time?
+      
+      div(class="col-md-10")
+        div(class="form-group")
+          div(class='input-group time' id='datetimepicker4')
+            input(type='text' class="form-control")
+            span(class="input-group-addon")
+              span(class="glyphicon glyphicon-time")
+  
+      div(class="timeButtonDiv" class="text-center")
+        button(type="button" class="btn btn-default large-btn" id="timeButton") DISCOVER!
+      span(id="timerValue")
+      div(id="duration")
+      div(id="durationVal")
+    div(id="recentDetours" class="greyDiv row-fluid")
+
+  div(id="fade" class="lightbox")
+    div(id="light" class="timer_content")
+      div(class='timer-alert')
+        h2(class='text-center' id='timer-text')
+        p(class='text-center') 
+          a(class='continue-from-timer') Continue to original destination.
+
+  div(class='lightbox text-center' id='loading-spinner')
+    span(class="fa fa-spinner fa-spin fa-5x" id='spinner') 
+
+  div(id="map_canvas")
+block scripts
+    script(src='https://maps.googleapis.com/maps/api/js?sensor=true')
+    script(src='https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places')
+    script(src='javascripts/index2.js')
+    script(type="text/javascript" src="javascripts/moment.js")
+    script(src="javascripts/bootstrap-datetimepicker.js")
+    include timer.html
+
+
+

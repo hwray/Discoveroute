@@ -43,7 +43,9 @@ app.get('/', routes.index);
 app.get('/detours/get', detours.getDetours);
 app.post('/detours/new', detours.newDetour);
 app.post('/places', place.places);
-app.get('/categories', categories.selectCategory);
+// app.get('/categories', categories.selectCategory);
+app.get('/categories', routes.categoriesV2);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

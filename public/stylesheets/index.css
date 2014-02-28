@@ -80,6 +80,12 @@ input.form-control
   -webkit-filter: drop-shadow(1px 1px 0px #444444);
 }
 
+.selectedCategoryV2{
+  background-color: #FF9805 !important;
+  border-style: 3px solid white;
+  box-shadow: 0 0 0 2px white inset;
+}
+
 .categoryOption h3{
   font-weight: 500;
   font-size: 20px;
@@ -196,3 +202,10 @@ input.form-control
   color: white;
   -webkit-filter: drop-shadow(1px 1px 0px #444444);
 }
+
+.categoryV2
+ {
+   background-color: #bebebe;
+   margin: 1px 1px 1px 2px;
+   max-width: 49%;
+ }
