@@ -45,6 +45,7 @@ app.post('/detours/new', detours.newDetour);
 app.post('/places', place.places);
 // app.get('/categories', categories.selectCategory);
 app.get('/categories', routes.categoriesV2);
+app.get('/sidebar', routes.sidebarV2);
 
 
 http.createServer(app).listen(app.get('port'), function(){

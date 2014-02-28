@@ -15,19 +15,30 @@ html
               span(class='fa fa-clock-o') 
               | Time
           div(class='inactive-icon')
-            span(class='fa fa-circle')
+            if (sidebar == false)
+              span(class='fa fa-circle')
         li
           div
             a(href='#' class='sidebar-categories')
               span(class='fa fa-ellipsis-h')
               | Categories
           div(class='inactive-icon')
-            span(class='fa fa-circle')
-        li
-          a(href='#' class='sidebar-activities')
-            span(class='fa fa-floppy-o') 
-            | Recent Detours
+            if (sidebar == false)
+              span(class='fa fa-circle')
 
+        - if (sidebar == true){
+          li(class='bottom-sticky')
+            a(href='#' class='sidebar-activities')
+              span(class='fa fa-floppy-o') 
+              | Recent Detours
+        - }
+        - else {
+          li
+            a(href='#' class='sidebar-activities')
+                span(class='fa fa-floppy-o') 
+                | Recent Detours
+        - }
+            
     div(class='main-container')
       // topbar navigation
       div(class="bar bar-header bar-dark topbar")
