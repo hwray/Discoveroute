@@ -209,3 +209,9 @@ input.form-control
    margin: 1px 1px 1px 2px;
    max-width: 49%;
  }
+
+
+.bottom-sticky{
+  position: absolute;
+  bottom: 0px;
+}
