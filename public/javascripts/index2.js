@@ -108,6 +108,10 @@ $(document).ready(function() {
 
 function slideLeftMenu(e){
   e.preventDefault();
+
+  ga("send", "event", "sidebar", "click", "v2-sidebar");
+
+
   e.stopPropagation();
   var sidebar = $("#sidebar-menu");
   if (sidebarIsVisible()) {
@@ -193,6 +197,27 @@ function routeButtonClick(e) {
 
   $($("#sidebar-list").children()[1].children).toggle();
   $($("#sidebar-list").children()[2].children).toggle();
+
+  // add GA about timing category click
+
+  var startTime = new Date().getTime();
+  $('.categoryOption').click(timeCategories);
+
+  function timeCategories(event){
+    var endTime = new Date().getTime();
+    var timeSpent = endTime - startTime;
+    ga("send", "event", "first-category", "click", 'version A', timeSpent);
+  }
+  
+  $('#categoriesButton').click(timeFinishCategories);
+  function timeFinishCategories(event){
+    var endTime = new Date().getTime();
+    var timeSpent = endTime - startTime;
+    ga("send", "event", "category-discover", "click", 'version A', timeSpent);
+  }
+
+  //end GA
+
 
   displayOptions();
   e.preventDefault(); 

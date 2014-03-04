@@ -107,6 +107,9 @@ $(document).ready(function() {
 })
 
 function slideLeftMenu(e){
+  // add analytics to clicks
+  ga("send", "event", "sidebar", "click", "original-sidebar");
+
   e.preventDefault();
   e.stopPropagation();
   var sidebar = $("#sidebar-menu");
@@ -194,6 +197,25 @@ function routeButtonClick(e) {
   $($("#sidebar-list").children()[1].children).toggle();
   $($("#sidebar-list").children()[2].children).toggle();
 
+  // add GA about timing category click
+
+  var startTime = new Date().getTime();
+  $('.categoryOption').click(timeCategories);
+
+  function timeCategories(event){
+    var endTime = new Date().getTime();
+    var timeSpent = endTime - startTime;
+    ga("send", "event", "first-category", "click", 'version A', timeSpent);
+  }
+  
+  $('#categoriesButton').click(timeFinishCategories);
+  function timeFinishCategories(event){
+    var endTime = new Date().getTime();
+    var timeSpent = endTime - startTime;
+    ga("send", "event", "category-discover", "click", 'version A', timeSpent);
+  }
+  // end GA
+
   displayOptions();
   e.preventDefault(); 
   var start = document.getElementById("routeStart").value; 
@@ -211,7 +233,6 @@ function routeButtonClick(e) {
     vehicleString = google.maps.TravelMode.WALKING;
 
   requestDirections(start, end, vehicleString, showDirections); 
-
 }
 
 function displayOptions() {
@@ -252,6 +273,7 @@ function displayCategories() {
       $(categoryButton).css('background-color', categoryColors[i]);
       //$(categoryButton).click(toggleCategorySelect);
       $(categoryButton).click(function() {
+
         $(this).toggleClass('selectedCategory');
         if ($(".selectedCategory").length == 0) {
           $("#categoriesButton").attr("disabled", "true");
