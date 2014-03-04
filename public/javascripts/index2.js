@@ -206,14 +206,14 @@ function routeButtonClick(e) {
   function timeCategories(event){
     var endTime = new Date().getTime();
     var timeSpent = endTime - startTime;
-    ga("send", "event", "first-category", "click", 'version A', timeSpent);
+    ga("send", "event", "category", "click", 'first-category', timeSpent);
   }
   
   $('#categoriesButton').click(timeFinishCategories);
   function timeFinishCategories(event){
     var endTime = new Date().getTime();
     var timeSpent = endTime - startTime;
-    ga("send", "event", "category-discover", "click", 'version A', timeSpent);
+    ga("send", "event", "category", "click", 'discover-category', timeSpent);
   }
 
   //end GA
