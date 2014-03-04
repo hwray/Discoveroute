@@ -108,7 +108,7 @@ $(document).ready(function() {
 
 function slideLeftMenu(e){
   // add analytics to clicks
-  ga("send", "event", "original-sidebar", "click");
+  ga("send", "event", "sidebar", "click", "original-sidebar");
 
   e.preventDefault();
   e.stopPropagation();

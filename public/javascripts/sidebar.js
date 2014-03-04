@@ -89,9 +89,9 @@ function timerScreen(e){
   e.preventDefault;
 
   if ($('.sidebar').find($(this)).length > 0){
-    ga("send", "event", "timer-sidebar", "click");
+    ga("send", "event", "sidebar", "click", "timer-sidebar");
   } else{
-    ga("send", "event", "timer-flow", "click");
+    ga("send", "event", "flow", "click", "timer-flow");
   }
 
   removeActiveClass();
@@ -114,9 +114,9 @@ function showActivitiesScreen(e){
   e.preventDefault;
 
   if ($('.sidebar').find($(this)).length > 0){
-    ga("send", "event", "activities-sidebar", "click");
+    ga("send", "event", "sidebar", "click", "activities-sidebar");
   } else{
-    ga("send", "event", "activities-flow", "click");
+    ga("send", "event", "flow", "click", "activities-flow");
   }
 
   activitiesScreen();
@@ -133,9 +133,9 @@ function categoriesScreen(e){
 
   // send GA from clicking on sidebar
   if ($('.sidebar').find($(this)).length > 0){
-    ga("send", "event", "categories-sidebar", "click");
+    ga("send", "event", "sidebar", "click", "categories-sidebar");
   } else{
-    ga("send", "event", "categories-flow", "click");
+    ga("send", "event", "flow", "click", "categories-flow");
   }
 
   removeActiveClass();
@@ -148,9 +148,9 @@ function destinationScreen(e){
   e.preventDefault;
 
   if ($('.sidebar').find($(this)).length > 0){
-    ga("send", "event", "destination-sidebar", "click");
+    ga("send", "event", "sidebar", "click", "destination-sidebar");
   } else{
-    ga("send", "event", "destination-flow", "click");
+    ga("send", "event", "flow", "click", "destination-flow");
   }
 
   removeActiveClass();

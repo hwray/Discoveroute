@@ -109,6 +109,9 @@ $(document).ready(function() {
 function slideLeftMenu(e){
   e.preventDefault();
 
+  ga("send", "event", "sidebar", "click", "v2-sidebar");
+
+
   e.stopPropagation();
   var sidebar = $("#sidebar-menu");
   if (sidebarIsVisible()) {
