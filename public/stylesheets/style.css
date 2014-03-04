@@ -49,6 +49,13 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	-webkit-overflow-scrolling: touch;
 }
 
+.info-button{
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	padding: 10px;
+}
+
 
 /* TOPBAR
 =============================================

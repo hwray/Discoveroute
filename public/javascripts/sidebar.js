@@ -1,7 +1,7 @@
 
 var destinationButton = $('.sidebar').find('.sidebar-destination');
 var categoriesButton = $('.sidebar').find('.sidebar-categories');
-var activitiesButton = $('.sidebar').find('.sidebar-activities');
+// var activitiesButton = $('.sidebar').find('.sidebar-activities');
 var timeSidebarButton = $('.sidebar').find('.sidebar-time');
 
 var routeButton = $('#routeButton');
@@ -11,10 +11,11 @@ var activitiesDiv = $('#interaction-bar').find('#detourDisplay');
 var timerDiv = $('#interaction-bar').find('#timer');
 
 
+var detoursButton = $('.sidebar').find('.sidebar-activities');
+
 $(document).ready(function() {
-  destinationButton.addClass('active');
-  destinationForm.addClass('active');
-  
+  destinationScreen();
+
   // linear flow
   routeButton.click(routeButtonClick);
   routeButton.click(timerScreen);
@@ -28,23 +29,62 @@ $(document).ready(function() {
 
   $('.logo-button').click(destinationScreen);
 
+
+  $('.info-button').click( function(event){ 
+    document.getElementById('fade').style.display='block';
+    document.getElementById('info-overlay').style.display='block';
+
+    $('.topbar').css('z-index', '2000');
+    $('#interaction-bar').css('z-index', '2000');
+
+    // should not highlight discover button!
+    // $('#routeButton').css('z-index', '0');
+
+    $('.topbar').click(function(){
+      resetScreen();      
+    })
+
+    $('#sidebar-button').click(function(){
+      resetScreen();
+    })
+
+    $('#fade').click( function(){
+      resetScreen();
+    })
+
+    $('#interaction-bar').click( function(){
+      resetScreen();
+    })
+
+    function resetScreen(){
+      $('#fade').hide();
+      $('#info-overlay').hide();
+      $('.topbar').css('z-index', '1000');
+      $('#interaction-bar').css('z-index', '1000');
+    }
+
+  })
+
+
   // CHANGES
-  activitiesButton.click(function(e) {
-    var detourBar = $("#recentDetours");
-
-    e.preventDefault(); 
-    removeActiveClass(); 
-    activitiesButton.addClass('active'); 
-
-    detourBar.addClass('active');
-    detourBar.show();
-
-    $.get('/detours/get', showSavedDetours);
-
-  });
+  detoursButton.click(detoursScreen);
 
 })
 
+
+function detoursScreen(e){
+  var detourBar = $("#recentDetours");
+
+  e.preventDefault(); 
+  removeActiveClass(); 
+  detoursButton.addClass('active'); 
+
+  detourBar.addClass('active');
+  detourBar.show();
+  $('#info-text').text("checkout some of the options, and click discover! when you're ready to go!");
+
+  $.get('/detours/get', showSavedDetours);
+}
 
 
 function showSavedDetours(data, status){
@@ -94,7 +134,11 @@ function timerScreen(e){
     ga("send", "event", "flow", "click", "timer-flow");
   }
 
+
   removeActiveClass();
+
+  $('#info-text').text('We keep track of how much time you should spend, just let us know when you need to be there!');
+
   timerDiv.addClass('active');
   timeSidebarButton.addClass('active');
   timerDiv.show();
@@ -105,9 +149,13 @@ function activitiesScreen(){
 
   removeActiveClass();
 
-  activitiesDiv.addClass('active');
-  activitiesButton.addClass('active');
-  activitiesDiv.show();
+  $('#info-text').text("checkout some of the options, and click discover! when you're ready to go!");
+
+  var detourDisplay = $('#detourDisplay');
+  detourDisplay.addClass('active');
+  // activitiesDiv.addClass('active');
+  // activitiesButton.addClass('active');
+  // activitiesDiv.show();
 }
 
 function showActivitiesScreen(e){
@@ -139,6 +187,7 @@ function categoriesScreen(e){
   }
 
   removeActiveClass();
+  $('#info-text').text("select categories you're interested in to begin exploring");
   categoriesDiv.addClass('active');
   categoriesButton.addClass('active');
   categoriesDiv.show();
@@ -147,6 +196,12 @@ function categoriesScreen(e){
 function destinationScreen(e){
   e.preventDefault;
 
+  destinationScreen();
+
+}
+
+
+function destinationScreen(){
   if ($('.sidebar').find($(this)).length > 0){
     ga("send", "event", "sidebar", "click", "destination-sidebar");
   } else{
@@ -154,8 +209,15 @@ function destinationScreen(e){
   }
 
   removeActiveClass();
+  var destinationInfo ='';
+  var textInfo = document.getElementById('info-text');
+  destinationInfo = 'enter start & end addresses to begin!';
+  destinationInfo += "<img src='images/orange-arrow.png' class='directions-screen-arrow center' />";
+
+  textInfo.innerHTML = destinationInfo;
+
+  // $('#info-text').html(destinationInfo);
   destinationButton.addClass('active');
   destinationForm.show();
   destinationForm.addClass('active');
-
 }

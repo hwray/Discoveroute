@@ -128,7 +128,7 @@ input.form-control
 
 
 .timeButtonDiv{
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 .timeButtonDiv p{
@@ -157,7 +157,7 @@ input.form-control
     left: 25%;
     width: 50%;
     height: 50%;
-    padding: 16px;
+    padding: 6px;
     background-color: black;
     filter: alpha(opacity=95);
     /*background-color: #444444;*/
@@ -203,6 +203,7 @@ input.form-control
   -webkit-filter: drop-shadow(1px 1px 0px #444444);
 }
 
+
 .categoryV2
  {
    background-color: #bebebe;
@@ -215,3 +216,45 @@ input.form-control
   position: absolute;
   bottom: 0px;
 }
+
+.lightbox-overlay{
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    padding: 6px;
+    color: rgba(255, 255, 255, 1.0);
+    overflow: auto;  
+}
+
+.directions-overlay{
+    display: none;
+    top: 55px;
+    padding: 6px;
+    color: rgba(255, 255, 255, 1.0);
+    overflow: auto;  
+    height: 100%;
+}
+
+.directions-info-text{
+  color: rgba(255, 255, 255, 1.0);
+  position: relative;
+  z-index: 1002;
+  vertical-align: middle;
+  padding: 5px;
+}
+
+.center {
+   float: none;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.directions-screen-arrow{
+  max-width: 30%;
+  float: middle;
+  -webkit-transform: rotate(180deg);
+  -webkit-transform: scaleY(-1);
+  margin-left: 40%;
+}
+

@@ -360,7 +360,7 @@ function displayCategories() {
     listingImg.setAttribute("src", listing.image_url); 
     listingDiv.appendChild(listingImg); 
     listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
-    listingDiv.appendChild(createFunctionDetail(listing.display_phone, "phone_num"));
+    // listingDiv.appendChild(createFunctionDetail(listing.display_phone, "phone_num"));
 
     var expandButton = document.createElement("span"); 
     expandButton.setAttribute('class', 'fa fa-chevron-circle-up'); 
