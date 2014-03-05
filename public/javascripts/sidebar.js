@@ -81,7 +81,7 @@ function detoursScreen(e){
 
   detourBar.addClass('active');
   detourBar.show();
-  $('#info-text').text("checkout some of the options, and click discover! when you're ready to go!");
+  $('#info-text').text("checkout some of the options, and hit discover when you're ready to go!");
 
   $.get('/detours/get', showSavedDetours);
 }
