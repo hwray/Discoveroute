@@ -73,6 +73,7 @@ input.form-control
 .selectedCategory{
   border-style: 3px solid white;
   box-shadow: 0 0 0 2px white inset;
+  font-weight: 400;
 }
 
 .selectedCategory h3.category{
@@ -128,7 +129,7 @@ input.form-control
 
 
 .timeButtonDiv{
-  padding-top: 150px;
+  padding-top: 120px;
 }
 
 .timeButtonDiv p{
@@ -152,19 +153,17 @@ input.form-control
 
 .timer_content {
     display: none;
-    position: absolute;
     top: 25%;
-    left: 25%;
-    width: 50%;
-    height: 50%;
-    padding: 6px;
+    margin-left: auto;
+    margin-right: auto;
     background-color: black;
     filter: alpha(opacity=95);
     /*background-color: #444444;*/
     z-index:1002;
     overflow: auto;  
     padding-top: 10%;
-    padding-bottom: 10%;    
+    padding-bottom: 10%;  
+    margin: 25px;  
 }
 
 .timer_content a{
