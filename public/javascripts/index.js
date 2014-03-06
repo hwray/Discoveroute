@@ -363,7 +363,12 @@ function displayCategories() {
     listingDiv.id = "listing" + index;
     var listingImg = document.createElement("img"); 
     listingImg.setAttribute("class", "profilePic"); 
-    listingImg.setAttribute("src", listing.image_url); 
+    if(!listing.image_url){
+      listingImg.setAttribute("src", 'images/R.png'); 
+    }
+    else {
+      listingImg.setAttribute("src", listing.image_url); 
+    }
     listingDiv.appendChild(listingImg); 
     listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
     // listingDiv.appendChild(createFunctionDetail(listing.display_phone, "phone_num"));
