@@ -54,13 +54,13 @@ $('#timeButton').click(function() {
   var extraTime = timeRemaining - timeAB;
   var minDetourTime = 15*60; // 15 minutes
   if(timeRemaining < 0){
-    console.log("Please select a time after the present time");
+    //console.log("Please select a time after the present time");
   }else if(extraTime < 0){
-    console.log("No time for a detour! Either reconsider your arrival time or get to where you're going now!");
+    //console.log("No time for a detour! Either reconsider your arrival time or get to where you're going now!");
   }else if(extraTime < minDetourTime){
-    console.log("Warning: you only have an estimated " + secs2timeString(extraTime) + " extra time to detour. Detour wisely.");
+    //console.log("Warning: you only have an estimated " + secs2timeString(extraTime) + " extra time to detour. Detour wisely.");
   }else{
-    console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
+    //console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
   }
   destinationTime = timeEndSecs;
 });
@@ -384,7 +384,7 @@ function displayCategories() {
 
     // console.log(listing);
 
-    listingInfo.innerHTML += '<br />' + listing.snippet_text;
+    //listingInfo.innerHTML += '<br />' + listing.snippet_text;
     listingInfo.style.display = 'none';
     listingDiv.appendChild(listingInfo);
 
@@ -440,10 +440,12 @@ function displayCategories() {
 
     discoverButton.onclick = function() {
 
+
       //$("#interaction-bar").css("max-height", "90%");
       var listingDiv = this.parentNode; 
       $(listingDiv).children("button").toggle();
       $(listingDiv).children("span").hide();
+      $(listingDiv).children("img").prop("onclick", null);
 
       var listingID = listingDiv.id.substring(7); 
       var listing = yelpListings[listingID][0]; 
