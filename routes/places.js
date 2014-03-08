@@ -10,15 +10,17 @@ exports.places = function(req, res) {
 
   var businesses = [];
   var coordinates = JSON.parse(req.body.coordinates);
-  var counter = coordinates.length;
-  for (var i = 0; i < coordinates.length; i++) {
-
+  var SPREAD_POINTS = 50;
+  
+  var stepIncrement = (coordinates.length > SPREAD_POINTS) ? coordinates.length / SPREAD_POINTS : 1;
+  var counter = coordinates.length / stepIncrement;
+  for (var i = 0; i < coordinates.length; i += stepIncrement) {
    yelpClient.search(
    {
      term: req.body.category, 
      ll: coordinates[i].d + "," + coordinates[i].e,
      radius_filter: "1000", 
-     limit: 1
+     limit: 5
    }, 
 
    function(error, data) {
