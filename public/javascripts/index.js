@@ -54,13 +54,13 @@ $('#timeButton').click(function() {
   var extraTime = timeRemaining - timeAB;
   var minDetourTime = 15*60; // 15 minutes
   if(timeRemaining < 0){
-    console.log("Please select a time after the present time");
+    //console.log("Please select a time after the present time");
   }else if(extraTime < 0){
-    console.log("No time for a detour! Either reconsider your arrival time or get to where you're going now!");
+    //console.log("No time for a detour! Either reconsider your arrival time or get to where you're going now!");
   }else if(extraTime < minDetourTime){
-    console.log("Warning: you only have an estimated " + secs2timeString(extraTime) + " extra time to detour. Detour wisely.");
+    //console.log("Warning: you only have an estimated " + secs2timeString(extraTime) + " extra time to detour. Detour wisely.");
   }else{
-    console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
+    //console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
   }
   destinationTime = timeEndSecs;
 });
@@ -267,7 +267,7 @@ function displayCategories() {
       // categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
       categoryText += '<input type="checkbox" class="input_hidden" name="categorySelect" id="category'+[i]+'" value="'+ categories[i]+'">';
       categoryText += '<label for="category'+[i]+'">';
-      categoryText += "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption' id='categoryDiv" + i + "'>";
+      categoryText += "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption categoryV2' id='categoryDiv" + i + "'>";
       categoryText += "<h3 class='text-center category'>"; 
       categoryText += categories[i]; 
       categoryText += "</h3>"; 
@@ -278,12 +278,15 @@ function displayCategories() {
 
     for (var i in categories) {
       var categoryButton = document.getElementById("categoryDiv" + i); 
-      $(categoryButton).css('background-color', categoryColors[i]);
+      $(categoryButton).css('background-color', "#666666");
+
+      //$(categoryButton).css('background-color', categoryColors[i]);
       //$(categoryButton).click(toggleCategorySelect);
       $(categoryButton).click(function() {
 
-        $(this).toggleClass('selectedCategory');
-        if ($(".selectedCategory").length == 0) {
+        //$(this).toggleClass('selectedCategory');
+        $(this).toggleClass('selectedCategoryV2');
+        if ($(".selectedCategoryV2").length == 0) {
           $("#categoriesButton").attr("disabled", "true");
         } else {
           $("#categoriesButton").removeAttr("disabled");
@@ -384,7 +387,7 @@ function displayCategories() {
 
     // console.log(listing);
 
-    listingInfo.innerHTML += '<br />' + listing.snippet_text;
+    //listingInfo.innerHTML += '<br />' + listing.snippet_text;
     listingInfo.style.display = 'none';
     listingDiv.appendChild(listingInfo);
 
@@ -440,10 +443,12 @@ function displayCategories() {
 
     discoverButton.onclick = function() {
 
+
       //$("#interaction-bar").css("max-height", "90%");
       var listingDiv = this.parentNode; 
       $(listingDiv).children("button").toggle();
       $(listingDiv).children("span").hide();
+      $(listingDiv).children("img").prop("onclick", null);
 
       var listingID = listingDiv.id.substring(7); 
       var listing = yelpListings[listingID][0]; 
