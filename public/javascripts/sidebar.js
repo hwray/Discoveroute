@@ -155,7 +155,7 @@ function activitiesScreen(){
   detourDisplay.addClass('active');
   // activitiesDiv.addClass('active');
   // activitiesButton.addClass('active');
-  // activitiesDiv.show();
+  activitiesDiv.show();
 }
 
 function showActivitiesScreen(e){
