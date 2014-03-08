@@ -267,7 +267,7 @@ function displayCategories() {
       // categoryText += "<div class='col-xs-2 col-sm-3 col-md-2 col-lg-2 circle' id='category" + i + "'>"; 
       categoryText += '<input type="checkbox" class="input_hidden" name="categorySelect" id="category'+[i]+'" value="'+ categories[i]+'">';
       categoryText += '<label for="category'+[i]+'">';
-      categoryText += "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption' id='categoryDiv" + i + "'>";
+      categoryText += "<div class='col-xs-6 col-sm-6 col-md-6 col-lg-6 categoryOption categoryV2' id='categoryDiv" + i + "'>";
       categoryText += "<h3 class='text-center category'>"; 
       categoryText += categories[i]; 
       categoryText += "</h3>"; 
@@ -278,12 +278,15 @@ function displayCategories() {
 
     for (var i in categories) {
       var categoryButton = document.getElementById("categoryDiv" + i); 
-      $(categoryButton).css('background-color', categoryColors[i]);
+      $(categoryButton).css('background-color', "#666666");
+
+      //$(categoryButton).css('background-color', categoryColors[i]);
       //$(categoryButton).click(toggleCategorySelect);
       $(categoryButton).click(function() {
 
-        $(this).toggleClass('selectedCategory');
-        if ($(".selectedCategory").length == 0) {
+        //$(this).toggleClass('selectedCategory');
+        $(this).toggleClass('selectedCategoryV2');
+        if ($(".selectedCategoryV2").length == 0) {
           $("#categoriesButton").attr("disabled", "true");
         } else {
           $("#categoriesButton").removeAttr("disabled");
