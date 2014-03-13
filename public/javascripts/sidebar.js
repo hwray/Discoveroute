@@ -142,6 +142,8 @@ function timerScreen(e){
   timerDiv.addClass('active');
   timeSidebarButton.addClass('active');
   timerDiv.show();
+  $("#time-input").focus();
+  
 
 }
 

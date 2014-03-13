@@ -54,14 +54,11 @@ block content
     div(id="detourDisplay")
     
     div(id="timer" class="greyDiv row-fluid")
-      h3(class='text-center') What's your ideal arrival time?
+      h4(class='text-center') What's your ideal arrival time?
       
-      div(class="col-md-10")
-        div(class="form-group")
-          div(class='input-group time' id='datetimepicker4')
-            input(type='text' class="form-control")
-            span(class="input-group-addon")
-              span(class="glyphicon glyphicon-time")
+      div(class="col-md-12")
+        div(class="time-container")
+          input(type="time" id="time-input")
   
       div(class="timeButtonDiv" class="text-center")
         button(type="button" class="btn btn-default large-btn" id="timeButton") DISCOVER!
@@ -76,13 +73,6 @@ block content
         h2(class='text-center' id='timer-text')
         p(class='text-center') 
           button(class='large-btn' class='continue-from-timer') Continue to original destination.
-
-  //- div(class='lightbox text-center' id='general-info')
-  //-   div(class='lightbox-overlay' id='info-overlay')
-  //-     div(class='row-fluid')
-  //-       img(src='images/orange-arrow.png' class='info-arrow')
-  //-     div(class='info-text row-fluid')
-  //-       h1 View different options
 
   div(class='lightbox text-center' id='loading-spinner')
     span(class="fa fa-spinner fa-spin fa-5x" id='spinner')

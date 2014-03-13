@@ -62,6 +62,7 @@ function activitiesScreen(){
   removeActiveClass();
   activitiesDiv.addClass('active');
   activitiesButton.addClass('active');
+  console.log("displaying detours");
   activitiesDiv.show();
 }
 
