@@ -638,8 +638,8 @@ function geocodeCallback(results, status) {
 function showDirections(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
       origRoute = response; // jQuery.extend(true, {}, response);
-      pointA = response.Tb.origin; 
-      pointB = response.Tb.destination; 
+      pointA = response.Zb.origin; 
+      pointB = response.Zb.destination; 
       var steps = response.routes[0].legs[0].steps; 
       var distSinceLast = 0; 
       for (var i = 0; i < steps.length; i++) {
