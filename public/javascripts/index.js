@@ -43,7 +43,7 @@ $(document).ready(function() {
 
 
 $('#timeButton').click(function() {
-  var timeInput= $('#datetimepicker4').find('input');
+  var timeInput= $('#time-input');
   var timeEnd = timeInput.val().toString();//hh:mm:ss
   var momentTime = new Date(timeInput);
   var timeEndSecs = parseTimeString(timeEnd);
@@ -159,13 +159,13 @@ function initialize() {
   directionsDisplay.setMap(map);
 
   var inputStart = /** @type {HTMLInputElement} */(
-      document.getElementById('routeStart'));
+    document.getElementById('routeStart'));
   var autocompleteStart = new google.maps.places.Autocomplete(inputStart);
   autocompleteStart.bindTo('bounds', map);
 
 
   var inputEnd = /** @type {HTMLInputElement} */(
-      document.getElementById('routeEnd'));
+    document.getElementById('routeEnd'));
   var autocompleteEnd = new google.maps.places.Autocomplete(inputEnd);
   autocompleteEnd.bindTo('bounds', map);
 
@@ -180,6 +180,16 @@ function initialize() {
     /* geolocation IS NOT available */
 
   }
+
+  $(document).on('blur', 'input, textarea', function() {
+    setTimeout(function() {
+      window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
+    }, 0);
+  });
+  $(document).on('focus', 'input, textarea', function() {
+    if (sidebarIsVisible)
+      slideHide();
+  });
 
 
   $("html").click(function(event) {
@@ -200,8 +210,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 function routeButtonClick(e) {
 
-  $($("#sidebar-list").children()[1].children).toggle();
-  $($("#sidebar-list").children()[2].children).toggle();
+ if (typeof(pointA) == "undefined") {
+   $($("#sidebar-list").children()[1].children).toggle();
+   $($("#sidebar-list").children()[2].children).toggle();
+ }
 
   // add GA about timing category click
 
@@ -244,7 +256,7 @@ function routeButtonClick(e) {
 }
 
 function displayOptions() {
-  
+
 }
 
 
@@ -293,7 +305,7 @@ function displayCategories() {
         }
       });
     }
-}
+  }
 
   function categoriesClick(e){
     var searchString = "";
@@ -582,51 +594,51 @@ function displayCategories() {
 }
 }
 
-  function saveDetour() {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; 
+function saveDetour() {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; 
 
-    var yyyy = today.getFullYear();
-    if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
+  var yyyy = today.getFullYear();
+  if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
 
-    var title = $('#detourTitleText').val(); 
-    var date = today;
-    var distance = origRoute.routes[0].legs[0].distance.text;
-    var duration = origRoute.routes[0].legs[0].duration.text; 
-    var category = "none";
-    var nameA = origRoute.Tb.origin;
-    var nameB = origRoute.Tb.destination;
-    var nameC = detourListing.name;
-    var addressA = origRoute.routes[0].legs[0].start_address; 
-    var addressB = origRoute.routes[0].legs[0].end_address; 
-    var addressC = detourListing.location.display_address[0] + " " + detourListing.location.display_address[1]; 
-    var travelMode = origRoute.Tb.travelMode;
-    var image = detourListing.image_url;
+  var title = $('#detourTitleText').val(); 
+  var date = today;
+  var distance = origRoute.routes[0].legs[0].distance.text;
+  var duration = origRoute.routes[0].legs[0].duration.text; 
+  var category = "none";
+  var nameA = origRoute.Tb.origin;
+  var nameB = origRoute.Tb.destination;
+  var nameC = detourListing.name;
+  var addressA = origRoute.routes[0].legs[0].start_address; 
+  var addressB = origRoute.routes[0].legs[0].end_address; 
+  var addressC = detourListing.location.display_address[0] + " " + detourListing.location.display_address[1]; 
+  var travelMode = origRoute.Tb.travelMode;
+  var image = detourListing.image_url;
 
-    var json = {
-      "title": title,
-      "date": date,
-      "distance": distance, 
-      "duration": duration,
-      "category": category,
-      "nameA": nameA,
-      "addressA": addressA,
-      "nameB": nameB,
-      "addressB": addressB,
-      "nameC": nameC,
-      "addressC": addressC,
-      "travelMode": travelMode,
-      "comment": "No comment", 
-      "image": image
-    };
+  var json = {
+    "title": title,
+    "date": date,
+    "distance": distance, 
+    "duration": duration,
+    "category": category,
+    "nameA": nameA,
+    "addressA": addressA,
+    "nameB": nameB,
+    "addressB": addressB,
+    "nameC": nameC,
+    "addressC": addressC,
+    "travelMode": travelMode,
+    "comment": "No comment", 
+    "image": image
+  };
 
 
 
-    $.post('/detours/new', json, function() {
+  $.post('/detours/new', json, function() {
       window.location.href = '/'; // reload the page
     });
-  }
+}
 
 
 
@@ -668,8 +680,8 @@ function showDirections(response, status) {
             //addMarker(step.lat_lngs[j].d, step.lat_lngs[j].e); 
           }
         } else {
-            lat = step.end_location.k;
-            lng = step.end_location.A;
+          lat = step.end_location.k;
+          lng = step.end_location.A;
 
           var latlng = new google.maps.LatLng(lat, lng); 
           console.log(latlng);
@@ -683,6 +695,18 @@ function showDirections(response, status) {
       var durationVal = response.routes[0].legs[0].duration.value;
       timeAB = durationVal;
       timeABstring = duration;
+
+      var fastArrivalTime = new Date(Date.now() + timeAB);
+      console.log(fastArrivalTime);
+      var hour = (fastArrivalTime.getHours() >= 10) ? "" + fastArrivalTime.getHours() : "0" + fastArrivalTime.getHours();
+      var minutes = (fastArrivalTime.getMinutes() >= 10) ? "" + fastArrivalTime.getMinutes() : "0" + fastArrivalTime.getMinutes();
+      console.log(hour + ":" + minutes);
+      $("#time-input").val(hour + ":" + minutes);
+      document.getElementById("time-input").onfocus = function () {
+        console.log("focusing time input");
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+      }
 
     //console.log(duration); 
 

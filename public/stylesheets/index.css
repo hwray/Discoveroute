@@ -33,6 +33,11 @@ input.form-control
   color: black;
 }
 
+#timer
+{
+  width: 100%;
+}
+
 #timerValue
 {
   color: black;
@@ -123,13 +128,14 @@ input.form-control
 }
 
 
-#timer h3{
+#timer h4 {
   color: white;
 }
 
 
 .timeButtonDiv{
-  padding-top: 120px;
+  margin-top: 10px;
+  
 }
 
 .timeButtonDiv p{
