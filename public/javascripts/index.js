@@ -28,6 +28,10 @@ var detourIndex;
 
 var yelpListings; 
 
+var inGeneralMode = true;
+var activeMarkers = [];
+var inactiveMarkers = [];
+
 var categories = ["dining", "shopping", "cafes", "nightlife", "arts", "grocery"]; 
 var categoryColors = ["#5A132c", "#761c4b", "#eed258", "#44a16c", "#379788", "#3d6585"];
 
@@ -44,24 +48,18 @@ $(document).ready(function() {
 
 $('#timeButton').click(function() {
   var timeInput= $('#time-input');
+
   var timeEnd = timeInput.val().toString();//hh:mm:ss
   var momentTime = new Date(timeInput);
   var timeEndSecs = parseTimeString(timeEnd);
+  console.log("Time end secs: " + timeEndSecs);
 
   var timeBegin = new Date();
   var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
   var timeRemaining = timeEndSecs - timeBeginSecs;
   var extraTime = timeRemaining - timeAB;
   var minDetourTime = 15*60; // 15 minutes
-  if(timeRemaining < 0){
-    //console.log("Please select a time after the present time");
-  }else if(extraTime < 0){
-    //console.log("No time for a detour! Either reconsider your arrival time or get to where you're going now!");
-  }else if(extraTime < minDetourTime){
-    //console.log("Warning: you only have an estimated " + secs2timeString(extraTime) + " extra time to detour. Detour wisely.");
-  }else{
-    //console.log("Excellent! You have an estimated " + secs2timeString(extraTime) + " of detour time.");
-  }
+
   destinationTime = timeEndSecs;
 });
 
@@ -203,6 +201,25 @@ function initialize() {
 
   $($("#sidebar-list").children()[1].children).toggle();
   $($("#sidebar-list").children()[2].children).toggle();
+
+
+  // add marker animation detour display scroll animation
+  $("#detourDisplay").scroll(function() {
+    if (inGeneralMode) {
+      if (typeof(activeDivIndex) == 'undefined') activeDivIndex = 0;
+      activeMarkers[activeDivIndex].setVisible(false);
+      inactiveMarkers[activeDivIndex].setVisible(true);
+
+
+      activeDivIndex = Math.round($("#detourDisplay").scrollLeft()/$(".listing").width());
+      inactiveMarkers[activeDivIndex].setVisible(false);
+      activeMarkers[activeDivIndex].setVisible(true);
+    }
+    
+    
+  });
+
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -253,6 +270,7 @@ function routeButtonClick(e) {
     vehicleString = google.maps.TravelMode.WALKING;
 
   requestDirections(start, end, vehicleString, showDirections); 
+
 }
 
 function displayOptions() {
@@ -371,7 +389,9 @@ function displayCategories() {
         }
         geocoder.geocode(request, function(result, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-            addMarker(result[0].geometry.location.d, result[0].geometry.location.e); 
+            markers = addMarker(result[0].geometry.location.k, result[0].geometry.location.A, true);
+            inactiveMarkers.push(markers[0]);
+            activeMarkers.push(markers[1]);
           } else {
             // error while geocoding address to lat-lng
           }
@@ -412,6 +432,7 @@ function displayCategories() {
     listingDiv.appendChild(listingInfo);
 
     var expandListing = function() {
+      inGeneralMode = false;
 
       $(listingDiv).css("min-width", $("body").width()-5);
       // $(listingDiv).height($("body").height() * 0.8);
@@ -425,6 +446,7 @@ function displayCategories() {
     }; 
 
     var hideListing = function() {
+      inGeneralMode = true;
       $(listingDiv).children("button").toggle();
       $(listingDiv).children("span").toggle();
       $(listingDiv).find('.listingInfo').toggle();
@@ -752,24 +774,35 @@ function listDirections(response, status, displayDiv) {
 }
 
 
-function addMarker(lat, lng) {
+function addMarker(lat, lng, active) {
+  console.log("ACTIVE IS: " + active);
   var latlng = new google.maps.LatLng(lat, lng); 
+  var markers = [];
   var marker = new google.maps.Marker({
     map: map,
     position: latlng,
-    animation: google.maps.Animation.DROP
+    animation: google.maps.Animation.DROP,
+    icon: 'images/blue_marker.png',
+    visible: true
   });
+  markers.push(marker)
+  if (active) {
+    var activeMarker = new google.maps.Marker({
+      map: map,
+      position: latlng,
+      icon: 'images/orange_marker.png',
+      visible: false
+    });
+    markers.push(activeMarker);
+  }
+  return markers;
 }
 
-//returns time in seconds, given "hh:mm AM/PM"
+//returns time in seconds, given "hh:mm"
 function parseTimeString(str){
   var colonDelim = str.search(':');
-  var spaceDelim = str.search (' ');
   var hours = str.substring(0, colonDelim);
-  var minutes = str.substring(colonDelim + 1, spaceDelim);
-  var AmPm = str.substring(spaceDelim + 1);
-  if(AmPm == 'PM') hours = parseInt(hours) + 12;
-  if(minutes.charAt(0) == '0') minutes = minutes.substring(1);
+  var minutes = str.substring(colonDelim + 1);
   return parseInt(minutes*60) + parseInt(hours*3600);
 }
 
