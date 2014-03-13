@@ -478,7 +478,7 @@ function displayCategories() {
       pointC = addressString; 
       pointA = origRoute.routes[0].legs[0].start_location; 
       pointB = origRoute.routes[0].legs[0].end_location; 
-      mode = origRoute.Tb.travelMode; 
+      mode = origRoute.Zb.travelMode; 
 
       $(listingDiv).children("p").children("a").hide();
 
