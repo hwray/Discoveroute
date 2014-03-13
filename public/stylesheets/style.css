@@ -23,6 +23,7 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 		width: 100%;
 		margin:0px; 
 		padding:0px;
+		min-width: 1024px;
 	}
 
 	.content{
