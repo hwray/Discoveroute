@@ -607,13 +607,13 @@ function saveDetour() {
   var distance = origRoute.routes[0].legs[0].distance.text;
   var duration = origRoute.routes[0].legs[0].duration.text; 
   var category = "none";
-  var nameA = origRoute.Tb.origin;
-  var nameB = origRoute.Tb.destination;
+  var nameA = origRoute.Zb.origin;
+  var nameB = origRoute.Zb.destination;
   var nameC = detourListing.name;
   var addressA = origRoute.routes[0].legs[0].start_address; 
   var addressB = origRoute.routes[0].legs[0].end_address; 
   var addressC = detourListing.location.display_address[0] + " " + detourListing.location.display_address[1]; 
-  var travelMode = origRoute.Tb.travelMode;
+  var travelMode = origRoute.Zb.travelMode;
   var image = detourListing.image_url;
 
   var json = {
