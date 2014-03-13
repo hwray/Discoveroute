@@ -315,13 +315,21 @@ function displayCategories() {
         context: document.body,
         data: yelpData,
         beforeSend: function() { $('#loading-spinner').show(); },
-        success: [yelpCallback, activitiesScreen]
+        success: [yelpCallback, activitiesScreen], 
+        statusCode : {
+          400: yelpFailCallback
+        }
       });
     }
   }
 
   function toggleCategorySelect(e){
     $(this).toggleClass('selectedCategory');
+  }
+
+  function yelpFailCallback(data, textStatus, jqXHR) {
+    $('#loading-spinner').hide();
+    console.log("yelp failed");
   }
 
   function yelpCallback(data, textStatus, jqXHR) {
@@ -655,14 +663,16 @@ function showDirections(response, status) {
           var increment = Math.floor(step.lat_lngs.length / numPoints); 
           var points = step.lat_lngs; 
           for (var j = increment; j < points.length; j += increment) {
-            var latlng = new google.maps.LatLng(step.lat_lngs[j].d, step.lat_lngs[j].e); 
+            var latlng = new google.maps.LatLng(step.lat_lngs[j].k, step.lat_lngs[j].A); 
             searchMarkers.push(latlng); 
             //addMarker(step.lat_lngs[j].d, step.lat_lngs[j].e); 
           }
         } else {
-          var lat = step.end_location.d;
-          var lng = step.end_location.e; 
+            lat = step.end_location.k;
+            lng = step.end_location.A;
+
           var latlng = new google.maps.LatLng(lat, lng); 
+          console.log(latlng);
           searchMarkers.push(latlng); 
           //addMarker(lat, lng); 
         }
