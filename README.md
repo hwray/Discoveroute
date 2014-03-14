@@ -4,4 +4,4 @@ discoveroute
 Discover hidden gems along your favorite routes. 
 
 ![homescreen-mockup](/public/images/discoveroute.png)
-/public/images/final_poster.jpg
+![homescreen-mockup](/public/images/final_poster.jpg)
