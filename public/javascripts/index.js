@@ -212,6 +212,8 @@ function initialize() {
 
 
       activeDivIndex = Math.round($("#detourDisplay").scrollLeft()/$(".listing").width());
+      activeDivIndex = Math.max(0, activeDivIndex);
+      activeDivIndex = Math.min(activeDivIndex, inactiveMarkers.length - 1);
       inactiveMarkers[activeDivIndex].setVisible(false);
       activeMarkers[activeDivIndex].setVisible(true);
     }
@@ -226,6 +228,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
 function routeButtonClick(e) {
+
+  inactiveMarkers = [];
+  activeMarkers = [];
 
  if (typeof(pointA) == "undefined") {
    $($("#sidebar-list").children()[1].children).toggle();
@@ -389,11 +394,13 @@ function displayCategories() {
         }
         geocoder.geocode(request, function(result, status) {
           if (status == google.maps.GeocoderStatus.OK) {
+            console.log("status OK");
             markers = addMarker(result[0].geometry.location.k, result[0].geometry.location.A, true);
             inactiveMarkers.push(markers[0]);
             activeMarkers.push(markers[1]);
           } else {
             // error while geocoding address to lat-lng
+            console.log(status);
           }
         }); 
       }
@@ -775,7 +782,6 @@ function listDirections(response, status, displayDiv) {
 
 
 function addMarker(lat, lng, active) {
-  console.log("ACTIVE IS: " + active);
   var latlng = new google.maps.LatLng(lat, lng); 
   var markers = [];
   var marker = new google.maps.Marker({
