@@ -1,7 +1,6 @@
 discoveroute
 ============
 
-Discover hidden gems along your favorite routes. 
+Find new places by old spaces. 
 
-![homescreen-mockup](/public/images/discoveroute.png)
 ![homescreen-mockup](/public/images/final_poster.jpg)
