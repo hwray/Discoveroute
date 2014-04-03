@@ -507,7 +507,7 @@ function displayCategories() {
       pointC = addressString; 
       pointA = origRoute.routes[0].legs[0].start_location; 
       pointB = origRoute.routes[0].legs[0].end_location; 
-      mode = origRoute.Zb.travelMode; 
+      mode = origRoute.Wb.travelMode; 
 
       $(listingDiv).children("p").children("a").hide();
 
@@ -564,6 +564,7 @@ function displayCategories() {
       var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
 
       $(this).hide();
+      $('.start-location').text(pointC);
 
       requestDirections(pointC, pointB, mode, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
@@ -687,8 +688,8 @@ function geocodeCallback(results, status) {
 function showDirections(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
       origRoute = response; // jQuery.extend(true, {}, response);
-      pointA = response.Zb.origin; 
-      pointB = response.Zb.destination; 
+      pointA = response.Wb.origin; 
+      pointB = response.Wb.destination; 
       var steps = response.routes[0].legs[0].steps; 
       var distSinceLast = 0; 
       for (var i = 0; i < steps.length; i++) {
@@ -746,11 +747,12 @@ function showDirections(response, status) {
 
 function listDirections(response, status, displayDiv) {
   if (status == google.maps.DirectionsStatus.OK) {
-    dirDiv = displayDiv
+
+    dirDiv = displayDiv;
     var detourSteps = response.routes[0].legs[0].steps; 
     var origSteps = origRoute.routes[0].legs[0].steps; 
     var directions = response.routes[0].legs[0].distance.text + ", " + response.routes[0].legs[0].duration.text + "</br>"; 
-    directions += "<b>START:</b> " + origRoute.routes[0].legs[0].start_address;
+    directions += "<b>START:</b> <span class='start-location'>" + origRoute.routes[0].legs[0].start_address + "</span>";
     directions += "<ol>" 
     for (var i = 0; i < origSteps.length; i++) {
       if (i >= detourSteps.length) 
