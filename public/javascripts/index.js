@@ -52,7 +52,6 @@ $('#timeButton').click(function() {
   var timeEnd = timeInput.val().toString();//hh:mm:ss
   var momentTime = new Date(timeInput);
   var timeEndSecs = parseTimeString(timeEnd);
-  console.log("Time end secs: " + timeEndSecs);
 
   var timeBegin = new Date();
   var timeBeginSecs = timeBegin.getSeconds() + (timeBegin.getMinutes()*60) + (timeBegin.getHours()*3600);
@@ -294,7 +293,7 @@ function requestDirections(start, end, vehicle, callback) {
 }
 
 function displayCategories() {
-  console.log("displaying categories");
+  // console.log("displaying categories");
 
   var categoryDiv = $('#categories-form'); 
   var categoryText = ""; 
@@ -394,7 +393,6 @@ function displayCategories() {
         }
         geocoder.geocode(request, function(result, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-            console.log("status OK");
             markers = addMarker(result[0].geometry.location.k, result[0].geometry.location.A, true);
             inactiveMarkers.push(markers[0]);
             activeMarkers.push(markers[1]);
@@ -431,8 +429,6 @@ function displayCategories() {
     var listingInfo = document.createElement("p");
     listingInfo.innerHTML = listing.location.display_address;
     listingInfo.className = 'listingInfo'
-
-    // console.log(listing);
 
     //listingInfo.innerHTML += '<br />' + listing.snippet_text;
     listingInfo.style.display = 'none';
@@ -507,7 +503,7 @@ function displayCategories() {
       pointC = addressString; 
       pointA = origRoute.routes[0].legs[0].start_location; 
       pointB = origRoute.routes[0].legs[0].end_location; 
-      mode = origRoute.Wb.travelMode; 
+      mode = origRoute.Tb.travelMode; 
 
       $(listingDiv).children("p").children("a").hide();
 
@@ -688,8 +684,9 @@ function geocodeCallback(results, status) {
 function showDirections(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
       origRoute = response; // jQuery.extend(true, {}, response);
-      pointA = response.Wb.origin; 
-      pointB = response.Wb.destination; 
+
+      pointA = response.Tb.origin; 
+      pointB = response.Tb.destination; 
       var steps = response.routes[0].legs[0].steps; 
       var distSinceLast = 0; 
       for (var i = 0; i < steps.length; i++) {
@@ -714,7 +711,6 @@ function showDirections(response, status) {
           lng = step.end_location.A;
 
           var latlng = new google.maps.LatLng(lat, lng); 
-          console.log(latlng);
           searchMarkers.push(latlng); 
           //addMarker(lat, lng); 
         }
@@ -727,18 +723,14 @@ function showDirections(response, status) {
       timeABstring = duration;
 
       var fastArrivalTime = new Date(Date.now() + timeAB);
-      console.log(fastArrivalTime);
       var hour = (fastArrivalTime.getHours() >= 10) ? "" + fastArrivalTime.getHours() : "0" + fastArrivalTime.getHours();
       var minutes = (fastArrivalTime.getMinutes() >= 10) ? "" + fastArrivalTime.getMinutes() : "0" + fastArrivalTime.getMinutes();
-      console.log(hour + ":" + minutes);
       $("#time-input").val(hour + ":" + minutes);
       document.getElementById("time-input").onfocus = function () {
-        console.log("focusing time input");
         window.scrollTo(0, 0);
         document.body.scrollTop = 0;
       }
 
-    //console.log(duration); 
 
   } else {
 
