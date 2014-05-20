@@ -393,7 +393,7 @@ function displayCategories() {
         }
         geocoder.geocode(request, function(result, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-            markers = addMarker(result[0].geometry.location.k, result[0].geometry.location.A, true);
+            markers = addMarker(result[0].geometry.location.d, result[0].geometry.location.e, true);
             inactiveMarkers.push(markers[0]);
             activeMarkers.push(markers[1]);
           } else {
@@ -633,13 +633,13 @@ function saveDetour() {
   var distance = origRoute.routes[0].legs[0].distance.text;
   var duration = origRoute.routes[0].legs[0].duration.text; 
   var category = "none";
-  var nameA = origRoute.Zb.origin;
-  var nameB = origRoute.Zb.destination;
+  var nameA = origRoute.Tb.origin;
+  var nameB = origRoute.Tb.destination;
   var nameC = detourListing.name;
   var addressA = origRoute.routes[0].legs[0].start_address; 
   var addressB = origRoute.routes[0].legs[0].end_address; 
   var addressC = detourListing.location.display_address[0] + " " + detourListing.location.display_address[1]; 
-  var travelMode = origRoute.Zb.travelMode;
+  var travelMode = origRoute.Tb.travelMode;
   var image = detourListing.image_url;
 
   var json = {
@@ -702,13 +702,13 @@ function showDirections(response, status) {
           var increment = Math.floor(step.lat_lngs.length / numPoints); 
           var points = step.lat_lngs; 
           for (var j = increment; j < points.length; j += increment) {
-            var latlng = new google.maps.LatLng(step.lat_lngs[j].k, step.lat_lngs[j].A); 
+            var latlng = new google.maps.LatLng(step.lat_lngs[j].d, step.lat_lngs[j].e); 
             searchMarkers.push(latlng); 
             //addMarker(step.lat_lngs[j].d, step.lat_lngs[j].e); 
           }
         } else {
-          lat = step.end_location.k;
-          lng = step.end_location.A;
+          lat = step.end_location.d;
+          lng = step.end_location.e;
 
           var latlng = new google.maps.LatLng(lat, lng); 
           searchMarkers.push(latlng); 
