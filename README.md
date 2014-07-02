@@ -3,8 +3,6 @@ Discoveroute
 
 ##Search for convenient places to stop along a route you need to travel. 
 
-===
-
 ###Mobile mapping applications have made it easy to do two things, separately: 
 
 ####* Get from point A to point B
