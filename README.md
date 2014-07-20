@@ -22,7 +22,8 @@ Discoveroute
 
 ![Home screen](http://i102.photobucket.com/albums/m93/hwray/pic2s_zps15164cb2.png)
 ![Tutorial](http://i102.photobucket.com/albums/m93/hwray/pic1s_zpsd994f843.png)
-![Start and end address entry](http://i102.photobucket.com/albums/m93/hwray/pic4s_zps694710f7.png)
+![Start address entry](http://i102.photobucket.com/albums/m93/hwray/pic3_zps1e85f9fd.png)
+![End address entry](http://i102.photobucket.com/albums/m93/hwray/pic4s_zps694710f7.png)
 
 * Input your preferred arrival time at your final destination, and what type of detour you're interested in stopping at along the way. 
  * Your arrival time constrains the set of suggested results. If you don't have much time to stop, Discoveroute will suggest locations that won't take much time off your route (i.e. < 1 mile detour). 
