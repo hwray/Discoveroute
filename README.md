@@ -26,7 +26,7 @@ Discoveroute
 
 ![Arrival time input](http://i102.photobucket.com/albums/m93/hwray/pic5s_zpsbae3438f.png)
 ![Detour category selection 1](http://i102.photobucket.com/albums/m93/hwray/pic6s_zps883c8fbc.png)
-![Detour category selection 2](http://s102.photobucket.com/user/hwray/media/pic7s_zpsa6c054c6.png.html?sort=3&o=11)
+![Detour category selection 2](http://i102.photobucket.com/albums/m93/hwray/pic7s_zpsa6c054c6.png)
 ![Retrieving Yelp results](http://i102.photobucket.com/albums/m93/hwray/pic8_zps48f3bc63.png)
 
 * Choose from a list of convenient places to stop along your route. 
