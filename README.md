@@ -21,6 +21,8 @@ Discoveroute
  * You want to find a good grocery store that's close to your usual route from work to home. 
  * You and a friend want to meet at a bar or restaurant roughly halfway between each other's places. 
 
+==================================
+
 ###User Flow
 
 * **Enter your start location and end destination.** 
@@ -58,8 +60,12 @@ Discoveroute
 ![Alarm notification to proceed to destination](http://i102.photobucket.com/albums/m93/hwray/pic15s_zpsc375af7f.png)
 ![Saving detour to come back some other time](http://i102.photobucket.com/albums/m93/hwray/pic16s_zps5708d612.png)
 
-* Stanford CS147 Award: Best Interaction Design
-* Stanford CS147 Award: Best Poster Design
+==================================
+
+* **Stanford CS147 Award:** Best Interaction Design
+* **Stanford CS147 Award:** Best Poster Design
+
+==================================
 
 * Discoveroute uses [Node.js](http://nodejs.org/), [MongoDB](http://www.mongodb.org/), and [Bootstrap](http://getbootstrap.com/) styling. 
 * Discoveroute leverages the [Google Maps API](https://developers.google.com/maps/) and [Yelp API](http://www.yelp.com/developers). 
