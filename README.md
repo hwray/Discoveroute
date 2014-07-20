@@ -42,8 +42,8 @@ Discoveroute
  * If you don't see a destination you like, use the sidebar navigation drawer to change your start, end, arrival time, or destination category, and try again. 
 
 ![Carousel list of detour destinations](http://i102.photobucket.com/albums/m93/hwray/pic9s_zps61993822.png)
-![Sidebar nav drawer for changing past selections](http://i102.photobucket.com/albums/m93/hwray/pic17s_zpsde132188.png)
 ![Examining a destination](http://i102.photobucket.com/albums/m93/hwray/pic10s_zpsdc3283fe.png)
+![Sidebar nav drawer for changing past selections](http://i102.photobucket.com/albums/m93/hwray/pic17s_zpsde132188.png)
 ![Selecting a destination](http://i102.photobucket.com/albums/m93/hwray/pic11s_zps79e7ba0e.png)
 
 * **Select a detour destination, and you'll receive step-by-step instructions for how to navigate there.** 
