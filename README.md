@@ -19,9 +19,7 @@ Discoveroute
 * It's the morning of your first day at a new job. You'd like to find a convenient place to stop for coffee on the way in. 
 
 ![Home screen](http://i102.photobucket.com/albums/m93/hwray/pic2s_zps15164cb2.png)
-
 ![Tutorial](http://i102.photobucket.com/albums/m93/hwray/pic1s_zpsd994f843.png)
-
 ![Start and end address entry](http://i102.photobucket.com/albums/m93/hwray/pic4s_zps694710f7.png)
 
 * CS147 Award: Best Interaction Design
