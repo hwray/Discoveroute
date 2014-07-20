@@ -3,6 +3,8 @@ Discoveroute
 
 ##Search for convenient places to stop along a route. 
 
+![CS147 Poster](/public/images/final_poster.jpg)
+
 ####Mobile mapping apps have made it easy to do two things, separately: 
 
 * Get from point A to point B
@@ -16,7 +18,7 @@ Discoveroute
 
 ####Example use case: 
 
-* It's the morning of your first day at a new job. You'd like to find a convenient place to stop for coffee on the way in. 
+* It's your first week at a new job. You'd like to explorea few convenient places to stop for coffee on the way in. 
 
 ![Home screen](http://i102.photobucket.com/albums/m93/hwray/pic2s_zps15164cb2.png)
 ![Tutorial](http://i102.photobucket.com/albums/m93/hwray/pic1s_zpsd994f843.png)
@@ -35,10 +37,19 @@ Discoveroute
 ![Selecting a destination](http://i102.photobucket.com/albums/m93/hwray/pic11s_zps79e7ba0e.png)
 ![Sidebar nav drawer for changing past selections](http://i102.photobucket.com/albums/m93/hwray/pic17s_zpsde132188.png)
 
-* CS147 Award: Best Interaction Design
-* CS147 Award: Best Poster Design
+* Select a detour destination, and you'll receive step-by-step instructions for how to navigate there. 
 
-![CS147 Poster](/public/images/final_poster.jpg)
+![Navigation instructions 1](http://i102.photobucket.com/albums/m93/hwray/pic12s_zpsf7696bac.png)
+![Navigation instructions 2](http://i102.photobucket.com/albums/m93/hwray/pic13s_zps767162b1.png)
+
+* Discoveroute will notify you with an alarm when it's time to proceed to your final destination. 
+
+![Alarm notification to proceed to destination](http://i102.photobucket.com/albums/m93/hwray/pic15s_zpsc375af7f.png)
+![Saving detour to come back some other time](http://i102.photobucket.com/albums/m93/hwray/pic16s_zps5708d612.png)
+
+
+* Stanford CS147 Award: Best Interaction Design
+* Stanford CS147 Award: Best Poster Design
 
 * Discoveroute uses [Node.js](http://nodejs.org/), [MongoDB](http://www.mongodb.org/), and [Bootstrap](http://getbootstrap.com/) styling. 
 * Discoveroute leverages the [Google Maps API](https://developers.google.com/maps/) and [Yelp API](http://www.yelp.com/developers). 
