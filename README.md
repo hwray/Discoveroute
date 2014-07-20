@@ -68,4 +68,4 @@ Discoveroute
 ==================================
 
 * Discoveroute uses [Node.js](http://nodejs.org/), [MongoDB](http://www.mongodb.org/), and [Bootstrap](http://getbootstrap.com/) styling. 
-* Discoveroute leverages the [Google Maps API](https://developers.google.com/maps/) and [Yelp API](http://www.yelp.com/developers). 
+* Discoveroute makes use of the [Google Maps API](https://developers.google.com/maps/) and [Yelp API](http://www.yelp.com/developers). 
