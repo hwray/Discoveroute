@@ -18,13 +18,14 @@ Discoveroute
 
 ####Example use case: 
 
-* It's your first week at a new job. You'd like to explorea few convenient places to stop for coffee on the way in. 
+* It's your first day at a new job. You'd like to find a convenient place to stop for coffee on the way in. 
 
 ![Home screen](http://i102.photobucket.com/albums/m93/hwray/pic2s_zps15164cb2.png)
 ![Tutorial](http://i102.photobucket.com/albums/m93/hwray/pic1s_zpsd994f843.png)
 ![Start and end address entry](http://i102.photobucket.com/albums/m93/hwray/pic4s_zps694710f7.png)
 
 * Input your preferred arrival time at your final destination, and what type of detour you're interested in stopping at along the way. 
+ * Your arrival time constrains the set of suggested results. If you don't have much time to stop, Discoveroute will suggest locations that won't take much time off your route (i.e. < 1 mile detour). 
 
 ![Arrival time input](http://i102.photobucket.com/albums/m93/hwray/pic5s_zpsbae3438f.png)
 ![Detour category selection 1](http://i102.photobucket.com/albums/m93/hwray/pic6s_zps883c8fbc.png)
@@ -43,10 +44,10 @@ Discoveroute
 ![Navigation instructions 2](http://i102.photobucket.com/albums/m93/hwray/pic13s_zps767162b1.png)
 
 * Discoveroute will notify you with an alarm when it's time to proceed to your final destination. 
+ * If you liked your stop, you can save it to come back again later. 
 
 ![Alarm notification to proceed to destination](http://i102.photobucket.com/albums/m93/hwray/pic15s_zpsc375af7f.png)
 ![Saving detour to come back some other time](http://i102.photobucket.com/albums/m93/hwray/pic16s_zps5708d612.png)
-
 
 * Stanford CS147 Award: Best Interaction Design
 * Stanford CS147 Award: Best Poster Design
