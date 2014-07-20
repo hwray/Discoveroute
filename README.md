@@ -16,7 +16,7 @@ Discoveroute
 
 ###Discoveroute helps users by providing time- and space-constrainted local business search. 
 
-* **Examples:** 
+* **Example use cases:** 
  * It's your first day at a new job. You'd like to find a convenient place to stop for coffee on the way in. 
  * You want to find a good grocery store that's close to your usual route from work to home. 
  * You and a friend want to meet at a bar or restaurant roughly halfway between each other's places. 
