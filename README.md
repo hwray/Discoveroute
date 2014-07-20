@@ -26,6 +26,7 @@ Discoveroute
 ###User Flow
 
 * **Enter your start location and end destination.** 
+
 ![Home screen](http://i102.photobucket.com/albums/m93/hwray/pic2s_zps15164cb2.png)
 ![Tutorial](http://i102.photobucket.com/albums/m93/hwray/pic1s_zpsd994f843.png)
 ![Start address entry](http://i102.photobucket.com/albums/m93/hwray/pic3_zps1e85f9fd.png)
@@ -33,6 +34,7 @@ Discoveroute
 
 * **Input your preferred arrival time at your end destination, and what type of detour you're interested in stopping at along the way.**
  * Your arrival time constrains the set of suggested results. If you don't have much time to stop, Discoveroute will suggest locations that won't take much time off your route (i.e. < 1 mile detour). 
+
 ![Arrival time input](http://i102.photobucket.com/albums/m93/hwray/pic5s_zpsbae3438f.png)
 ![Detour category selection 1](http://i102.photobucket.com/albums/m93/hwray/pic6s_zps883c8fbc.png)
 ![Detour category selection 2](http://i102.photobucket.com/albums/m93/hwray/pic7s_zpsa6c054c6.png)
@@ -40,6 +42,7 @@ Discoveroute
 
 * **Choose from a list of convenient places to stop along your route.** 
  * If you don't see a destination you like, use the sidebar navigation drawer to change your start, end, arrival time, or destination category, and try again. 
+
 ![Carousel list of detour destinations](http://i102.photobucket.com/albums/m93/hwray/pic9s_zps61993822.png)
 ![Examining a destination](http://i102.photobucket.com/albums/m93/hwray/pic10s_zpsdc3283fe.png)
 ![Sidebar nav drawer for changing past selections](http://i102.photobucket.com/albums/m93/hwray/pic17s_zpsde132188.png)
@@ -47,11 +50,13 @@ Discoveroute
 
 * **Select a detour destination, and you'll receive step-by-step instructions for how to navigate there.** 
  * If you're making a stop along a familiar route, you can choose to view the difference between the detour directions and your normal route. Ex: "Instead of turning left on Mission St., continue straight on 10th St." 
+
 ![Navigation instructions 1](http://i102.photobucket.com/albums/m93/hwray/pic12s_zpsf7696bac.png)
 ![Navigation instructions 2](http://i102.photobucket.com/albums/m93/hwray/pic13s_zps767162b1.png)
 
 * **Discoveroute will notify you with an alarm when it's time to proceed to your final destination.** 
  * If you liked your stop, you can name and save it to come back again later. 
+
 ![Alarm notification to proceed to destination](http://i102.photobucket.com/albums/m93/hwray/pic15s_zpsc375af7f.png)
 ![Saving detour to come back some other time](http://i102.photobucket.com/albums/m93/hwray/pic16s_zps5708d612.png)
 
