@@ -1,7 +1,7 @@
 Discoveroute
 ============
 
-##Search for convenient places to stop along a route. 
+##Time- and route-constrained business search. 
 
 ![CS147 Poster](/public/images/final_poster.jpg)
 
@@ -12,9 +12,9 @@ Discoveroute
 
 ####But users often have to solve both these problems together: 
 
-* Get from point A to point B, and make a convenient stop at a business along the way (for lunch, coffee, shopping, etc.) 
+* Get from point A to point B, and make a convenient stop at a business along the way (for lunch, coffee, shopping, etc.), while ensuring you arrive at your original destination on-time
 
-###Discoveroute helps users by providing time- and space-constrainted local business search. 
+###Discoveroute helps users by providing time- and route-constrainted local business search. 
 
 * **Example use cases:** 
  * It's your first day at a new job. You'd like to find a convenient place to stop for coffee on the way in. 
