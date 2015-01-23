@@ -683,12 +683,17 @@ function geocodeCallback(results, status) {
 
 function showDirections(response, status) {
   if (status == google.maps.DirectionsStatus.OK) {
-      origRoute = response; // jQuery.extend(true, {}, response);
+      origRoute = response.routes[0]; // jQuery.extend(true, {}, response);
+      var legs = origRoute.legs;
 
-      pointA = response.Tb.origin; 
-      pointB = response.Tb.destination; 
-      var steps = response.routes[0].legs[0].steps; 
+      console.log(response);
+
+      pointA = legs.start_location; 
+      pointB = legs.end_location; 
+
       var distSinceLast = 0; 
+      var steps = legs[0].steps;
+
       for (var i = 0; i < steps.length; i++) {
         var step = steps[i]; 
         if ((step.distance.value + distSinceLast) < 1000) {
@@ -699,26 +704,24 @@ function showDirections(response, status) {
         }
         if (step.distance.value > 2000) {
           var numPoints = Math.floor(step.distance.value / 1600); 
-          var increment = Math.floor(step.lat_lngs.length / numPoints); 
+          var increment = Math.floor(step.path.length / numPoints); 
           var points = step.lat_lngs; 
           for (var j = increment; j < points.length; j += increment) {
-            var latlng = new google.maps.LatLng(step.lat_lngs[j].d, step.lat_lngs[j].e); 
+            var latlng = new google.maps.LatLng(step.start_location.C, step.start_location.k); 
             searchMarkers.push(latlng); 
-            //addMarker(step.lat_lngs[j].d, step.lat_lngs[j].e); 
           }
         } else {
-          lat = step.end_location.d;
-          lng = step.end_location.e;
+          lat = step.end_location.C;
+          lng = step.end_location.k;
 
           var latlng = new google.maps.LatLng(lat, lng); 
           searchMarkers.push(latlng); 
-          //addMarker(lat, lng); 
         }
       }
       directionsDisplay.setDirections(response);
 
-      var duration = response.routes[0].legs[0].duration.text;
-      var durationVal = response.routes[0].legs[0].duration.value;
+      var duration = legs.duration.text;
+      var durationVal = legs.duration.value;
       timeAB = durationVal;
       timeABstring = duration;
 
