@@ -6,17 +6,16 @@ exports.places = function(req, res) {
   var businesses = [];
   var coordinates = JSON.parse(req.body.coordinates);
   var SPREAD_POINTS = 50;
-  console.log(coordinates);
   
   var stepIncrement = (coordinates.length > SPREAD_POINTS) ? coordinates.length / SPREAD_POINTS : 1;
   var counter = coordinates.length / stepIncrement;
   for (var i = 0; i < coordinates.length; i += stepIncrement) {
 
    yelpClient.createClient({
-    consumer_key: "yYfw_hnSvBqGMOxsoggiQQ", 
-    consumer_secret: "ocT_ORTEaWMf51qpXg_DevQ15Pk",
-    token: "o8G8ptup2cX3iyI6S3S1YG317mCPYsyZ",
-    token_secret: "qEIqCuvJ1rw1mkmzBuP4xRy67Cw",
+    consumer_key: "iy4_rKs-PmK_gHTgCRmb1A", 
+    consumer_secret: "szVnY0AzT-muqHK2wDEiTgyOijo",
+    token: "sT4K4iPOTCG0ZPtvZ_x9v-G85eYITnL2",
+    token_secret: "qNU1OlZbg72UdQVIXZxWJIbhqkY",
   }).search(
   {
    term: req.body.category, 
@@ -26,6 +25,8 @@ exports.places = function(req, res) {
  }, 
 
  function(error, data) {
+  console.log(data);
+
   if (error) {
     console.log("Error with Yelp API call");
     console.log(data);
