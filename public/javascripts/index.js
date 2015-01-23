@@ -395,6 +395,9 @@ function displayCategories() {
         geocoder.geocode(request, function(result, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             markers = addMarker(result[0].geometry.location.d, result[0].geometry.location.e, true);
+
+            console.log(result);
+
             inactiveMarkers.push(markers[0]);
             activeMarkers.push(markers[1]);
           } else {
