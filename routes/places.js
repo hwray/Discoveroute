@@ -20,7 +20,7 @@ exports.places = function(req, res) {
   }).search(
   {
    term: req.body.category, 
-   ll: coordinates[i].d + "," + coordinates[i].e,
+   ll: coordinates[i].C + "," + coordinates[i].k,
    radius_filter: "1000", 
    limit: 5
  }, 

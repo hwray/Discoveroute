@@ -262,18 +262,17 @@ function routeButtonClick(e) {
   var start = document.getElementById("routeStart").value; 
   var end = document.getElementById("routeEnd").value; 
   var vehicle = $('input[name="vehicleOptions"]:checked').val();
-  var vehicleString;
 
   if (vehicle === 'DRIVING')
-    vehicleString = google.maps.TravelMode.DRIVING;
+    mode = google.maps.TravelMode.DRIVING;
   else if (vehicle === 'TRANSIT')
-    vehicleString = google.maps.TravelMode.TRANSIT;
+    mode = google.maps.TravelMode.TRANSIT;
   else if (vehicle === 'BICYCLING')
-    vehicleString = google.maps.TravelMode.BICYCLING;
+    mode = google.maps.TravelMode.BICYCLING;
   else if (vehicle === 'WALKING')
-    vehicleString = google.maps.TravelMode.WALKING;
+    mode = google.maps.TravelMode.WALKING;
 
-  requestDirections(start, end, vehicleString, showDirections); 
+  requestDirections(start, end, mode, showDirections); 
 
 }
 
@@ -342,10 +341,12 @@ function displayCategories() {
 
     var yelpData = {"coordinates" : JSON.stringify(searchMarkers), 'category': searchString};
     
+    console.log(yelpData);
+
     if (searchMarkers.length > 0) {
       $.ajax({
-        url: "/places",
         type: "POST",
+        url: "/places",
         context: document.body,
         data: yelpData,
         beforeSend: function() { $('#loading-spinner').show(); },
@@ -503,7 +504,6 @@ function displayCategories() {
       pointC = addressString; 
       pointA = origRoute.routes[0].legs[0].start_location; 
       pointB = origRoute.routes[0].legs[0].end_location; 
-      mode = origRoute.Tb.travelMode; 
 
       $(listingDiv).children("p").children("a").hide();
 
@@ -633,13 +633,13 @@ function saveDetour() {
   var distance = origRoute.routes[0].legs[0].distance.text;
   var duration = origRoute.routes[0].legs[0].duration.text; 
   var category = "none";
-  var nameA = origRoute.Tb.origin;
-  var nameB = origRoute.Tb.destination;
+  var nameA = origRoute.routes[0].legs[0].start_location;
+  var nameB = origRoute.routes[0].legs[0].end_location;
   var nameC = detourListing.name;
   var addressA = origRoute.routes[0].legs[0].start_address; 
   var addressB = origRoute.routes[0].legs[0].end_address; 
   var addressC = detourListing.location.display_address[0] + " " + detourListing.location.display_address[1]; 
-  var travelMode = origRoute.Tb.travelMode;
+  var travelMode = mode;
   var image = detourListing.image_url;
 
   var json = {
@@ -688,8 +688,8 @@ function showDirections(response, status) {
 
       console.log(response);
 
-      pointA = legs.start_location; 
-      pointB = legs.end_location; 
+      pointA = legs[0].start_location; 
+      pointB = legs[0].end_location; 
 
       var distSinceLast = 0; 
       var steps = legs[0].steps;
@@ -720,8 +720,8 @@ function showDirections(response, status) {
       }
       directionsDisplay.setDirections(response);
 
-      var duration = legs.duration.text;
-      var durationVal = legs.duration.value;
+      var duration = legs[0].duration.text;
+      var durationVal = legs[0].duration.value;
       timeAB = durationVal;
       timeABstring = duration;
 
