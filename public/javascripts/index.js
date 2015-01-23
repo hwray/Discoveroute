@@ -341,8 +341,6 @@ function displayCategories() {
 
     var yelpData = {"coordinates" : JSON.stringify(searchMarkers), 'category': searchString};
     
-    console.log(yelpData);
-
     if (searchMarkers.length > 0) {
       $.ajax({
         type: "POST",
@@ -368,6 +366,8 @@ function displayCategories() {
   }
 
   function yelpCallback(data, textStatus, jqXHR) {
+
+    console.log(data);
 
     $('#loading-spinner').hide();
     yelpListings = []; 
