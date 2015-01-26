@@ -394,7 +394,7 @@ function displayCategories() {
         }
         geocoder.geocode(request, function(result, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-            markers = addMarker(result[0].geometry.location.d, result[0].geometry.location.e, true);
+            markers = addMarker(result[0].geometry.location.lat(), result[0].geometry.location.lng(), true);
 
             console.log(result);
 
@@ -710,12 +710,12 @@ function showDirections(response, status) {
           var increment = Math.floor(step.path.length / numPoints); 
           var points = step.lat_lngs; 
           for (var j = increment; j < points.length; j += increment) {
-            var latlng = new google.maps.LatLng(step.start_location.C, step.start_location.k); 
+            var latlng = new google.maps.LatLng(step.start_location.lat(), step.start_location.lng());
             searchMarkers.push(latlng); 
           }
         } else {
-          lat = step.end_location.C;
-          lng = step.end_location.k;
+          lat = step.end_location.lat();
+          lng = step.end_location.lng();
 
           var latlng = new google.maps.LatLng(lat, lng); 
           searchMarkers.push(latlng); 

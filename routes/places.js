@@ -19,7 +19,7 @@ exports.places = function(req, res) {
   }).search(
   {
    term: req.body.category, 
-   ll: coordinates[i].C + "," + coordinates[i].k,
+   ll: coordinates[i].G + "," + coordinates[i].k,
    radius_filter: "1000", 
    limit: 5
  }, 
@@ -31,7 +31,7 @@ exports.places = function(req, res) {
     console.log("Error with Yelp API call");
     console.log(data);
     res.status(400);
-    res.send();
+    res.send(error);
   } else {
     console.log(data.businesses);
     businesses.push(data.businesses);
