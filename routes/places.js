@@ -5,14 +5,12 @@ exports.places = function(req, res) {
 
   var businesses = [];
   var coordinates = JSON.parse(req.body.coordinates);
-  var SPREAD_POINTS = 50;
-  
-  console.log(req.body);
+
+  console.log(coordinates);
+  var SPREAD_POINTS = 70;
 
   var stepIncrement = (coordinates.length > SPREAD_POINTS) ? coordinates.length / SPREAD_POINTS : 1;
   var counter = coordinates.length / stepIncrement;
-
-
 
   coordinates.forEach(function(coordinate){
 
@@ -24,13 +22,12 @@ exports.places = function(req, res) {
     }).search(
     {
      term: req.body.category, 
-     ll: coordinate.G + "," + coordinate.K,
-     radius_filter: "1000", 
+     ll: coordinate.lat + "," + coordinate.lng,
+     radius_filter: "1500", 
      limit: 5
     }, 
 
     function(error, data) {
-      // console.log(data);
 
       if (error) {
         console.log("Error with Yelp API call");
@@ -38,13 +35,17 @@ exports.places = function(req, res) {
         res.status(400);
         res.send(error);
       } else {
-        console.log(data.businesses);
-        businesses.push(data.businesses);
+        var results = data.businesses;
+
+        for(var i=0; i<results.length; i++){
+          var b = results[i];
+          businesses.push(b);
+        }
         counter--;
-        if (counter == 0) {
+        if (counter === 0) {
           res.json(businesses);
         }
-      };
+      }
     });
   });
 };

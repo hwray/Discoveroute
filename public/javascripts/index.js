@@ -7,6 +7,8 @@ var timerSeconds;
 var timerInterval;
 
 var searchMarkers = new Array();
+var seen = new Set();
+
 
 var origRoute; 
 
@@ -31,6 +33,8 @@ var yelpListings;
 var inGeneralMode = true;
 var activeMarkers = [];
 var inactiveMarkers = [];
+
+var dataDump;
 
 var categories = ["dining", "shopping", "cafes", "nightlife", "arts", "grocery"]; 
 var categoryColors = ["#5A132c", "#761c4b", "#eed258", "#44a16c", "#379788", "#3d6585"];
@@ -313,11 +317,8 @@ function displayCategories() {
       var categoryButton = document.getElementById("categoryDiv" + i); 
       $(categoryButton).css('background-color', "#666666");
 
-      //$(categoryButton).css('background-color', categoryColors[i]);
-      //$(categoryButton).click(toggleCategorySelect);
       $(categoryButton).click(function() {
 
-        //$(this).toggleClass('selectedCategory');
         $(this).toggleClass('selectedCategoryV2');
         if ($(".selectedCategoryV2").length == 0) {
           $("#categoriesButton").attr("disabled", "true");
@@ -365,54 +366,75 @@ function displayCategories() {
     console.log("yelp failed");
   }
 
-  function yelpCallback(data, textStatus, jqXHR) {
-
+  function createMarkers(data) {
     console.log(data);
 
-    $('#loading-spinner').hide();
-    yelpListings = []; 
+    yelpListings = [];
 
-    var detoursDiv = document.getElementById("detourDisplay"); 
+    var detoursDiv = document.getElementById("detourDisplay");
 
     var displayIndex = 0;
+
+    // data.forEach(function(businesses) {
+
+        // console.log(businesses);
+
+      if(data.length > 0) {
+
+        data.forEach(function(business) {
+          if(!seen.has(business.id)){
+            seen.add(business.id);
+
+              // add listing div to carousel
+            detoursDiv.appendChild(createListing(business, displayIndex));
+            displayIndex++;
+            yelpListings.push(business);
+            // add marker to map
+            var addressString = business.location.display_address[0] + ", " + business.location.display_address[1];
+            var request = {
+              address: addressString
+            };
+            geocoder.geocode(request, function(result, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                markers = addMarker(result[0].geometry.location.lat(), result[0].geometry.location.lng(), true);
+
+                inactiveMarkers.push(markers[0]);
+                activeMarkers.push(markers[1]);
+              } else {
+                // error while geocoding address to lat-lng
+                console.log(status);
+              }
+            });
+          }
+        });
+      }
+    // });
+  }
+
+  function yelpCallback(data, textStatus, jqXHR) {
+
+    $('#loading-spinner').hide();
+
+    var detoursDiv = document.getElementById("detourDisplay");
 
     // remove all elements currently in the detourDiv
     while(detoursDiv.hasChildNodes()){
       detoursDiv.removeChild(detoursDiv.lastChild);
     }
+    seen.clear();
+    createMarkers(data);
 
-    for (var i = 0; i < data.length; i++) {
-      if(data[i].length > 0) {
-        // add listing div to carousel
-        detoursDiv.appendChild(createListing(data[i][0], displayIndex));
-        displayIndex++;
-        yelpListings.push(data[i]);
-        // add marker to map
-        var addressString = data[i][0].location.display_address[0] + ", " + data[i][0].location.display_address[1]; 
-        var request = {
-          address: addressString
-        }
-        geocoder.geocode(request, function(result, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            markers = addMarker(result[0].geometry.location.lat(), result[0].geometry.location.lng(), true);
-
-            console.log(result);
-
-            inactiveMarkers.push(markers[0]);
-            activeMarkers.push(markers[1]);
-          } else {
-            // error while geocoding address to lat-lng
-            console.log(status);
-          }
-        }); 
-      }
-    }
   }
 
   function createListing(listing, index) {
     var listingDiv = document.createElement("DIV");
     listingDiv.className = "listing";
     listingDiv.id = "listing" + index;
+
+
+    var listingImgDiv = document.createElement("div");
+    listingImgDiv.setAttribute('class', 'imgDiv'); 
+
     var listingImg = document.createElement("img"); 
     listingImg.setAttribute("class", "profilePic"); 
     if(!listing.image_url){
@@ -421,14 +443,25 @@ function displayCategories() {
     else {
       listingImg.setAttribute("src", listing.image_url); 
     }
-    listingDiv.appendChild(listingImg); 
+    listingImgDiv.appendChild(listingImg); 
+    listingDiv.appendChild(listingImgDiv); 
+
     listingDiv.appendChild(createFunctionDetail(listing.name, "name"));
     // listingDiv.appendChild(createFunctionDetail(listing.display_phone, "phone_num"));
 
+    var expandDiv = document.createElement("div");
+    expandDiv.setAttribute('class', 'expandIcon'); 
+
+    if((listing.name).length < 20) {
+      expandDiv.setAttribute('class', 'short expandIcon');       
+    }
+
+
     var expandButton = document.createElement("span"); 
-    expandButton.setAttribute('class', 'fa fa-chevron-circle-up'); 
-    expandButton.setAttribute('style', "color:#FF9805; font-size:16pt;"); 
-    listingDiv.appendChild(expandButton);
+    expandButton.setAttribute('class', 'fa fa-chevron-circle-up chevron chevron-up'); 
+
+    expandDiv.appendChild(expandButton);
+    listingDiv.appendChild(expandDiv);
 
     var listingInfo = document.createElement("p");
     listingInfo.innerHTML = listing.location.display_address;
@@ -448,15 +481,17 @@ function displayCategories() {
 
       // switch what buttons are displayed 
       $(listingDiv).children("button").toggle();
-      $(listingDiv).children("span").toggle();
+      $(listingDiv).children('.expandIcon').children(".chevron").toggle();
+      $(listingDiv).children('.short').css('bottom', '10px');
       $(listingDiv).find('.listingInfo').toggle();
     }; 
 
     var hideListing = function() {
       inGeneralMode = true;
       $(listingDiv).children("button").toggle();
-      $(listingDiv).children("span").toggle();
+      $(listingDiv).children('.expandIcon').children(".chevron").toggle();
       $(listingDiv).find('.listingInfo').toggle();
+      $(listingDiv).children('.short').css('bottom', '-13px');
       $(".listing").removeAttr("style");
     }; 
 
@@ -471,21 +506,16 @@ function displayCategories() {
     }; 
 
     var discoverButton = document.createElement("button");
-    discoverButton.setAttribute('class', 'btn');
-    discoverButton.setAttribute('class', 'btn-default');
-    discoverButton.setAttribute('class', 'discoverButton'); 
+    discoverButton.setAttribute('class', 'btn btn-default discoverButton large-btn'); 
     discoverButton.innerHTML = "Discover!";
     discoverButton.style.display = "none";
     listingDiv.appendChild(discoverButton);
 
-    listingDiv.appendChild(document.createElement("br")); 
-    listingDiv.appendChild(document.createElement("br")); 
-
     var returnButton = document.createElement("span"); 
-    returnButton.setAttribute('class', 'fa fa-chevron-circle-down'); 
-    returnButton.setAttribute('style', "color:#FF9805; font-size:16pt;"); 
+    returnButton.setAttribute('class', 'fa fa-chevron-circle-down chevron chevron-down'); 
     returnButton.style.display = "none";
-    listingDiv.appendChild(returnButton);
+
+    expandDiv.appendChild(returnButton);
 
     returnButton.onclick = hideListing; 
 
@@ -500,19 +530,20 @@ function displayCategories() {
       $(listingDiv).children("img").prop("onclick", null);
 
       var listingID = listingDiv.id.substring(7); 
-      var listing = yelpListings[listingID][0]; 
-      detourListing = yelpListings[listingID][0]
+      var listing = yelpListings[listingID]; 
+      detourListing = yelpListings[listingID];
       detourIndex = listingID; 
       var addressString = listing.location.display_address[0] + ", " + listing.location.display_address[1]; 
       pointC = addressString; 
-      pointA = origRoute.routes[0].legs[0].start_location; 
-      pointB = origRoute.routes[0].legs[0].end_location; 
+      pointA = origRoute.legs[0].start_location; 
+      pointB = origRoute.legs[0].end_location; 
 
       $(listingDiv).children("p").children("a").hide();
 
       // Get directions from pointA (origin) to pointC (detour)
       requestDirections(pointA, pointC, mode, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
+          console.log(response);
           timeAC = response.routes[0].legs[0].duration.value; 
 
           var detourDiv = document.createElement('div');
@@ -549,10 +580,7 @@ function displayCategories() {
     nextDirections.setAttribute('class', 'continue-directions');
     
     var continueButton = document.createElement("button");
-    continueButton.setAttribute('class', 'continueButton');
-    continueButton.setAttribute('class', 'btn');
-    continueButton.setAttribute('class', 'btn-default');
-    continueButton.setAttribute('class', 'discoverButton'); 
+    continueButton.setAttribute('class', 'continueButton btn btn-default discoverButton large-btn'); 
     continueButton.innerHTML = "I've arrived at my detour! ";
     
     nextDirections.appendChild(continueButton);
@@ -581,19 +609,15 @@ function displayCategories() {
           $(".continue-directions").append(doneText);
 
           var saveButton = document.createElement("button");
-          saveButton.setAttribute('class', 'btn');
-          saveButton.setAttribute('class', 'btn-default');
-          saveButton.setAttribute('class', 'discoverButton'); 
-          saveButton.innerHTML = "Save this detour!";
+          saveButton.setAttribute('class', 'btn btn-default discoverButton large-btn'); 
+          saveButton.innerHTML = "Save Detour";
           $(".continue-directions").append(saveButton);
 
           $(".continue-directions").append("  ");
 
           var exitButton = document.createElement("button");
-          exitButton.setAttribute('class', 'btn');
-          exitButton.setAttribute('class', 'btn-default');
-          exitButton.setAttribute('class', 'discoverButton'); 
-          exitButton.innerHTML = "Meh. Let's try again.";
+          exitButton.setAttribute('class', 'btn btn-default discoverButton large-btn'); 
+          exitButton.innerHTML = "Another Detour";
           $(".continue-directions").append(exitButton);
 
           saveButton.onclick = function(e) {
@@ -697,6 +721,8 @@ function showDirections(response, status) {
       var distSinceLast = 0; 
       var steps = legs[0].steps;
 
+      var locs = {};
+
       for (var i = 0; i < steps.length; i++) {
         var step = steps[i]; 
         if ((step.distance.value + distSinceLast) < 1000) {
@@ -710,15 +736,22 @@ function showDirections(response, status) {
           var increment = Math.floor(step.path.length / numPoints); 
           var points = step.lat_lngs; 
           for (var j = increment; j < points.length; j += increment) {
-            var latlng = new google.maps.LatLng(step.start_location.lat(), step.start_location.lng());
-            searchMarkers.push(latlng); 
+            var lat = step.start_location.lat();
+            var lng = step.start_location.lng();
+
+            var latlng = new google.maps.LatLng(lat, lng);
+            if(!lat in locs || locs[lat] != lng){
+              locs[lat] = lng;
+              searchMarkers.push({lat: lat, lng: lng}); 
+            }
           }
         } else {
-          lat = step.end_location.lat();
-          lng = step.end_location.lng();
+          var lat = step.end_location.lat();
+          var lng = step.end_location.lng();
 
           var latlng = new google.maps.LatLng(lat, lng); 
-          searchMarkers.push(latlng); 
+          // searchMarkers.push(latlng); 
+          searchMarkers.push({lat: lat, lng: lng}); 
         }
       }
       directionsDisplay.setDirections(response);
@@ -748,9 +781,9 @@ function listDirections(response, status, displayDiv) {
 
     dirDiv = displayDiv;
     var detourSteps = response.routes[0].legs[0].steps; 
-    var origSteps = origRoute.routes[0].legs[0].steps; 
+    var origSteps = origRoute.legs[0].steps; 
     var directions = response.routes[0].legs[0].distance.text + ", " + response.routes[0].legs[0].duration.text + "</br>"; 
-    directions += "<b>START:</b> <span class='start-location'>" + origRoute.routes[0].legs[0].start_address + "</span>";
+    directions += "<b>START:</b> <span class='start-location'>" + origRoute.legs[0].start_address + "</span>";
     directions += "<ol>" 
     for (var i = 0; i < origSteps.length; i++) {
       if (i >= detourSteps.length) 

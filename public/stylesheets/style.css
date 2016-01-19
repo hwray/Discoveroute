@@ -162,17 +162,30 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 	padding: 5px;
 	min-width: 150px;
 	background-color: #444444;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	border-radius: 5px;
+}
+
+.listing > .imgDiv {
+	height: 150px;
+	text-align: center;
+}
+
+.listing > .listingInfo {
+	text-align: center;
 }
 
 .listing > .name
 {
 	font-weight: bold;
 	color: #FF9805;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 25px;
 }
 
-.listing > .profilePic
+.listing .profilePic
 {
 	width: 100%;
 	max-width: 150px;
@@ -191,6 +204,21 @@ Elaine Zhou, Harrison Wray, Brian Lam, Aaron Holden
 
 .listing a{
 	color: #FEC700;
+}
+
+.listing .expandIcon{
+    position: relative;
+    bottom: 10px;
+	text-align: center;
+}
+
+.listing .expandIcon.short{
+	bottom: -13px;
+}
+
+.listing .chevron{
+	color:#FF9805; 
+	font-size:16pt; 
 }
 
 #spinner{
