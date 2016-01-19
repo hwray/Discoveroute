@@ -6,6 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "bson": "^0.4.21",
     "express": "3.4.8",
     "jade": "*",
     "yelp": "0.1.1"
